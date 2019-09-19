@@ -1,0 +1,161 @@
+Wed 2019/06/19 19:31:11 gammu-smsd: The native_mysql driver was not compiled in!
+Wed 2019/06/19 20:06:02 gammu-smsd: The native_mysql driver was not compiled in!
+Wed 2019/06/19 20:21:47 gammu-smsd: Using generic SQL for ODBC, this might fail. In such case please set SQL configuration option.
+Wed 2019/06/19 20:21:48 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Wed 2019/06/19 20:21:48 gammu-smsd: Created Windows RW shared memory at 000001EE9A450000
+Wed 2019/06/19 20:21:48 gammu-smsd: Starting phone communication...
+Wed 2019/06/19 20:21:53 gammu-smsd: Inserting phone info
+Wed 2019/06/19 20:21:53 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Wed 2019/06/19 20:21:53 gammu-smsd: 42000:1:1064:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Signal) VALUES ("353907049761991", "510106762430472", "", "",
+
+Wed 2019/06/19 20:21:53 gammu-smsd: SQL failure: 79
+Wed 2019/06/19 20:21:53 gammu-smsd: Error inserting into database (SMSDSQL_InitAfterConnect)
+Wed 2019/06/19 20:21:53 gammu-smsd: Post initialisation failed, stopping Gammu smsd: Error in executing SQL query. (SQL[79])
+Wed 2019/06/19 20:21:53 gammu-smsd: Terminating communication...
+Wed 2019/06/19 20:21:53 gammu-smsd: Stopping Gammu smsd: No error. (NONE[1])
+Wed 2019/06/19 20:25:48 gammu-smsd: Using generic SQL for ODBC, this might fail. In such case please set SQL configuration option.
+Wed 2019/06/19 20:25:48 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Wed 2019/06/19 20:25:48 gammu-smsd: Created Windows RW shared memory at 000001F09BEA0000
+Wed 2019/06/19 20:25:48 gammu-smsd: Starting phone communication...
+Wed 2019/06/19 20:25:53 gammu-smsd: Inserting phone info
+Wed 2019/06/19 20:25:53 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Wed 2019/06/19 20:25:53 gammu-smsd: 42000:1:1064:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Signal) VALUES ("353907049761991", "510106762430472", "", "",
+
+Wed 2019/06/19 20:25:53 gammu-smsd: SQL failure: 79
+Wed 2019/06/19 20:25:53 gammu-smsd: Error inserting into database (SMSDSQL_InitAfterConnect)
+Wed 2019/06/19 20:25:53 gammu-smsd: Post initialisation failed, stopping Gammu smsd: Error in executing SQL query. (SQL[79])
+Wed 2019/06/19 20:25:53 gammu-smsd: Terminating communication...
+Wed 2019/06/19 20:25:53 gammu-smsd: Stopping Gammu smsd: No error. (NONE[1])
+Wed 2019/06/19 20:27:29 gammu-smsd: Using generic SQL for ODBC, this might fail. In such case please set SQL configuration option.
+Wed 2019/06/19 20:27:29 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Wed 2019/06/19 20:27:29 gammu-smsd: Created Windows RW shared memory at 00000201D25A0000
+Wed 2019/06/19 20:27:29 gammu-smsd: Starting phone communication...
+Wed 2019/06/19 20:27:34 gammu-smsd: Inserting phone info
+Wed 2019/06/19 20:27:34 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Wed 2019/06/19 20:27:34 gammu-smsd: 42000:1:1064:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Signal) VALUES ("353907049761991", "510106762430472", "", "",
+
+Wed 2019/06/19 20:27:34 gammu-smsd: SQL failure: 79
+Wed 2019/06/19 20:27:34 gammu-smsd: Error inserting into database (SMSDSQL_InitAfterConnect)
+Wed 2019/06/19 20:27:34 gammu-smsd: Post initialisation failed, stopping Gammu smsd: Error in executing SQL query. (SQL[79])
+Wed 2019/06/19 20:27:34 gammu-smsd: Terminating communication...
+Wed 2019/06/19 20:27:34 gammu-smsd: Stopping Gammu smsd: No error. (NONE[1])
+Wed 2019/06/19 20:29:36 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Wed 2019/06/19 20:29:36 gammu-smsd: Created Windows RW shared memory at 000001EB53340000
+Wed 2019/06/19 20:29:36 gammu-smsd: Starting phone communication...
+Wed 2019/06/19 20:29:41 gammu-smsd: Inserting phone info
+Wed 2019/06/19 20:29:42 gammu-smsd: Read 6 messages
+Wed 2019/06/19 20:29:44 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Wed 2019/06/19 20:34:17 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Wed 2019/06/19 20:36:42 gammu-smsd: Read 1 messages
+Wed 2019/06/19 20:53:54 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Wed 2019/06/19 20:53:54 gammu-smsd: Created Windows RW shared memory at 000001E77EBF0000
+Wed 2019/06/19 20:53:54 gammu-smsd: Starting phone communication...
+Wed 2019/06/19 20:53:58 gammu-smsd: Inserting phone info
+Thu 2019/06/20 16:05:49 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Thu 2019/06/20 16:05:49 gammu-smsd: Created Windows RW shared memory at 000001BFA3190000
+Thu 2019/06/20 16:05:49 gammu-smsd: Starting phone communication...
+Thu 2019/06/20 16:05:54 gammu-smsd: Inserting phone info
+Thu 2019/06/20 16:05:55 gammu-smsd: Read 1 messages
+Thu 2019/06/20 16:07:25 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:07:58 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:09:40 gammu-smsd: Read 1 messages
+Thu 2019/06/20 16:19:01 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:19:04 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:22:36 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:22:39 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Thu 2019/06/20 16:22:39 gammu-smsd: 23000:1:1062:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]Duplicate entry '2-1' for key 'PRIMARY'
+
+Thu 2019/06/20 16:22:39 gammu-smsd: SQL failure: 79
+Thu 2019/06/20 16:22:39 gammu-smsd: Error writing to database (SMSDSQL_AddSentSMSInfo)
+Thu 2019/06/20 16:22:39 gammu-smsd: Error setting sent status: Error in executing SQL query. (SQL[79])
+Thu 2019/06/20 16:32:40 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:32:43 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Thu 2019/06/20 16:32:43 gammu-smsd: 23000:1:1062:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]Duplicate entry '2-1' for key 'PRIMARY'
+
+Thu 2019/06/20 16:32:43 gammu-smsd: SQL failure: 79
+Thu 2019/06/20 16:32:43 gammu-smsd: Error writing to database (SMSDSQL_AddSentSMSInfo)
+Thu 2019/06/20 16:32:43 gammu-smsd: Error setting sent status: Error in executing SQL query. (SQL[79])
+Thu 2019/06/20 16:39:43 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:39:46 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Thu 2019/06/20 16:39:46 gammu-smsd: 23000:1:1062:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]Duplicate entry '3-1' for key 'PRIMARY'
+
+Thu 2019/06/20 16:39:46 gammu-smsd: SQL failure: 79
+Thu 2019/06/20 16:39:46 gammu-smsd: Error writing to database (SMSDSQL_AddSentSMSInfo)
+Thu 2019/06/20 16:39:46 gammu-smsd: Error setting sent status: Error in executing SQL query. (SQL[79])
+Thu 2019/06/20 16:42:46 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Thu 2019/06/20 16:42:46 gammu-smsd: 23000:1:1062:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]Duplicate entry '2-1' for key 'PRIMARY'
+
+Thu 2019/06/20 16:42:46 gammu-smsd: SQL failure: 79
+Thu 2019/06/20 16:42:46 gammu-smsd: Error writing to database (SMSDSQL_AddSentSMSInfo)
+Thu 2019/06/20 16:48:10 gammu-smsd: Read 1 messages
+Thu 2019/06/20 16:49:40 gammu-smsd: Read 1 messages
+Thu 2019/06/20 16:49:47 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Thu 2019/06/20 16:49:50 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Thu 2019/06/20 16:49:50 gammu-smsd: 23000:1:1062:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]Duplicate entry '3-1' for key 'PRIMARY'
+
+Thu 2019/06/20 16:49:50 gammu-smsd: SQL failure: 79
+Thu 2019/06/20 16:49:50 gammu-smsd: Error writing to database (SMSDSQL_AddSentSMSInfo)
+Thu 2019/06/20 16:49:50 gammu-smsd: Error setting sent status: Error in executing SQL query. (SQL[79])
+Thu 2019/06/20 17:00:50 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Fri 2019/06/21 13:56:26 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Fri 2019/06/21 13:56:26 gammu-smsd: Created Windows RW shared memory at 000001AC1AF40000
+Fri 2019/06/21 13:56:26 gammu-smsd: Starting phone communication...
+Fri 2019/06/21 13:56:32 gammu-smsd: Inserting phone info
+Fri 2019/06/21 13:56:34 gammu-smsd: Read 1 messages
+Fri 2019/06/21 14:06:33 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Fri 2019/06/21 14:09:18 gammu-smsd: Read 1 messages
+Sat 2019/07/06 22:01:11 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Sat 2019/07/06 22:01:11 gammu-smsd: Created Windows RW shared memory at 000001D14E670000
+Sat 2019/07/06 22:01:11 gammu-smsd: Starting phone communication...
+Sat 2019/07/06 22:01:17 gammu-smsd: Inserting phone info
+Sat 2019/07/06 22:05:18 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Sat 2019/07/06 22:07:21 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Sat 2019/07/06 22:07:48 gammu-smsd: Read 1 messages
+Sat 2019/07/06 22:33:01 gammu-smsd: Stopping Gammu smsd: No error. (NONE[1])
+Sat 2019/07/06 22:33:01 gammu-smsd: Terminating communication...
+Sat 2019/07/06 22:35:16 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Sat 2019/07/06 22:35:16 gammu-smsd: Created Windows RW shared memory at 000001B1447C0000
+Sat 2019/07/06 22:35:16 gammu-smsd: Starting phone communication...
+Sat 2019/07/06 22:35:21 gammu-smsd: Inserting phone info
+Sat 2019/07/06 22:41:23 gammu-smsd: Stopping Gammu smsd: No error. (NONE[1])
+Sat 2019/07/06 22:41:23 gammu-smsd: Terminating communication...
+Sat 2019/07/06 22:43:50 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Sat 2019/07/06 22:43:50 gammu-smsd: Created Windows RW shared memory at 000002D423F70000
+Sat 2019/07/06 22:43:50 gammu-smsd: Starting phone communication...
+Sat 2019/07/06 22:43:55 gammu-smsd: Inserting phone info
+Sat 2019/07/06 22:45:26 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Sat 2019/07/06 22:46:29 gammu-smsd: Error getting send status of message: No response in specified timeout. Probably the phone is not connected. (TIMEOUT[14])
+Mon 2019/07/08 13:18:29 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Mon 2019/07/08 13:18:29 gammu-smsd: Created Windows RW shared memory at 0000021A79EB0000
+Mon 2019/07/08 13:18:29 gammu-smsd: Starting phone communication...
+Mon 2019/07/08 13:18:34 gammu-smsd: Inserting phone info
+Mon 2019/07/08 13:18:35 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Mon 2019/07/08 13:19:37 gammu-smsd: Error getting send status of message: No response in specified timeout. Probably the phone is not connected. (TIMEOUT[14])
+Mon 2019/07/08 13:25:16 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Mon 2019/07/08 13:26:16 gammu-smsd: Read 1 messages
+Mon 2019/07/08 13:29:31 gammu-smsd: Read 1 messages
+Mon 2019/07/08 13:29:49 gammu-smsd: SQLExecDirect failed, Code = -1, ODBC diagnostics:
+Mon 2019/07/08 13:29:49 gammu-smsd: 23000:1:1062:[MySQL][ODBC 8.0(a) Driver][mysqld-5.5.5-10.1.38-MariaDB]Duplicate entry '1-1' for key 'PRIMARY'
+
+Mon 2019/07/08 13:29:49 gammu-smsd: SQL failure: 79
+Mon 2019/07/08 13:29:49 gammu-smsd: Error writing to database (SMSDSQL_AddSentSMSInfo)
+Mon 2019/07/08 15:10:42 gammu-smsd: Read 1 messages
+Mon 2019/07/08 15:38:17 gammu-smsd: Error getting security status: Error writing to the device. (DEVICEWRITEERROR[11])
+Mon 2019/07/08 15:38:18 gammu-smsd: You might want to set CheckSecurity = 0 to avoid checking security status
+Mon 2019/07/08 15:39:45 gammu-smsd: Error getting security status: No response in specified timeout. Probably the phone is not connected. (TIMEOUT[14])
+Mon 2019/07/08 15:39:45 gammu-smsd: You might want to set CheckSecurity = 0 to avoid checking security status
+Mon 2019/07/08 15:41:13 gammu-smsd: Error getting security status: No response in specified timeout. Probably the phone is not connected. (TIMEOUT[14])
+Mon 2019/07/08 15:41:13 gammu-smsd: You might want to set CheckSecurity = 0 to avoid checking security status
+Mon 2019/07/08 15:41:13 gammu-smsd: Already hit 3 errors
+Mon 2019/07/08 15:41:13 gammu-smsd: Terminating communication: Empty entry. (EMPTY[22])
+Mon 2019/07/08 15:41:22 gammu-smsd: Starting phone communication...
+Mon 2019/07/08 15:41:35 gammu-smsd: Can't open device: Error opening device. Unknown, busy or no permissions. (DEVICEOPENERROR[2])
+Mon 2019/07/08 15:41:35 gammu-smsd: Stopping Gammu smsd: No error. (NONE[1])
+Tue 2019/07/09 13:38:25 gammu-smsd: Connected to Database odbc: coba on mysql_odbc
+Tue 2019/07/09 13:38:25 gammu-smsd: Created Windows RW shared memory at 0000026BA7830000
+Tue 2019/07/09 13:38:25 gammu-smsd: Starting phone communication...
+Tue 2019/07/09 13:38:30 gammu-smsd: Inserting phone info
+Tue 2019/07/09 13:38:31 gammu-smsd: Read 2 messages
+Tue 2019/07/09 14:43:31 gammu-smsd: Message without SMSC, assuming you want to use the one from phone
+Tue 2019/07/09 14:44:15 gammu-smsd: Ignoring incoming SMS info as not a Status Report in SR memory.
+Tue 2019/07/09 14:44:16 gammu-smsd: Read 1 messages
