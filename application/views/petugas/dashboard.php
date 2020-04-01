@@ -50,7 +50,7 @@
 </style>
 
 <!--CONTAINER-->
-  <div class="home">
+  <!-- <div class="home">
     <div class="home-judul">Home</div>
             <div class="img">
                 <a href="<?php echo base_url();?>Pendataan/index">
@@ -111,7 +111,7 @@
               <img src="<?php echo base_url();?>assets/img/report.png">
               <p>Laporan</p></a>
             </div>
-    </div>
+    </div> -->
 
 
   <div class="informasi">

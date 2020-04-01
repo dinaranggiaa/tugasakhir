@@ -78,6 +78,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
+	// 'database' => 'db_rekrutkaryawan',
 	'database' => 'coba',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

@@ -13508,7 +13508,7 @@ var widgetsSelectable = $.widget( "ui.selectable", $.ui.mouse, {
 	version: "1.12.0",
 	options: {
 		appendTo: "body",
-		autoRefresh: true,
+		autoRefresh: false,
 		distance: 0,
 		filter: "*",
 		tolerance: "touch",

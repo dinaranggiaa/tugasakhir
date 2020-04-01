@@ -1,0 +1,443 @@
+body {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+  font-size: 15px; 
+}
+
+.container-fluid{
+  padding: 0px;
+  background-color: #dcdde1;
+  min-height: 625px;
+  /* border: 2px solid black; */
+}
+
+.top-text {
+  color: white;
+  margin-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+hr {
+  margin-top: 0px;
+  position: relative;
+  top: -10px;
+}
+
+.left-bar{
+  float: left;
+  /*border-width: 3px;
+  border-style: solid;*/
+  width: 210px;
+  position: fixed;
+  left: 0px;
+  height: 700px;
+  background-color: #041A11;
+}
+
+.left-bar-isi{
+  margin-top: 70px;
+  /* padding-top: 70px; */
+  padding-left: 40px;
+  color: #ffffff;
+}
+
+.left-bar-admin{
+  margin-top: 0px;
+  margin-left: 35px;
+  /* position: absolute; */
+  /* left: 0px; */
+  /* border: 1px solid white; */
+}
+
+.left-bar-admin img {
+  margin-top: 10px;
+  margin-left: 0px;
+  height: 50px;
+  width: 50px;
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
+a{
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.action {
+  text-decoration: none;
+  color: black;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {
+  font-size: 16px;
+  background-color: #041a11;
+  border-radius: 5px;
+}
+
+.button2 {
+  background-color: #1be666;
+  border-radius: 5px;
+}
+
+.button3 {
+  background-color: #e61b1b;
+  border-radius: 0px;
+}
+
+.button4 {
+  float: right;
+  padding: 5px 20px;
+  background-color: #109240;
+  border-radius: 5px;
+}
+
+
+input[type=text] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.demo-table input[type=text], select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 350px;
+}
+
+.center-pencarian{
+  text-align: center;
+
+}
+.pencarian {
+    width: 60%;
+}
+
+.styled-select {
+  width: 190px;
+  height: 43px;
+
+}
+.form{
+  width: 100%;
+  border: solid;
+}
+
+
+.active {
+  background-color: rgb(19, 85, 228);
+  color: rgb(251, 252, 250);
+}
+
+
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+  color: #c7d8d1;
+}
+
+.center{
+  /*border-width: 3px;
+  border-style: solid;*/
+  margin-left: 155px;
+  position: fixed;
+  width: 1200px;
+}
+
+.home{
+  border-width: 1px;
+  /* border-style: solid; */
+  background-color: #ffffff;
+  float: left;
+  width: 564px;
+  margin: 70px 0 0 220px;
+  box-shadow: 5px 5px 15px;
+}
+
+.home-mangkir{
+  /* border-width: 1px; */
+  /* border-style: solid; */
+  background-color: #ffffff;
+  float: left;
+  width: 700px;
+  margin: 20px 0 10px 220px;
+  box-shadow: 5px 5px 15px;
+}
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+}
+
+.img{
+  margin: 10px 10px 10px 10px;
+  padding: 5px 6px 1px 10px;
+  border-width: 1px;
+  border-radius: 5px;
+  border-style: solid;
+  width: 120px;
+  align-items: center;
+  text-align: center;
+  float: left;
+}
+
+.img2{
+  margin: 10px 10px 10px 10px;
+  padding: 10px 12px 10px 20px;
+  border-width: 1px;
+  border-radius: 5px;
+  border-style: solid;
+  width: 260px;
+  align-items: center;
+  text-align: center;
+  float: left;
+}
+
+.img img {
+  width: 50px;
+}
+
+.home-judul{
+  height: 40px;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #104e1a;
+  padding: 5px 0 0 12px;
+}
+
+.home-isi{
+  padding: 5px 5px 15px 5px;
+}
+
+.informasi{
+  border-width: 1px;
+  /* border-style: solid; */
+  background-color: #ffffff;
+  float: right;
+  width: 500px;
+  margin: 70px 0 0 20px;
+  box-shadow: 5px 5px 15px;
+
+}
+
+.informasi-judul{
+  height: 40px;
+  font-size: 20px;
+  background-color: #104e1a;
+}
+
+.header {
+  padding-left: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 49px;
+  box-shadow: 5px 5px 15px;
+  margin-left: 40px;
+  background-color: #ffffff;
+}
+
+.header h1 {
+  font-size: 20px;
+  position: relative;
+  top: -14px;
+  left: 7px;
+}
+
+.center-bar{
+  margin: 90px 20px 30px 230px;
+  padding: 5px 8px 0 8px;
+  min-height: 500px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.border{
+  padding-top: 1px;
+  border-bottom-style: solid;
+  border-width: 2px;
+  color: #ededed;
+  /* margin: 20px 0 30px 0; */
+}
+
+
+.form-pendataan{
+  font-size: 15px;
+}
+
+input[type="text-form"], input[type="date"] select {
+
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 60%;
+}
+
+.data-list{
+  font-family: fantasy;
+  margin-left: 350px;
+  align-self: center;
+  text-align: center;
+}
+
+.list-judul{
+  text-align: center;
+}
+
+
+/*LIST MENU SIDE BAR*/
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li a {
+  display: block;
+  color: rgb(199, 216, 209);
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li .listmenu a{
+  
+}
+  
+ /* Change the link color on hover */
+li a:hover {
+   background-color: #555;
+   color: white;
+}
+
+/*dropdown menu*/  
+      
+.dropdown{
+  margin-left:12px;
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+}
+
+.dropbtn {
+  background-color: #041a11;
+  color: rgb(199, 216, 209);
+  padding: 5px;
+  font-size: 14px;
+  border: none;
+}
+
+.dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+.dropdown-child {
+  display: none;
+  background-color: #041a11;
+  margin-left: 20px;
+}
+
+.dropdown-child ul{
+  width: 170px;
+}
+
+a:hover {
+  /* color: green; */
+  text-decoration: none;
+}
+
+.main {
+  font-size: 18px;
+  color: white;
+  text-transform: uppercase;
+  position: relative;
+  margin-left: 20px;
+}
+
+ul .submenu {
+  background-color: #041a11;
+  color: #fff;
+  /*border: 1px solid #ccc; */
+  position: absolute;
+  top: 40px;
+  left: 0;
+  display: none;
+}
+
+ul .submenu li {
+    display: block;
+}
+
+li .listmenu{
+  color: #9fe61b;
+  padding-left: 100px;
+}
+
+ul .submenu li a{
+  display: block;
+  padding: 0px 40px;
+  color: rgb(199, 216, 209);
+  padding-top: 0px;
+}
+
+/* Change the link color on hover */
+
+ul .submenu li a:hover {
+  background-color: #555;
+  color: white;
+}
+
+.menu{
+  float: right;
+  padding-right: 120px;
+}
+
+.menu ul li {
+    display: inline-block;
+    position: relative;
+}
+
+.menu ul {
+    padding: 0;
+}
+
+.menu ul li:hover ul.submenu  {
+    display: block;
+}
+
+.menu ul li {
+  text-decoration: none;
+  padding: 10px 20px;
+}
+
+/* body {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+} */
