@@ -30,10 +30,10 @@ class Dashboard extends MY_Controller {
 
 	public function dashboard_admin()
 	{
-		$data['pasientbc'] = $this->petugas_model->JmlPasienTBC();
-		$data['terdugatbc'] = $this->petugas_model->JmlTerduga();
-		$data['pasienmangkir'] = $this->petugas_model->PasienMangkir();
-		$this->load->view("admin/dashboard", $data);
+		// $data['pasientbc'] = $this->petugas_model->JmlPasienTBC();
+		// $data['terdugatbc'] = $this->petugas_model->JmlTerduga();
+		// $data['pasienmangkir'] = $this->petugas_model->PasienMangkir();
+		$this->load->view("admin/dashboard");
 	}
 
 	public function dashboard_manager()

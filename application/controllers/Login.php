@@ -25,11 +25,11 @@ class Login extends CI_Controller {
 			'password' => $password
 		);
 
-		$cek = $this->petugas_model->cek_login('petugas', $where);
+		$cek = $this->petugas_model->cek_login('users', $where);
 		if($cek) {
 			$data_session = array(
-				'id' => $cek['id_petugas'],
-				'nama' => $cek['nm_petugas'],
+				'id' => $cek['id_users'],
+				'nama' => $cek['nm_users'],
 				'level' => $cek['level'],
 				'status' => 'login'
 			);

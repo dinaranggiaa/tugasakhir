@@ -2,7 +2,7 @@
 <?php $this->view('partials/sidebar_admin')?>
 
 <style>
-  .form-pendataan{
+  /* .form-pendataan{
     margin-left: 35px;
     font-family: arial;
   }
@@ -42,21 +42,49 @@
     padding: 5px;
   }
 
-  .btn-primary{
-    float: right;
-    margin-right: 25px;
-  }
+  /* .btn-primary{
+    float: left;
+    margin-right: 35px;
+  }  */
 
 </style>
-
 <div class="center-bar">
   <h3><i class='far fa-folder-open'></i>&nbsp;Data Kandidat</h3> 
   <div class="border"></div>
   <br>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class='fas fa-plus'></i>&nbsp;Tambah Data</button>
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Tambah Data</button>
+  <br>
+  <br>
+  
+  <!-- Data Kandidat -->
+  <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Id Kandidat</th>
+                            <th>Nama Lengkap</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Alamat</th>
+                            <th>No HP</th>
+                            <th>Pendidikan Terakhir</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl_data_kandidat">
+                         
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+  <!-- Modal Entri Data Kandidat -->
   <div class="form-pendataan">
         <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="ModalAdd" role="dialog">
         <div class="modal-dialog">
         
           <!-- Modal content-->
@@ -68,9 +96,9 @@
             <div class="modal-body">
               <table>
                 <tr>
-                  <td><label for="kd_kandidat">Kode Kandidat</label></td>
+                  <td><label for="id_kandidat">Kode Kandidat</label></td>
                   <td>:</td>
-                  <td><input type="text-form" name="kd_kandidat" id="kd_kandidat" class="form-control"></td>
+                  <td><input readonly type="text-form" class ="form-control" name="id_kandidat" id="id_kandidat" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
                 </tr>
                 <tr>
                   <td><label for="nm_kandidat">Nama Lengkap</label></td>
@@ -80,13 +108,13 @@
                 <tr>
                   <td><label for="jk_kandidat">Jenis Kelamin</label></td>
                   <td>:</td>
-                  <td><input type='radio' name='jk_kandidat' value='Pria'>Pria &nbsp;&nbsp;
-                  <input type='radio' name='jk_kandidat' value='Wanita'>Wanita</td>
+                  <td><input type='radio' name='jk_kandidat' id="jk_kandidat" value='Pria'>Pria &nbsp;&nbsp;
+                  <input type='radio' name='jk_kandidat' id="jk_kandidat" value='Wanita'>Wanita</td>
                 </tr>
                 <tr>
                   <td><label for="almt_kandidat">Alamat</label></td>
                   <td>:</td>
-                  <td><textarea name='almt_kandidat' cols='25' rows='3' class="form-control"></textarea></td>
+                  <td><textarea name='almt_kandidat' id='almt_kandidat' cols='25' rows='3' class="form-control"></textarea></td>
                 </tr>
                 <tr>
                   <td><label for="nohp_kandidat">No HP</label></td>
@@ -109,45 +137,77 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success">Simpan</button>
+              <button type="button" class="btn btn-success" id="btn_simpan">Simpan</button>
               <button type='reset' class="btn btn-warning" name='btnbatal' value='BATAL' onclick="javascript:Batal();">Batal</button>
             </div>
           </div>
         </div>
     </div>
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <tr>
-            <td>No</td>
-            <td>Nama Mahasiswa</td>
-            <td>Alamat</td>
-            <td>Jurusan</td>
-            <td>Jenis Kelamin</td>
-            <td>Tanggal Masuk</td>
-            <td>Action</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="button" class="btn btn-info"><i class="far fa-file-alt"></i> Detail </button>
-            <button class="btn btn-success btn-sm edit_data"> <i class="fa fa-edit"></i> Edit </button>
-            <button class="btn btn-danger btn-sm hapus_data"> <i class="fa fa-trash"></i> Hapus </button>
-                </td>
-        </tr>
-    </thead>
-    <tbody>
-       
-    </tbody>
-</table>
 </div>
 
+<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.dataTables.js'?>"></script>
 <script type="text/javascript">
+    
     $(document).ready(function() {
-        $('#example').DataTable();
-    } );
+      tampil_data();
+
+      // Menampilkan data kandidat pada table
+      function tampil_data() {
+        $.ajax({
+          url : "<?php echo base_url('M_Kandidat/ambil_data_kandidat')?>",
+          type : 'POST',
+          dataType: 'json',
+          success: function (response){
+            console.log(response);
+            var i;
+            var no = 0;
+            var html = "";
+            for (i=0; i < response.length; i++){
+              no++;
+              html = html + '<tr>'
+                          + '<td>' + no + '</td>'
+                          + '<td>' + response[i].id_kandidat + '</td>'
+                          + '<td>' + response[i].nm_kandidat + '</td>'
+                          + '<td>' + response[i].jk_kandidat + '</td>'
+                          + '<td>' + response[i].almt_kandidat + '</td>'
+                          + '<td>' + response[i].nohp_kandidat + '</td>'
+                          + '<td>' + response[i].pendidikan_akhir + '</td>'
+                          + '<td>' + response[i].nohp_kandidat + '</td>'
+                          + '</tr>';
+            }
+          $("#tbl_data_kandidat").html(html);
+        }
+     });
+    }
+
+     $('#btn_simpan').on('click', function() {
+      var id_kandidat=$('#id_kandidat').val();
+      var nm_kandidat=$('#nm_kandidat').val();
+      var jk_kandidat=$('#jk_kandidat').val();
+      var almt_kandidat=$('#almt_kandidat').val();
+      var nohp_kandidat=$('#nohp_kandidat').val();
+      var pendidikan_akhir=$('#pendidikan_akhir').val();
+      
+      $.ajax({
+        type : "POST",
+        url : "<?php echo base_url('M_Kandidat/simpan_kandidat')?>",
+        dataType : "JSON",
+        data : {id_kandidat:id_kandidat, nm_kandidat:nm_kandidat, jk_kandidat:jk_kandidat, almt_kandidat:almt_kandidat, nohp_kandidat:nohp_kandidat, pendidikan_akhir:pendidikan_akhir},
+        success : function (data) {
+          $('[name="id_kandidat"]').val("");
+          $('[name="nm_kandidat"]').val("");
+          $('[name="jk_kandidat"]').val("");
+          $('[name="almt_kandidat"]').val("");
+          $('[name="nohp_kandidat"]').val("");
+          $('[name="pendidikan_akhir"]').val("");
+          tampil_data();
+        }
+      })
+    });
+    });
+
+
+
 </script>

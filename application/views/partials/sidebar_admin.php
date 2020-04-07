@@ -18,16 +18,15 @@
   <script src="<?= base_url('assets/js/app.js') ?>"></script>
   <script src="<?= base_url('assets/timepicker_1_6_3/jquery-ui-timepicker-addon.js') ?>"></script>
   
-  <script src='https://kit.fontawesome.com/a076d05399.js'>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
   <script src="<?= base_url('assets/js/jquery-1.12.4.min.js') ?>"></script>
   <script src="<?= base_url('assets/jquery_ui_1_12_0/jquery-ui.min.js') ?>"></script>
   <script src="<?= base_url('assets/timepicker_1_6_3/jquery-ui-timepicker-addon.js') ?>"></script>
   <script src="<?= base_url('assets/bootstrap_3_3_6/js/bootstrap.min.js') ?>"></script>
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
   <style>
     a:hover {
       text-decoration: none;
@@ -49,8 +48,8 @@
               <button class="dropbtn"><i class='fas fa-id-badge'> &nbsp; </i>Form Entri Data &nbsp;<i class='fas fa-caret-down'></i></button>
             </div>
             <div class="dropdown-child">
-              <ul><?php echo "<a href='".base_url()."m_kandidat/index'><i class='fas fa-id-badge'> &nbsp; </i>Data Pelamar</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."Laporan/pengobatanpasien'><i class='fas fa-id-badge'> &nbsp; </i>Data Nilai Pelamar</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."m_kandidat/index'><i class='fas fa-id-badge'> &nbsp; </i>Data Kandidat</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."Laporan/pengobatanpasien'><i class='fas fa-id-badge'> &nbsp; </i>Data Nilai Kandidat</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."Laporan/kehadirancheckup'><i class='fas fa-id-badge'> &nbsp; </i>Data Divisi</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."Laporan/hasilakhir'><i class='fas fa-id-badge'> &nbsp; </i>Data Kriteria</a>"; ?></ul>
             </div>

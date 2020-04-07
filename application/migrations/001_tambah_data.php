@@ -28,8 +28,56 @@ class Migration_Tambah_Data extends CI_Migration {
                         )
 
                 ));
-                $this->dbforge->add_key('id_admin', TRUE);
+                $this->dbforge->add_key('id_user', TRUE);
                 $this->dbforge->create_table('users');
+
+                $this->dbforge->add_field(array(
+                        'id_kandidat' => array(
+                                'type' => 'varchar',
+                                'constraint' => 3,
+                                'unsigned' => TRUE,
+                                'auto_increment' => TRUE
+                        ),
+                        'nm_kandidat' => array(
+                                'type' => 'varchar',
+                                'constraint' => '50'
+                        ),
+                        'jk_kandidat' => array(
+                                'type' => 'varchar',
+                                'constraint' => '6'
+                        ),
+                        'almt_kandidat' => array(
+                                'type' => 'varchar',
+                                'constraint' => '100'
+                        ),
+                        'nohp_kandidat' => array(
+                                'type' => 'varchar',
+                                'constraint' => '13'
+                        ),
+                        'pendidikan_akhir' => array(
+                                'type' => 'varchar',
+                                'constraint' => '3'
+                        ),
+
+
+                ));
+                $this->dbforge->add_key('id_kandidat', TRUE);
+                $this->dbforge->create_table('kandidat');
+
+                $this->dbforge->add_field(array(
+                        'id_divisi' => array(
+                                'type' => 'varchar',
+                                'constraint' => 2,
+                                'unsigned' => TRUE,
+                                'auto_increment' => TRUE
+                        ),
+                        'nm_divisi' => array(
+                                'type' => 'varchar',
+                                'constraint' => '10'
+                        ),
+                ));
+                $this->dbforge->add_key('id_divisi', TRUE);
+                $this->dbforge->create_table('divisi');
         }
         
         public function down()

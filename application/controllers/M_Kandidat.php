@@ -24,18 +24,45 @@ class M_kandidat extends MY_Controller {
 
 		parent::__construct();
 		$this->load->model('Pendataan_model');
+		$this->load->model('M_Pendataan');
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->library('pagination');
 
 	}
 
-	//Menampilkan Form Pendataan Pasien Terduga Tuberculosis
+	//Menampilkan Form Pendataan Kandidat
 		function index()
 		{
-			$this->load->view('admin/f_entrikandidat');
-			$this->Pendataan_model->create();
-			$this->session->set_flashdata('Sukses_Pendataan','Data Pasien Terduga TBC Tersimpan');
+			$data['kode'] = $this->M_Pendataan->get_id_kandidat();
+			$this->load->view('admin/f_entrikandidat', $data);
+			
+		}
+
+		function simpan_kandidat()
+		{
+			$id_kandidat = $this->input->post('id_kandidat');
+			$nm_kandidat = $this->input->post('nm_kandidat');
+			$jk_kandidat = $this->input->post('jk_kandidat');
+			$almt_kandidat = $this->input->post('almt_kandidat');
+			$nohp_kandidat = $this->input->post('nohp_kandidat');
+			$pendidikan_akhir = $this->input->post('pendidikan_akhir');
+
+			$data = ['id_kandidat' => $id_kandidat,
+				'nm_kandidat' => $nm_kandidat,
+				'jk_kandidat' => $jk_kandidat,
+				'almt_kandidat' => $almt_kandidat,
+				'nohp_kandidat' => $nohp_kandidat,
+				'pendidikan_akhir' => $pendidikan_akhir
+			];
+			$data = $this->M_Pendataan->simpan_kandidat($data);
+			echo json_encode($data);
+		}
+
+		function ambil_data_kandidat()
+		{
+			$data = $this->M_Pendataan->ambil_data_kandidat();
+			echo json_encode($data);
 		}
 
 	//Menampilkan seluruh data pasien yang terdaftar sebagai terduga tbc
