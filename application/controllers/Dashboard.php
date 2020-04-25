@@ -23,40 +23,18 @@ class Dashboard extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Pendataan_model');
-		$this->load->model('petugas_model');
 		$this->load->helper('url');
 		$this->load->helper('form');
 	}
 
 	public function dashboard_admin()
 	{
-		// $data['pasientbc'] = $this->petugas_model->JmlPasienTBC();
-		// $data['terdugatbc'] = $this->petugas_model->JmlTerduga();
-		// $data['pasienmangkir'] = $this->petugas_model->PasienMangkir();
 		$this->load->view("admin/dashboard");
 	}
 
 	public function dashboard_manager()
 	{
-		$data['pasientbc'] = $this->petugas_model->JmlPasienTBC();
-		$data['terdugatbc'] = $this->petugas_model->JmlTerduga();
-		$data['pasienmangkir'] = $this->petugas_model->PasienMangkir();
-		$this->load->view("manager/dashboard", $data);
-	}
-
-	function informasi()
-	{
-		$data['informasi'] = $this->Pendataan_model->JmlPasienTBC();
-		$data['informasi'] = $this->Pendataan_model->JmlTerduga();
-		print_r($data);
-		$this->load->view("admin/dashboard", $data);
-
-	}
-
-	function pasienmangkir()
-	{
-		$data['pasienmangkir'] = $this->Pendataan_model->PasienMangkir();
-		$this->load->view("petugas/dashboard", $data);
+		$this->load->view("admin/dashboard");
 	}
 
 }

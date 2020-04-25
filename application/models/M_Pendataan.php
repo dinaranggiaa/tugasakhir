@@ -8,11 +8,15 @@ class M_Pendataan extends MY_Model {
 		public $almt_kandidat;
 		public $pendidikan_akhir;
 		
+		private $kriteria = 'kriteria';
+		public $id_kriteria;
+		public $nm_kriteria;
+		public $bobot_kriteria;
+
 		public function __construct()
 		{
 			$this->load->database();
 		}
-
 		
         // Menampilkan id kandidat
 		function get_id_kandidat()
@@ -35,16 +39,87 @@ class M_Pendataan extends MY_Model {
 			$kodemax = str_pad($kode,3,"0",STR_PAD_LEFT);
 			$kodejadi = 'K'.$kodemax;
 
-
 			return $kodejadi;
-        }
+		}
         
         function simpan_kandidat($data){
             $this->db->insert('kandidat', $data);
-        }
+		}
+		
+		function hapus_kandidat($id_kandidat){
+			$this->db->where('id_kandidat', $id_kandidat);
+			$this->db->delete('kandidat');
+		}
+
+		function ubah_kandidat($id_kandidat, $data)
+		{
+			$this->db->where('id_kandidat', $id_kandidat);
+			$this->db->update('kandidat', $data);
+		}
 
         function ambil_data_kandidat(){
-            return $this->db->get('kandidat')->result();
+            $result = array();
+            $this->db->SELECT('*')
+                     ->FROM('kandidat')
+                     ->ORDER_BY('id_kandidat','DESC');
+            $kandidat = $this->db->get();
+            
+            if($kandidat->num_rows() > 0){
+                $result = $kandidat->result();
+            }
+            return $result;
+		}
+		
+		function ambil_data_byidkandidat($id_kandidat)
+		{
+			$this->db->where('id_kandidat', $id_kandidat);
+			return $this->db->get('kandidat')->result();
+		}
+
+        function pagination_data_kandidat($limit, $start)
+        {
+            return $this->db->get('kandidat', $limit, $start) ->result_array();
+		}
+		
+		function get_id_kriteria()
+		{
+			$this->db->select('RIGHT(kriteria.id_kriteria,2) as kode', false);
+			$this->db->order_by('kode','DESC');
+			$this->db->limit(1);
+
+			$query = $this->db->get('kriteria');
+
+			//Mengecek sudah ada data atau belum
+			if($query->num_rows() <> 0)
+			{
+				$data = $query->row();
+				$kode = intval($data->kode)+1; //kalo udah +1
+
+			} else {
+				$kode = 1; //kalo belum buat kode
+			}
+			$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
+			$kodejadi = 'C'.$kodemax;
+
+			return $kodejadi;
+		}
+		
+		function simpan_kriteria($data){
+            $this->db->insert('kriteria', $data);
+		}
+		
+		function ambil_data_kriteria(){
+            $result = array();
+            $this->db->SELECT('*')
+                     ->FROM('kriteria')
+                     ->ORDER_BY('id_kriteria','DESC');
+            $kriteria = $this->db->get();
+            
+            if($kriteria->num_rows() > 0){
+                $result = $kriteria->result();
+            }
+            return $result;
         }
+
 
 }

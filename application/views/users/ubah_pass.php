@@ -46,12 +46,8 @@
     <!-- Icon -->
     <div class="fadeIn first">
       <br>
-      <h4>SISTEM INFORMASI <BR> POJOK DOTS</h4>
-      <br>
-      <br>
-      <p>KLINIK UTAMA<br>JAKARTA RESPIRATORY CENTRE</p>
-      <br>
-      <br>
+      <!-- <p>SISTEM PENUNJANG KEPUTUSAN SELEKSI CALON KARYAWAN<br>PT. DEALER HONDA JAYA UTAMA</p> -->
+      <p>Reset Password</p>
     </div>
 
     <?php
@@ -61,42 +57,30 @@
     }?>
 
     <!--Login Form-->
-    <?php echo form_open('Petugas/ubahpassword'); ?>
+    <?php echo form_open('Login/ubahpassword'); ?>
 
-    <h4 class="lp">Lupa Password</h4>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input id="username" type="text" class="form-control" name="username" value="<?php set_value('username')?>" name="username" required="" placeholder="Username">
+      </div>
+      
+      <br>
 
-        <table class="demo-table">
-          <div class="input-group">
-             <tr>
-                <td><label>Username</label></td>
-                <td><input id="username" type="text-login" class="form-control" value="<?php set_value('username')?>" name="username" required=""></td>
-             </tr>
-          </div>
+      <div class="input-group">
+       <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+       <input type="password" id="password" class="form-control" name="password" required placeholder="Password Baru">
+      </div>
 
-          <div class="input-group">
-            <tr>
-              <td><label>Password Baru</label></td>
-              <td><input type="password" id="password" class="form-control" name="password" required></td>
-            </tr>
-          </div>
+      <br>
 
-          <div class="input-group">
-            <tr>
-              <td><label>Konfirmasi Password</label></td>
-              <td><input type="password" id="password2" class="form-control" name="password2" required></td>
-            </tr>
-          </div>
-
-        </table>
-        <br>
-        <br>
+      <div class="input-group">
+       <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+       <input type="password" id="password2" class="form-control" name="password2" required placeholder="Konfirmasi Password Baru">
+      </div>
         <br>
          <input type='submit'class="button button4" class="fadeIn fourth" name='btnsimpan' id='simpan' value='SIMPAN'> &nbsp;
-
-
         <br>
-        <?php echo "<a href='".base_url()."index.php/Petugas/index'>Login ||</a>"; ?>
-        <?php echo "<a href='".base_url()."index.php/Petugas/register'>Register</a>"; ?>
+        <?php echo "<a href='".base_url()."index.php/Login/index'>Login</a>"; ?>
 
 
         <script type="text/javascript">

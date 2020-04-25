@@ -6,7 +6,7 @@
 
     <div class="fadeIn first">
       <br>
-      <p>SISTEM PENUNJANG KEPUTUSAN REKRUTMEN KARYAWAN<br>PT. DEALER HONDA JAYA UTAMA</p>
+      <p>SISTEM PENUNJANG KEPUTUSAN SELEKSI CALON KARYAWAN<br>PT. DEALER HONDA JAYA UTAMA</p>
     </div>
       <br><br>
     <?php
@@ -29,8 +29,8 @@
         <br>
         <input type="submit" name="submit" class="fadeIn fourth" value="Log In">
         <br>
-        <?php echo "<a href='".base_url()."index.php/Petugas/register'>Register ||</a>"; ?>
-        <?php echo "<a href='".base_url()."index.php/Petugas/lupapass'>Lupa Password</a>"; ?>
+        <?php echo "<a href='".base_url()."Login/lupapass'>Lupa Password?</a>"; ?>
+        
     </form>
   </div>
 </div>

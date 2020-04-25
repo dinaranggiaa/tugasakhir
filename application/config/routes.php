@@ -51,12 +51,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'Login/index';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
-// $route['PetugasLogin'] = 'Petugas/login';
-// $route['inbox/(:num)'] = 'Inbox/index/$1';
-// $route['outbox/(:num)'] = 'Outbox/index/$1';
-// $route['sent/(:num)'] = 'Sent/index/$1';
-// $route['sms/create'] = 'Sms/create';
-// $route['sms-scheduled'] = 'SmsScheduled/index';
-// $route['sms-scheduled/(:num)'] = 'SmsScheduled/index/$1';
-// $route['pasien/(:num)'] = 'Pendataan/dataPasien/$1';
+$route['translate_uri_dashes'] = TRUE;

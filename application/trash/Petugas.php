@@ -6,14 +6,14 @@ class Petugas extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('petugas_model');
+		// $this->load->model('petugas_model');
 		$this->load->helper('url');
 		$this->load->helper('form');
 	}
 
 	function index()
 	{
-		$this->load->view('petugas/login');
+		$this->load->view('users/login');
 	}
 
 	function aksi_login()
@@ -44,8 +44,8 @@ class Petugas extends CI_Controller {
 
 	public function register()
 	{
-		$data['kode'] = $this->petugas_model->idpetugas();
-		$this->load->view('petugas/register', $data);
+		$data['kode'] = $this->petugas_model->idusers();
+		$this->load->view('users/register', $data);
 	}
 
 
@@ -58,13 +58,12 @@ class Petugas extends CI_Controller {
 
 		public function lupapass()
 		{
-			$this->load->view('petugas/ubah_pass');
+			$this->load->view('users/ubah_pass');
 		}
 
 		function ubahpassword()
 			{
-				$data['petugas'] = $this->petugas_model->UbahPassword($where, $data, $tabel);
-				//$this->load->view("Pendataan/list_pasien", $data);
+				$data['users'] = $this->petugas_model->ResetPassword($where, $data, $tabel);
 				redirect('Petugas/lupapass');
 			}
 

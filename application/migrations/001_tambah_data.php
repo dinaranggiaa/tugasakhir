@@ -78,12 +78,29 @@ class Migration_Tambah_Data extends CI_Migration {
                 ));
                 $this->dbforge->add_key('id_divisi', TRUE);
                 $this->dbforge->create_table('divisi');
+
+                $this->dbforge->add_field(array(
+                        'id_kriteria' => array(
+                                'type' => 'varchar',
+                                'constraint' => 2,
+                                'unsigned' => TRUE,
+                                'auto_increment' => TRUE
+                        ),
+                        'nm_kriteria' => array(
+                                'type' => 'varchar',
+                                'constraint' => '25'
+                        ),
+                        'bobot_kriteria' => array(
+                                'type' => 'integer',
+                                'constraint' => '1'
+                        ),
+                ));
+                $this->dbforge->add_key('id_kriteria', TRUE);
+                $this->dbforge->create_table('kriteria');
         }
         
         public function down()
         {
                 $this->dbforge->drop_table('petugas');
-                
-
         }
 }
