@@ -36,7 +36,6 @@ class C_kandidat extends MY_Controller {
 		{
 			$data['kode'] = $this->M_Pendataan->get_id_kandidat();
 			$this->load->view('admin/f_entrikandidat', $data);
-			
 		}
 
 		function simpan_kandidat()
@@ -100,5 +99,4 @@ class C_kandidat extends MY_Controller {
 			echo json_encode($data); // Mengencode variabel data menjadi json format
 		}
 
-	
 }

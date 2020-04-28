@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller {
+class C_Laporan extends MY_Controller {
 
-		/**
+	/**
 	 * Index Page for this controller.
 	 *
 	 * Maps to the following URL
@@ -25,17 +25,12 @@ class Dashboard extends MY_Controller {
 		$this->load->model('M_Pendataan');
 		$this->load->helper('url');
 		$this->load->helper('form');
-	}
-
-	public function dashboard_admin()
-	{
-		$this->load->view("admin/dashboard");
-	}
-
-	public function dashboard_manager()
-	{
-		
-		$this->load->view("admin/dashboard");
-	}
-
+		$this->load->library('pagination');
+    }
+    
+    function index()
+	{	
+		$this->load->view('admin/L_rekapkeputusan');		
+    }
+    
 }

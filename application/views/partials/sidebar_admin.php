@@ -59,7 +59,7 @@
               <button class="dropbtn"><i class='fas fa-id-badge'> &nbsp; </i>Form Entri Proses &nbsp;<i class='fas fa-caret-down'></i></button>
             </div>
             <div class="dropdown-child">
-              <ul><?php echo "<a href='".base_url()."C_kandidat/index'><i class='fas fa-id-badge'> &nbsp; </i>Perhitungan AHP</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_ProsesAHP/NilaiPerbandingan'><i class='fas fa-id-badge'> &nbsp; </i>Perhitungan AHP</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-id-badge'> &nbsp; </i>Perhitungan PM</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-id-badge'> &nbsp; </i>Hasil Keputusan</a>"; ?></ul>
             </div>
@@ -83,7 +83,7 @@
           <li><?= $this->session->userdata('level'); ?>&nbsp;&nbsp;<i class='fas fa-angle-down'></i>
               <ul class="submenu">
                 <li class="listmenu"><?= $this->session->userdata('nama'); ?></li>
-                <li class="listmenu"><?php echo "<a href='".base_url()."C_Users/logout'>Logout</a>"; ?></li>
+                <li class="listmenu"><?php echo "<a href='".base_url()."Login/logout'>Logout</a>"; ?></li>
               </ul>
           </li>
 				</ul>

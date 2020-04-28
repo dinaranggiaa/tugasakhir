@@ -131,21 +131,21 @@ class Faskes extends MY_Controller {
 		}
 
 		//Mengupdate Data Pasien Terduga TBC
-		function UpdateData()
-		{
-			$data['pasientbc'] = $this->Pendataan_model->UpdateFaskes($where, $data, $tabel);
-			//$this->load->view("Pendataan/list_pasien", $data);
-			redirect('Faskes/listpasientbc');
+		// function UpdateData()
+		// {
+		// 	$data['pasientbc'] = $this->Pendataan_model->UpdateFaskes($where, $data, $tabel);
+		// 	//$this->load->view("Pendataan/list_pasien", $data);
+		// 	redirect('Faskes/listpasientbc');
 
-		}
+		// }
 
-		function UpdatePMO()
-		{
-			$data['pasientbc'] = $this->Pendataan_model->UpdatePMO($where, $data, $tabel);
-			//$this->load->view("Pendataan/list_pasien", $data);
-			redirect('Faskes/listpasientbc');
+		// function UpdatePMO()
+		// {
+		// 	$data['pasientbc'] = $this->Pendataan_model->UpdatePMO($where, $data, $tabel);
+		// 	//$this->load->view("Pendataan/list_pasien", $data);
+		// 	redirect('Faskes/listpasientbc');
 
-		}
+		// }
 
 
 		public function TB02($no_faskes)

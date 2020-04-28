@@ -47,7 +47,6 @@ class Pendataan_model extends MY_Model {
 		public $berat_bdn_2;
 		public $tahap_pengobatan;
 		public $keterangan;
-
 	
 	/*Cek Dahak*/
 		private $dahak = 'dahak';

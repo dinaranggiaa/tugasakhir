@@ -65,7 +65,8 @@ class M_Pendataan extends MY_Model {
             $kandidat = $this->db->get();
             
             if($kandidat->num_rows() > 0){
-                $result = $kandidat->result();
+				$result = $kandidat->result();
+				
             }
             return $result;
 		}
@@ -107,6 +108,17 @@ class M_Pendataan extends MY_Model {
 		function simpan_kriteria($data){
             $this->db->insert('kriteria', $data);
 		}
+
+		function ambil_data_byidkriteria($id_kriteria)
+		{
+			$this->db->where('id_kriteria', $id_kriteria);
+			return $this->db->get('kriteria')->result();
+		}
+
+		function hapus_kriteria($id_kriteria){
+			$this->db->where('id_kriteria', $id_kriteria);
+			$this->db->delete('kriteria');
+		}
 		
 		function ambil_data_kriteria(){
             $result = array();
@@ -116,10 +128,34 @@ class M_Pendataan extends MY_Model {
             $kriteria = $this->db->get();
             
             if($kriteria->num_rows() > 0){
-                $result = $kriteria->result();
+				$result = $kriteria->result();
+				
             }
             return $result;
-        }
+		}
 
+		function getJmlKriteria()
+		{
+			$result = array();
+			$this->db->SELECT('count(id_kriteria) as total')
+					->FROM('kriteria');
+			$kriteria = $this->db->get();
+
+			if($kriteria->num_rows() > 0)
+			{
+				$result = $kriteria->row_array();
+			}
+			return $result;
+		}
+
+		function getNmKriteria()
+		{
+			$this->db->select('nm_kriteria')
+					 ->from('kriteria')
+					 ->order_by('id_kriteria');
+			$kriteria = $this->db->get();
+			return $kriteria;
+
+		}
 
 }

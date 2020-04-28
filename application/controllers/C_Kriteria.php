@@ -30,7 +30,9 @@ class C_Kriteria extends MY_Controller {
     
     function index()
 	{	
-        $data['kode'] = $this->M_Pendataan->get_id_kriteria();
+		// $data['kriteria'] = $this->M_Pendataan->JmlKriteria();
+		$data['kode'] = $this->M_Pendataan->get_id_kriteria();
+		// print_r($data);
 		$this->load->view('admin/f_kriteria',$data);		
     }
     
@@ -40,17 +42,34 @@ class C_Kriteria extends MY_Controller {
         $nm_kriteria = $this->input->post('nm_kriteria');
 
         $data = ['id_kriteria' => $id_kriteria,
-            'nm_kriteria' => $nm_kriteria
+            	 'nm_kriteria' => $nm_kriteria
         ];
         $data = $this->M_Pendataan->simpan_kriteria($data);
         echo json_encode($data);
-    }
+	}
+	
+	function hapus_kriteria()
+	{
+		$id_kriteria = $this->input->post('id_kriteria');
+		$data = $this->M_Pendataan->hapus_kriteria($id_kriteria);
+		echo json_encode($data);
+	}
 
     function ambil_data_kriteria()
-		{
-			$data = $this->M_Pendataan->ambil_data_kriteria();
-			echo json_encode($data);
-		}
+	{
+		$data = $this->M_Pendataan->ambil_data_kriteria();
+		// $this->load->view('admin/f_kriteria', $data);
+		echo json_encode($data);
+	}
+
+	function ambil_data_byidkriteria()
+	{
+		$id_kriteria = $this->input->post('id_kriteria');
+		$data = $this->M_Pendataan->ambil_data_byidkriteria($id_kriteria);
+		echo json_encode($data);
+	}
+
+	
 
 	
 }

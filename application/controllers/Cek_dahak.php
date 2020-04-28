@@ -61,11 +61,11 @@ class Cek_dahak extends MY_Controller
 			$this->load->view('cekdahak/edit_cekdahak', $data);
 		}
 
-			function updatedahak()
-		{
-			$data['pasientbc'] = $this->Pendataan_model->UpdateDahak($where, $data, $tabel);
-			redirect('Cek_dahak/listdahak');
-		}
+		// 	function updatedahak()
+		// {
+		// 	$data['pasientbc'] = $this->Pendataan_model->UpdateDahak($where, $data, $tabel);
+		// 	redirect('Cek_dahak/listdahak');
+		// }
 
 
 	//Pencarian Hasil Dahak Pasien

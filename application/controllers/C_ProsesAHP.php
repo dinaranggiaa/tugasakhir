@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller {
+class C_ProsesAHP extends MY_Controller {
 
 		/**
 	 * Index Page for this controller.
@@ -27,15 +27,12 @@ class Dashboard extends MY_Controller {
 		$this->load->helper('form');
 	}
 
-	public function dashboard_admin()
+	public function NilaiPerbandingan()
 	{
-		$this->load->view("admin/dashboard");
-	}
-
-	public function dashboard_manager()
-	{
+		$data['JmlKriteria'] = $this->M_Pendataan->getJmlKriteria();
+		$data['NmKriteria'] = $this->M_Pendataan->getNmKriteria()->result_array();
 		
-		$this->load->view("admin/dashboard");
+		$this->load->view("admin/dashboard", $data);
 	}
 
 }

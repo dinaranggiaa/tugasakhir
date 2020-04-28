@@ -113,13 +113,44 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" id="btn_simpan">Simpan</button>
-              <button type='reset' class="btn btn-warning" name='btnbatal' value='BATAL' onclick="javascript:Batal();">Batal</button>
+              <button type="button" class="btn btn-success fas fa-save" id="btn_simpan"> Simpan</button>
+              <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Batal</button>
             </div>
           </div>
         </div>
     </div>
 </div>
+
+    <!-- Modal Edit-->
+    <div id="editModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+ 
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">Edit Data Kriteria</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="id_kriteria">Id Kriteria</label>
+                    <input type="text" name="id_kriteria_edit" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <label for="nm_kriteria">Nama Kriteria</label>
+                    <input type="text" name="nm_kriteria_edit" class="form-control"></input>
+                </div> 
+            </form>
+          </div>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-success" id="btn_update_data">Simpan</button>
+           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
 
 <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
 <script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'?>"></script>
@@ -129,7 +160,7 @@
     $(document).ready(function() {
       tampil_data();
 
-      // Menampilkan data kandidat pada table
+      // Menampilkan data kriteria pada table
       function tampil_data() {
         $.ajax({
           url : "<?php echo base_url('C_Kriteria/ambil_data_kriteria')?>",
@@ -147,14 +178,48 @@
                           + '<td>' + response[i].id_kriteria + '</td>'
                           + '<td>' + response[i].nm_kriteria + '</td>'
                           + '<td>' + response[i].bobot_kriteria + '</td>'
-                          + '<td style="width: 16.66%;">' + '<span><button data-id="'+response[i].id_kriteria+'" class="btn btn-primary btn_edit">Edit</button><button style="margin-left: 5px;" data-id="'+response[i].id_kriteria+'" class="btn btn-danger btn_hapus">Hapus</button></span>'  + '</td>'
+                          + '<td style="width: 17%;">' + '<span><button data-id="'+response[i].id_kriteria+'" class="btn btn-primary btn_edit fas fa-edit"> Edit</button><button style="margin-left: 5px;" data-id="'+response[i].id_kriteria+'" class="btn btn-danger btn_hapus fas fa-trash-alt"> Hapus</button></span>'  + '</td>'
                           + '</tr>';
             }
           $("#tbl_data_kriteria").html(html);
         }
      });
     }
+    
+     //Memunculkan modal edit
+     $("#tbl_data_kriteria").on('click','.btn_edit',function(){
+            var id_kriteria = $(this).attr('data-id');
+            $.ajax({
+                url: '<?php echo base_url(); ?>C_Kriteria/ambil_data_byidkriteria',
+                type: 'POST',
+                data: {id_kriteria:id_kriteria},
+                dataType: 'json',
+                success: function(response){
+                    console.log(response);
+                    $("#editModal").modal('show');
+                    $('input[name="id_kriteria_edit"]').val(response[0].id_kriteria);
+                    $('input[name="nm_kriteria_edit"]').val(response[0].nm_kriteria);
+                }
+            })
+        });
 
+    //Menghapus Data  
+    $("#tbl_data_kriteria").on('click','.btn_hapus',function(){
+            var id_kriteria = $(this).attr('data-id');
+            var status = confirm('Yakin ingin menghapus?');
+            if(status){
+                $.ajax({
+                    url: '<?php echo base_url(); ?>C_Kriteria/hapus_kriteria',
+                    type: 'POST',
+                    data: {id_kriteria:id_kriteria},
+                    success: function(response){
+                        tampil_data();
+                    }
+                })
+            }
+        })
+
+    //Menyimpan Data
      $('#btn_simpan').on('click', function() {
       var id_kriteria=$('#id_kriteria').val();
       var nm_kriteria=$('#nm_kriteria').val();
