@@ -178,7 +178,7 @@
                           + '<td>' + response[i].id_kriteria + '</td>'
                           + '<td>' + response[i].nm_kriteria + '</td>'
                           + '<td>' + response[i].bobot_kriteria + '</td>'
-                          + '<td style="width: 17%;">' + '<span><button data-id="'+response[i].id_kriteria+'" class="btn btn-primary btn_edit fas fa-edit"> Edit</button><button style="margin-left: 5px;" data-id="'+response[i].id_kriteria+'" class="btn btn-danger btn_hapus fas fa-trash-alt"> Hapus</button></span>'  + '</td>'
+                          + '<td style="width: 17%;">' + '<span><button data-id="'+response[i].id_kriteria+'" class="btn btn-primary btn_edit fas fa-edit"></button><button style="margin-left: 5px;" data-id="'+response[i].id_kriteria+'" class="btn btn-danger btn_hapus fas fa-trash-alt"></button></span>'  + '</td>'
                           + '</tr>';
             }
           $("#tbl_data_kriteria").html(html);

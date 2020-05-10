@@ -28,9 +28,7 @@ hr {
 
 .left-bar{
   float: left;
-  /*border-width: 3px;
-  border-style: solid;*/
-  width: 210px;
+  width: 240px;
   position: fixed;
   left: 0px;
   height: 700px;
@@ -39,7 +37,6 @@ hr {
 
 .left-bar-isi{
   margin-top: 70px;
-  /* padding-top: 70px; */
   padding-left: 40px;
   color: #ffffff;
 }
@@ -47,9 +44,6 @@ hr {
 .left-bar-admin{
   margin-top: 0px;
   margin-left: 35px;
-  /* position: absolute; */
-  /* left: 0px; */
-  /* border: 1px solid white; */
 }
 
 .left-bar-admin img {
@@ -259,7 +253,7 @@ input[type=text] {
   padding-bottom: 10px;
   height: 49px;
   box-shadow: 5px 5px 15px;
-  margin-left: 40px;
+  margin-left: 70px;
   background-color: #ffffff;
 }
 
@@ -271,7 +265,7 @@ input[type=text] {
 }
 
 .center-bar{
-  margin: 90px 20px 30px 230px;
+  margin: 90px 10px 30px 250px;
   padding: 5px 8px 0 8px;
   min-height: 500px;
   background-color: #ffffff;
@@ -321,21 +315,23 @@ ul {
   padding: 0;
 }
 
+
 li a {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: medium;
   display: block;
   color: rgb(199, 216, 209);
   padding: 8px 16px;
   text-decoration: none;
 }
 
-li .listmenu a{
-  
-}
   
  /* Change the link color on hover */
 li a:hover {
    background-color: #555;
    color: white;
+   text-decoration: none;
+   width: 240px;
 }
 
 /*dropdown menu*/  
@@ -351,7 +347,8 @@ li a:hover {
   background-color: #041a11;
   color: rgb(199, 216, 209);
   padding: 5px;
-  font-size: 14px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: medium;
   border: none;
 }
 
@@ -365,12 +362,17 @@ li a:hover {
   margin-left: 20px;
 }
 
+.dropdown-child ul a:hover{
+  text-decoration: none;
+  width: 220px;
+}
+
+
 .dropdown-child ul{
-  width: 170px;
+  width: 220px;
 }
 
 a:hover {
-  /* color: green; */
   text-decoration: none;
 }
 
@@ -385,7 +387,6 @@ a:hover {
 ul .submenu {
   background-color: #041a11;
   color: #fff;
-  /*border: 1px solid #ccc; */
   position: absolute;
   top: 40px;
   left: 0;
@@ -397,8 +398,11 @@ ul .submenu li {
 }
 
 li .listmenu{
-  color: #9fe61b;
-  padding-left: 100px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  padding-left: 10px;
+  width: 150px;
 }
 
 ul .submenu li a{
@@ -406,14 +410,29 @@ ul .submenu li a{
   padding: 0px 40px;
   color: rgb(199, 216, 209);
   padding-top: 0px;
+  text-align: center;
 }
 
-/* Change the link color on hover */
-
 ul .submenu li a:hover {
+  background-color: rgb(212, 54, 54);
+  color: white;
+  width: 120px;
+  margin-right: 40px;
+}
+
+li .listmenu a:hover {
   background-color: #555;
   color: white;
 }
+
+
+/* Change the link color on hover */
+
+/* ul .submenu li a:hover {
+  background-color: #555;
+  color: white;
+  width: 220px;
+} */
 
 .menu{
   float: right;
@@ -438,6 +457,4 @@ ul .submenu li a:hover {
   padding: 10px 20px;
 }
 
-/* body {
-  font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
-} */
+

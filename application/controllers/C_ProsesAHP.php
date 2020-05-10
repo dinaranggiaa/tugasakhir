@@ -29,10 +29,35 @@ class C_ProsesAHP extends MY_Controller {
 
 	public function NilaiPerbandingan()
 	{
+
 		$data['JmlKriteria'] = $this->M_Pendataan->getJmlKriteria();
-		$data['NmKriteria'] = $this->M_Pendataan->getNmKriteria()->result_array();
+		$data['NmKriteria'] = $this->M_Pendataan->getNamaKriteria()->result_array();
+		// print_r($data['NmKriteria']);
+		$data['IdKriteria'] = $this->M_Pendataan->getIdKriteria()->result_array();
+		$data['getNamaKriteria'] = $this->M_Pendataan->getNmKriteria()->result_array();
+		$data['getIdKriteria'] = $this->M_Pendataan->getIdKriteria()->result_array();
+		$this->load->view("admin/f_NilaiPerbandingan", $data);
 		
-		$this->load->view("admin/dashboard", $data);
 	}
 
+	public function inputNilaiPerbandingan()
+	{
+		$this->M_Pendataan->inputDataPerbandinganKriteria();
+		redirect('C_ProsesAHP/getNilaiPerbandinganKriteria');
+	}
+
+	public function getNilaiPerbandinganKriteria()
+	{
+		$data['JmlKriteria'] = $this->M_Pendataan->getJmlKriteria();
+		$data['NilaiPerbandinganKriteria'] = $this->M_Pendataan->getNilaiPerbandinganKriteria()->result_array();
+		$data['getNamaKriteria'] = $this->M_Pendataan->getNmKriteria()->result_array();
+		// print_r($data['NilaiPerbandinganKriteria']);
+		$this->load->view("admin/h_PerhitunganAHP", $data);
+	}
+
+
+
+	
+
 }
+

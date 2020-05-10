@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Rekrutmen Karyawan</title>
+  <title>SISTEM PENDUKUNG KEPUTUSAN - SELEKSI CALON KARYAWAN PT DEALER HONDA JAYA UTAMA</title>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/styles.css');?>">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,11 +27,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-  <style>
-    a:hover {
-      text-decoration: none;
-    }
-  </style>
+
 </head>
 
 <body>
@@ -39,38 +35,39 @@
     <div class="left-bar">
       <div class="top-text">PT HONDA JAYA UTAMA</div>
         <hr>
-        <p class="main">Menu</p>
-        
         <ul>
-          <li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-tachometer-alt'> &nbsp; </i>Dashboard</a>"; ?></li>
+          <li ><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-tachometer-alt'> &nbsp; </i>Dashboard</a>"; ?></li>
           <li>
             <div class="dropdown">
-              <button class="dropbtn"><i class='fas fa-id-badge'> &nbsp; </i>Form Entri Data &nbsp;<i class='fas fa-caret-down'></i></button>
+              <button class="dropbtn"><i class='fas fa-pen'> &nbsp; </i>Form Entri Data &nbsp;<i class='fas fa-caret-down'></i></button>
             </div>
             <div class="dropdown-child">
-              <ul><?php echo "<a href='".base_url()."C_kandidat/index'><i class='fas fa-id-badge'> &nbsp; </i>Data Kandidat</a>"; ?></ul>
-              <!-- <ul><?php echo "<a href='".base_url()."Laporan/pengobatanpasien'><i class='fas fa-id-badge'> &nbsp; </i>Data Nilai Kandidat</a>"; ?></ul> -->
-              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-id-badge'> &nbsp; </i>Data Kriteria</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-id-badge'> &nbsp; </i>Data Nilai Target</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Pelamar/index'><i class='fas fa-user-alt'> &nbsp; </i>Data Pelamar</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Pelamar/index'><i class='fab fa-readme'> &nbsp; </i>Data Penilaian</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fab fa-kickstarter'> &nbsp; </i>Data Kriteria</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='far fa-file-alt'> &nbsp; </i>Data Nilai Target</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Periode/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Periode</a>"; ?></ul>
+
             </div>
           </li>
           <li>
             <div class="dropdown">
-              <button class="dropbtn"><i class='fas fa-id-badge'> &nbsp; </i>Form Entri Proses &nbsp;<i class='fas fa-caret-down'></i></button>
+              <button class="dropbtn"><i class='fas fa-calculator'> &nbsp; </i>Proses Perhitungan&nbsp;<i class='fas fa-caret-down'></i></button>
             </div>
             <div class="dropdown-child">
-              <ul><?php echo "<a href='".base_url()."C_ProsesAHP/NilaiPerbandingan'><i class='fas fa-id-badge'> &nbsp; </i>Perhitungan AHP</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-id-badge'> &nbsp; </i>Perhitungan PM</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-id-badge'> &nbsp; </i>Hasil Keputusan</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_ProsesAHP/NilaiPerbandingan'><i class=' 	fas fa-sync'> &nbsp; </i>Perhitungan AHP</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-sync'> &nbsp; </i>Perhitungan PM</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-newspaper'> &nbsp; </i>Hasil Keputusan</a>"; ?></ul>
             </div>
           </li>
           <li>
             <div class="dropdown">
-              <button class="dropbtn"><i class='fas fa-folder-open'></i> &nbsp;Laporan &nbsp;<i class='fas fa-caret-down'></i></button>
+              <button class="dropbtn"><i class='fas fa-archive'></i> &nbsp;Laporan &nbsp;<i class='fas fa-caret-down'></i></button>
             </div>
             <div class="dropdown-child">
-              <ul><?php echo "<a href='".base_url()."Laporan/pengobatanpasien'>Hasil Rangking</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."Laporan/kehadirancheckup'>Hasil Rekapitulasi</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."Laporan/pengobatanpasien'><i class='fas fa-medal'> &nbsp; </i>Rekomendasi Pelamar</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."Laporan/kehadirancheckup'><i class='far fa-list-alt'> &nbsp; </i>Karyawan Diterima</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."Laporan/kehadirancheckup'><i class='far fa-address-book'> &nbsp; </i>Data Karyawan Baru</a>"; ?></ul>
             </div>
           </li>
         </ul>
@@ -82,7 +79,7 @@
 				<ul>
           <li><?= $this->session->userdata('level'); ?>&nbsp;&nbsp;<i class='fas fa-angle-down'></i>
               <ul class="submenu">
-                <li class="listmenu"><?= $this->session->userdata('nama'); ?></li>
+                <li class="listmenu"><?= $this->session->userdata('nama'); ?></li><br>
                 <li class="listmenu"><?php echo "<a href='".base_url()."Login/logout'>Logout</a>"; ?></li>
               </ul>
           </li>
@@ -90,6 +87,7 @@
 		  </div>
     </div>
   </div>
+
       
 
   <script>

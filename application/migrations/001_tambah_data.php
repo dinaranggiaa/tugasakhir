@@ -30,59 +30,53 @@ class Migration_Tambah_Data extends CI_Migration {
                 ));
                 $this->dbforge->add_key('id_user', TRUE);
                 $this->dbforge->create_table('users');
-
+                
                 $this->dbforge->add_field(array(
-                        'id_kandidat' => array(
+                        'id_pelamar' => array(
                                 'type' => 'varchar',
-                                'constraint' => 3,
+                                'constraint' => 4,
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ),
-                        'nm_kandidat' => array(
+                        'nm_pelamar' => array(
                                 'type' => 'varchar',
                                 'constraint' => '50'
                         ),
-                        'jk_kandidat' => array(
+                        'jk_pelamar' => array(
                                 'type' => 'varchar',
                                 'constraint' => '6'
                         ),
-                        'almt_kandidat' => array(
+                        'no_ktp' => array(
                                 'type' => 'varchar',
                                 'constraint' => '100'
                         ),
-                        'nohp_kandidat' => array(
+                        'almt_pelamar' => array(
+                                'type' => 'varchar',
+                                'constraint' => '100'
+                        ),
+                        'nohp_pelamar' => array(
                                 'type' => 'varchar',
                                 'constraint' => '13'
                         ),
-                        'pendidikan_akhir' => array(
+                        'tempat_lahir' => array(
                                 'type' => 'varchar',
                                 'constraint' => '3'
                         ),
-
+                        'tanggal_lahir' => array(
+                                'type' => 'date',
+                                'constraint' => '8'
+                        ),
+        
 
                 ));
-                $this->dbforge->add_key('id_kandidat', TRUE);
-                $this->dbforge->create_table('kandidat');
+                $this->dbforge->add_key('id_pelamar', TRUE);
+                $this->dbforge->create_table('pelamar');
 
-                $this->dbforge->add_field(array(
-                        'id_divisi' => array(
-                                'type' => 'varchar',
-                                'constraint' => 2,
-                                'unsigned' => TRUE,
-                                'auto_increment' => TRUE
-                        ),
-                        'nm_divisi' => array(
-                                'type' => 'varchar',
-                                'constraint' => '10'
-                        ),
-                ));
-                $this->dbforge->add_key('id_divisi', TRUE);
-                $this->dbforge->create_table('divisi');
 
                 $this->dbforge->add_field(array(
                         'id_kriteria' => array(
                                 'type' => 'varchar',
-                                'constraint' => 2,
+                                'constraint' => 3,
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ),
@@ -91,7 +85,7 @@ class Migration_Tambah_Data extends CI_Migration {
                                 'constraint' => '25'
                         ),
                         'bobot_kriteria' => array(
-                                'type' => 'integer',
+                                'type' => 'double',
                                 'constraint' => '1'
                         ),
                 ));
