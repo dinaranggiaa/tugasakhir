@@ -65,6 +65,7 @@
           <tr>
             <th>No</th>
             <th>Kode Pelamar</th>
+            <th>Periode</th>
             <th>Nama Lengkap</th>
             <th>No HP</th>
             <th>Alamat</th>
@@ -77,6 +78,7 @@
           <tr>
             <td><?= $no?></td>
             <td><?= $Pelamar -> id_pelamar?></td>
+            <td><?= $Pelamar -> bulan?></td>
             <td><?= $Pelamar -> nm_pelamar?></td>
             <td><?= $Pelamar -> nohp_pelamar?></td>
             <td><?= $Pelamar -> almt_pelamar?></td>
@@ -112,6 +114,23 @@
             <td><label for="id_pelamar">Kode pelamar</label></td>
             <td>:</td>
             <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
+          </tr>
+         
+          <tr>
+            <td><label for="id_periode">Periode</label></td>
+            <td>:</td>
+            <td>
+            <?php
+                echo "
+                <select name='id_periode' id='id_periode' required>
+                <option value='' disabled selected>Pilih Periode</option>";
+                  foreach ($periode as $Periode) {  
+                  echo "<option value='".$Periode->id_periode."'>".$Periode->bulan."</option>";
+                  }
+                  echo"
+                </select>";
+                ?>    
+            </td>     
           </tr>
           <tr>
             <td><label for="tgl_daftar">Tanggal Daftar</label></td>
@@ -211,6 +230,11 @@
                     <td><?= $Pelamar -> id_pelamar?></td>
                   </tr>
                   <tr>
+                    <td><label for="id_periode">Periode</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> bulan?></td>
+                  </tr>
+                  <tr>
                     <td><label for="tgl_daftar">Tanggal Daftar</label></td>
                     <td>:</td>
                     <td><?= $Pelamar -> tgl_daftar?></td>
@@ -285,13 +309,20 @@
               <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Edit Data pelamar</h4>
             </div>
             <div class="modal-body">
+            <form action="<?php echo base_url()?>index.php/C_Pelamar/ubah_pelamar" method="POST">
             <table>
                   <tr>
                     <td><label for="id_pelamar">Kode</label></td>
                     <td>:</td>
                     <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?= $Pelamar -> id_pelamar?>" placeholder="<?= $Pelamar -> id_pelamar?>"></td>
-                    
                   </tr>
+                  <tr>
+                    <td><label for="id_periode">Periode</label></td>
+                    <td>:</td>
+                    <td><input readonly type="text-form" name="id_periode" id="id_periode" value="<?= $Pelamar -> bulan?>" placeholder="<?php $Pelamar -> bulan?>" class="form-control">
+                        <input type="hidden" name="id_periode" id="id_periode" value="<?= $Pelamar -> id_periode?>" placeholder="<?php $Pelamar -> id_periode?>" class="form-control">
+                    </td>
+                </tr>
                   <tr>
                     <td><label for="tgl_daftar">Tanggal Daftar</label></td>
                     <td>:</td>
@@ -348,6 +379,7 @@
                  <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
                  <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:HapusText();"> Cancel</button>
               </div>
+              </form>
             </div>
           </div>
         </div>

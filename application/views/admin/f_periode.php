@@ -48,7 +48,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Id Periode</th>
+                            <th>Kode Periode</th>
                             <th>Bulan</th>
                             <th>Tanggal Pembukaan</th>
                             <th>Action</th>

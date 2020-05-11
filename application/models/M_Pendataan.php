@@ -55,6 +55,7 @@ class M_Pendataan extends MY_Model {
 
 			$pelamar = array(
 				'id_pelamar' => $this->input->post('id_pelamar'),
+				'id_periode' => $this->input->post('id_periode'),
 				'tgl_daftar' => $this->input->post('tgl_daftar'),
 				'nm_pelamar' => $this->input->post('nm_pelamar'),
 				'jk_pelamar' => $this->input->post('jk_pelamar'),
@@ -89,8 +90,9 @@ class M_Pendataan extends MY_Model {
 	function ambil_data_pelamar()
 	{
     	$result = array();
-        $this->db->SELECT('*')
-                 ->FROM('pelamar')
+        $this->db->SELECT('pelamar.*,periode.*')
+				 ->FROM('pelamar')
+				 ->join('periode','periode.id_periode=pelamar.id_periode')
                  ->ORDER_BY('id_pelamar','DESC');
         $pelamar = $this->db->get();
 
@@ -350,6 +352,20 @@ class M_Pendataan extends MY_Model {
 
 		if($periode->num_rows() > 0){
 				$result = $periode->result();				
+        }
+        return $result;
+	}
+
+	function ambil_id_periode()
+	{
+		$result = array();
+        $this->db->SELECT('*')
+                 ->FROM('periode')
+                 ->ORDER_BY('id_periode','DESC');
+        $periode = $this->db->get();
+
+		if($periode->num_rows() > 0){
+				$result = $periode->result_array();				
         }
         return $result;
 	}
