@@ -1,5 +1,6 @@
 body {
-  font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+  /* font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui"; */
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 15px; 
 }
 
@@ -297,7 +298,7 @@ input[type="text-form"], input[type="date"] select {
 }
 
 .data-list{
-  font-family: fantasy;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin-left: 350px;
   align-self: center;
   text-align: center;

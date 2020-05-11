@@ -34,10 +34,29 @@ class C_Pelamar extends MY_Controller {
 		function index()
 		{
 			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
-			$this->load->view('admin/f_entripelamar', $data);
+			$data['pelamar'] = $this->M_Pendataan->ambil_data_pelamar();
+			$this->load->view('admin/F_Pelamar', $data);
+		}
+
+		function tambah_pelamar()
+		{
+			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
+			$this->load->view('admin/F_Pelamar_Entri', $data);
 		}
 
 		function simpan_pelamar()
+		{
+			$data['pelamar'] = $this->M_Pendataan->simpan_pelamar();
+			redirect('C_Pelamar/index');
+		}
+
+		function hapus_pelamar($id_pelamar)
+		{
+			$data['pelamar'] = $this->M_Pendataan->hapus_pelamar($id_pelamar);
+			redirect('C_Pelamar/index');
+		}
+
+		function ubah_pelamar()
 		{
 			$id_pelamar = $this->input->post('id_pelamar');
 			$nm_pelamar = $this->input->post('nm_pelamar');
@@ -45,22 +64,28 @@ class C_Pelamar extends MY_Controller {
 			$almt_pelamar = $this->input->post('almt_pelamar');
 			$nohp_pelamar = $this->input->post('nohp_pelamar');
 			$pendidikan_akhir = $this->input->post('pendidikan_akhir');
-
-			$data = ['id_pelamar' => $id_pelamar,
+	 
+			$data = array(
+				'nm_pelamar' => $nm_pelamar,
 				'nm_pelamar' => $nm_pelamar,
 				'jk_pelamar' => $jk_pelamar,
 				'almt_pelamar' => $almt_pelamar,
 				'nohp_pelamar' => $nohp_pelamar,
-				'pendidikan_akhir' => $pendidikan_akhir
-			];
-			$data = $this->M_Pendataan->simpan_pelamar($data);
-			echo json_encode($data);
+				'pendidikan_akhir' => $pendidikan_akhir,
+			);
+	
+			$where = array('id_pelamar' => $id_pelamar);
+	
+			$data['pelamar'] = $this->M_Pendataan->ubah_pelamar($where, $data, 'pelamar');
+			redirect('C_Pelamar/index');
 		}
 
-		function ambil_data_pelamar()
+		function cari_keyword()
 		{
-			$data = $this->M_Pendataan->ambil_data_pelamar();
-			echo json_encode($data);
+			$data['keyword'] = $this->input->post("keyword");
+			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
+			$data['pelamar']= $this->M_Pendataan->cari_pelamar($data['keyword']);
+			$this->load->view('admin/F_Pelamar', $data);
 		}
 
 		function ambil_data_byidpelamar()
@@ -70,52 +95,6 @@ class C_Pelamar extends MY_Controller {
 			echo json_encode($data);
 		}
 
-		function hapus_pelamar()
-		{
-			$id_pelamar = $this->input->post('id_pelamar');
-			$data = $this->M_Pendataan->hapus_pelamar($id_pelamar);
-			echo json_encode($data);
-		}
-
-		function ubah_pelamar(){
-			$id_pelamar = $this->input->post('id_pelamar');
-			$nm_pelamar = $this->input->post('nm_pelamar');
-			$jk_pelamar = $this->input->post('jk_pelamar');
-			$almt_pelamar = $this->input->post('almt_pelamar');
-			$nohp_pelamar = $this->input->post('nohp_pelamar');
-			$pendidikan_akhir = $this->input->post('pendidikan_akhir');
-	 
-			$data = ['id_pelamar' => $id_pelamar, 
-						'nm_pelamar' => $nm_pelamar, 
-						'jk_pelamar' => $jk_pelamar , 
-						'almt_pelamar' => $almt_pelamar,
-						'nohp_pelamar' => $nohp_pelamar,
-						'pendidikan_akhir' => $pendidikan_akhir,
-					];
-	 
-			$data = $this->m_Pendataan->ubah_pelamar($id_pelamar,$data);
-			 
-			echo json_encode($data); // Mengencode variabel data menjadi json format
-		}
-
-		public function cari_pelamar()
-		{
-			$keyword = $this->input->post('keyword');
-			$pelamar = $this->M_Pendataan->cari_pelamar($keyword);
-			$hasil = $this->load->view('admin/f_entripelamar', array('pelamar'=> $pelamar), true);
-			$callback = array('hasil' => $hasil,);
-			echo json_encode($callback);
-		}
-
-		// public function cari_pelamar()
-		// {
-		// 	$data['keyword'] = $this->input->post('keyword');
-		// 	$data['pelamar'] = $this->M_Pendataan->cari_pelamar($data['pelamar']);
-		// 	$data['hasil'] = $this->load->view('admin/f_entripelamar', $data, true);
-		// 	print_r($data['hasil']);
-
-		// 	echo json_encode($data);
-		// }
 
 		
 

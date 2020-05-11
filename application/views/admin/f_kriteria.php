@@ -2,34 +2,15 @@
 <?php $this->view('partials/sidebar_admin')?>
 
 <style>
-  /* .form-pendataan{
-    margin-left: 35px;
-    font-family: arial;
+  .inputsearch {
+    float: right;
+    margin-right: 15px;
   }
 
-  .demo-table {
-    border-collapse: collapse;
-    font-size: 17px;
-    width: 75%;
-    margin-left: 130px;
-    margin-top: 50px;
-  }
-
-  .demo-table td:first-child {
+  .inputsearch input.form-control{
     width: 250px;
-    text-align: left;
   }
 
-  .demo-table td:nth-child(2) {
-    width: 30px;
-    text-align: center;
-  }
-  .demo-table td {
-    /* border: 1px solid #2ed573; */
-    /* padding: 7px 17px;
-  } */
-
-  /* Table Body */
   .demo-table tbody td {
     color: #353535;
   }
@@ -41,12 +22,6 @@
   .modal-body td{
     padding: 5px;
   }
-
-  /*.btn-primary{
-    float: left;
-    margin-right: 35px;
-  } */
-
 </style>
 
 <div class="center-bar">
@@ -54,27 +29,47 @@
   <div class="border"></div>
   
   <br>
-
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Tambah Data</button>
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
+  
+  <div class="inputsearch">
+    <?php echo form_open('C_Kriteria/cari_keyword')?>
+    <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
+    <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
+    <button class="btn-link" type='submit' href="<?php echo site_url('C_Kriteria/index')?>"><i class='fas fa-undo'></i></button>
+    <?php echo form_close()?>
+  </div>
   <br>
   <br>
   
-  <!-- Data Kandidat -->
+  <!-- Data Kriteria -->
   <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Id Kriteria</th>
+                            <th>Kode Kriteria</th>
                             <th>Nama Kriteria</th>
-                            <th>Bobot</th>
+                            <th>Bobot Kriteria</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <?php  $no = $this->uri->segment(3) + 1; ?>
-                    <tbody id="tbl_data_kriteria">
-                         
+                    <tbody>
+                      <?php $no=1?>
+                      <?php foreach ($kriteria as $Kriteria):?>
+                      <tr>
+                        <td><?= $no?></td>
+                        <td><?= $Kriteria -> id_kriteria?></td>
+                        <td><?= $Kriteria -> nm_kriteria?></td>
+                        <td><?= $Kriteria -> bobot_kriteria?></td>
+                        <td style="width: 15%;">
+                          <a class="btn btn-info btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-eye"></span></a>
+                          <a class="btn btn-primary btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-edit"></span></a>
+                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Kriteria/hapus_kriteria/'.$Kriteria -> id_kriteria)?>"><span class="fas fa-trash-alt"></span></a>
+                        </td>
+                      </tr>
+                      <?php $no++?>
+                      <?php endforeach?>
                     </tbody>
                 </table>
             </div>
@@ -83,159 +78,136 @@
 
   <!-- Modal Entri Data Kriteria -->
   <div class="form-pendataan">
+    
         <!-- Modal -->
     <div class="modal fade" id="ModalAdd" role="dialog">
         <div class="modal-dialog">
         
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Kriteria</h4>
-            </div>
-            <div class="modal-body">
-              <table>
-                <tr>
-                  <td><label for="id_kriteria">Kode Kriteria</label></td>
-                  <td>:</td>
-                  <td><input readonly type="text-form" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
-                </tr>
-                <tr>
-                  <td><label for="nm_kriteria">Nama Kriteria</label></td>
-                  <td>:</td>
-                  <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" class="form-control"></td>
-                </tr>
-                <tr>
-                  <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
-                  <td>:</td>
-                  <td><input type="text-form" name="bobot_kriteria" id="bobot_kriteria" class="form-control"></td>
-                </tr>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success fas fa-save" id="btn_simpan"> Simpan</button>
-              <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Batal</button>
-            </div>
+            
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Kriteria</h4>
+              </div>
+              <div class="modal-body">
+              <form action="<?php echo base_url()?>index.php/C_Kriteria/simpan_kriteria" method="POST">
+                  <table>
+                    <tr>
+                      <td><label for="id_kriteria">Kode Kriteria</label></td>
+                      <td>:</td>
+                      <td><input readonly type="text-form" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
+                    </tr>
+                    <tr>
+                      <td><label for="nm_kriteria">Nama Kriteria</label></td>
+                      <td>:</td>
+                      <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
+                      <td>:</td>
+                      <td><input type="text-form" name="bobot_kriteria" id="bobot_kriteria" class="form-control"></td>
+                    </tr>
+                  </table>
+              </div>
+              <div class="modal-footer">
+                 <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
+                 <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:HapusText();"> Cancel</button>
+              </div>
+              </form>
           </div>
         </div>
     </div>
 </div>
 
-    <!-- Modal Edit-->
-    <div id="editModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
- 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h4 class="modal-title">Edit Data Kriteria</h4>
-          </div>
-          <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <label for="id_kriteria">Id Kriteria</label>
-                    <input type="text" name="id_kriteria_edit" class="form-control"></input>
-                </div>
-                <div class="form-group">
-                    <label for="nm_kriteria">Nama Kriteria</label>
-                    <input type="text" name="nm_kriteria_edit" class="form-control"></input>
-                </div> 
-            </form>
-          </div>
-          <div class="modal-footer">
-           <button type="button" class="btn btn-success" id="btn_update_data">Simpan</button>
-           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+
+<!-- Modal View Data Kriteria -->
+<?php foreach ($kriteria as $Kriteria) : ?>
+
+  <div class="form-pendataan">
+    
+        <!-- Modal -->
+    <div class="modal fade" id="ModalView<?= $Kriteria -> id_kriteria?>" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content" id="ModelView">
+            
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Kriteria</h4>
+              </div>
+              <div class="modal-body">
+              <form action="<?php echo base_url()?>index.php/C_Kriteria/simpan_kriteria" method="POST">
+                  <table>
+                    <tr>
+                      <td><label for="id_kriteria">Kode Kriteria</label></td>
+                      <td>:</td>
+                      <td><?= $Kriteria -> id_kriteria?></td>
+                    </tr>
+                    <tr>
+                      <td><label for="nm_kriteria">Nama Kriteria</label></td>
+                      <td>:</td>
+                      <td><?= $Kriteria -> nm_kriteria?></td>
+                    </tr>
+                    <tr>
+                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
+                      <td>:</td>
+                      <td><?= $Kriteria -> bobot_kriteria?></td>
+                    </tr>
+                  </table>
+              </div>
+              </form>
           </div>
         </div>
- 
-      </div>
     </div>
+  </form>
+</div>
+<?php endforeach?>
 
-<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
-<script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'?>"></script>
-<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.dataTables.js'?>"></script>
-<script type="text/javascript">
+
+<!-- Modal Edit Data Kriteria -->
+<?php foreach ($kriteria as $Kriteria) : ?>
+  <div class="form-pendataan">
     
-    $(document).ready(function() {
-      tampil_data();
-
-      // Menampilkan data kriteria pada table
-      function tampil_data() {
-        $.ajax({
-          url : "<?php echo base_url('C_Kriteria/ambil_data_kriteria')?>",
-          type : 'POST',
-          dataType: 'json',
-          success: function (response){
-            console.log(response);
-            var i;
-            var no = 0;
-            var html = "";
-            for (i=0; i < response.length; i++){
-              no++;
-              html = html + '<tr>'
-                          + '<td>' + no + '</td>'
-                          + '<td>' + response[i].id_kriteria + '</td>'
-                          + '<td>' + response[i].nm_kriteria + '</td>'
-                          + '<td>' + response[i].bobot_kriteria + '</td>'
-                          + '<td style="width: 17%;">' + '<span><button data-id="'+response[i].id_kriteria+'" class="btn btn-primary btn_edit fas fa-edit"></button><button style="margin-left: 5px;" data-id="'+response[i].id_kriteria+'" class="btn btn-danger btn_hapus fas fa-trash-alt"></button></span>'  + '</td>'
-                          + '</tr>';
-            }
-          $("#tbl_data_kriteria").html(html);
-        }
-     });
-    }
-    
-     //Memunculkan modal edit
-     $("#tbl_data_kriteria").on('click','.btn_edit',function(){
-            var id_kriteria = $(this).attr('data-id');
-            $.ajax({
-                url: '<?php echo base_url(); ?>C_Kriteria/ambil_data_byidkriteria',
-                type: 'POST',
-                data: {id_kriteria:id_kriteria},
-                dataType: 'json',
-                success: function(response){
-                    console.log(response);
-                    $("#editModal").modal('show');
-                    $('input[name="id_kriteria_edit"]').val(response[0].id_kriteria);
-                    $('input[name="nm_kriteria_edit"]').val(response[0].nm_kriteria);
-                }
-            })
-        });
-
-    //Menghapus Data  
-    $("#tbl_data_kriteria").on('click','.btn_hapus',function(){
-            var id_kriteria = $(this).attr('data-id');
-            var status = confirm('Yakin ingin menghapus?');
-            if(status){
-                $.ajax({
-                    url: '<?php echo base_url(); ?>C_Kriteria/hapus_kriteria',
-                    type: 'POST',
-                    data: {id_kriteria:id_kriteria},
-                    success: function(response){
-                        tampil_data();
-                    }
-                })
-            }
-        })
-
-    //Menyimpan Data
-     $('#btn_simpan').on('click', function() {
-      var id_kriteria=$('#id_kriteria').val();
-      var nm_kriteria=$('#nm_kriteria').val();
-      
-      $.ajax({
-        type : "POST",
-        url : "<?php echo base_url('C_Kriteria/simpan_Kriteria')?>",
-        dataType : "JSON",
-        data : {id_kriteria:id_kriteria, nm_kriteria:nm_kriteria},
-        success : function (data) {
-          $('[name="id_kriteria"]').val("");
-          $('[name="nm_kriteria"]').val("");
-          tampil_data();
-          $("ModalAdd").modal('hide');
-        }
-      })
-    });
-    });
-</script>
+        <!-- Modal -->
+    <div class="modal fade" id="ModalEdit<?= $Kriteria -> id_kriteria?>" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content" id="ModelEdit">
+            
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Kriteria</h4>
+              </div>
+              <div class="modal-body">
+                <form action="<?php echo base_url()?>index.php/C_Kriteria/ubah_kriteria" method="POST">
+                  <table>
+                    <tr>
+                      <td><label for="id_kriteria">Kode Kriteria</label></td>
+                      <td>:</td>
+                      <td><input readonly type="text-form" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?= $Kriteria -> id_kriteria?>" placeholder="<?= $Kriteria -> id_kriteria?>"></td>
+                    </tr>
+                    <tr>
+                      <td><label for="nm_kriteria">Nama Kriteria</label></td>
+                      <td>:</td>
+                      <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" value="<?= $Kriteria -> nm_kriteria?>" placeholder="<?= $Kriteria -> nm_kriteria?>" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
+                      <td>:</td>
+                      <td><input type="text-form" name="bobot_kriteria" id="bobot_kriteria" value="<?= $Kriteria -> bobot_kriteria?>" placeholder="<?= $Kriteria -> bobot_kriteria?>" class="form-control"></td>
+                    </tr>
+                  </table>
+              </div>
+              <div class="modal-footer">
+                 <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
+                 <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:HapusText();"> Cancel</button>
+              </div>
+              </form>
+          </div>
+        </div>
+    </div>
+</div>
+<?php endforeach?>

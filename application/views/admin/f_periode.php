@@ -2,16 +2,15 @@
 <?php $this->view('partials/sidebar_admin')?>
 
 <style>
-  
-.inputsearch {
-  float: right;
-  margin-right: 15px;
-}
+  .inputsearch {
+    float: right;
+    margin-right: 15px;
+  }
 
-.inputsearch input.form-control{
-  width: 250px;
-}
-  /* Table Body */
+  .inputsearch input.form-control{
+    width: 250px;
+  }
+
   .demo-table tbody td {
     color: #353535;
   }
@@ -23,7 +22,6 @@
   .modal-body td{
     padding: 5px;
   }
-
 </style>
 
 <div class="center-bar">
@@ -31,13 +29,13 @@
   <div class="border"></div>
   
   <br>
-
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Tambah Data</button>
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
+  
   <div class="inputsearch">
     <?php echo form_open('C_Periode/cari_keyword')?>
     <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
-    <input class="button button1" type='submit' name='btncari' value='Cari'>
-    <input class="btn-link" type='submit' href="<?php echo site_url('C_Periode/index/')?>" value='Batal'>
+    <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
+    <button class="btn-link" type='submit' href="<?php echo site_url('C_Periode/index')?>"><i class='fas fa-undo'></i></button>
     <?php echo form_close()?>
   </div>
   <br>
@@ -113,19 +111,19 @@
                   </table>
               </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Simpan</button>
-                  <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Batal</button>
+                  <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
+                  <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Cancel</button>
                 </div>
               </form>
           </div>
         </div>
     </div>
-  </form>
 </div>
 
 
+<!-- Modal View Data Periode -->
 <?php foreach ($periode as $Periode) : ?>
-  <!-- Modal View Data Periode -->
+
   <div class="form-pendataan">
     
         <!-- Modal -->
@@ -137,7 +135,7 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Periode</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Periode</h4>
               </div>
               <div class="modal-body">
               <form action="<?php echo base_url()?>index.php/C_Periode/simpan_periode" method="POST">
@@ -168,8 +166,8 @@
 <?php endforeach?>
 
 
+<!-- Modal Edit Data Periode -->
 <?php foreach ($periode as $Periode) : ?>
-  <!-- Modal Edit Data Periode -->
   <div class="form-pendataan">
     
         <!-- Modal -->
@@ -184,7 +182,7 @@
                 <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Periode</h4>
               </div>
               <div class="modal-body">
-              <form action="<?php echo base_url()?>index.php/C_Periode/ubah_periode" method="POST">
+                <form action="<?php echo base_url()?>index.php/C_Periode/ubah_periode" method="POST">
                   <table>
                     <tr>
                       <td><label for="id_periode">Kode Periode</label></td>
@@ -203,36 +201,13 @@
                     </tr>
                   </table>
               </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Simpan</button>
-                  <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Batal</button>
-                </div>
+              <div class="modal-footer">
+                 <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
+                 <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:HapusText();"> Cancel</button>
+              </div>
               </form>
           </div>
         </div>
     </div>
-  </form>
 </div>
 <?php endforeach?>
-
-
-
-<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
-<script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'?>"></script>
-<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.dataTables.js'?>"></script>
-<script type="text/javascript">
- //Menghapus Data 
- $("#btn_hapus").on('click','.btn_hapus',function(){
-            var id_periode = $(this).attr('id');
-            var status = confirm('Yakin ingin menghapus?');
-            if(status){
-                $.ajax({
-                    url: '<?php echo base_url(); ?>C_Periode/hapus_periode',
-                    type: 'POST',
-                    data: {id_periode:id_periode},
-                    success: function(response){
-                    }
-                })
-            }
-        })
-</script>

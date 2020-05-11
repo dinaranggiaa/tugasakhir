@@ -42,14 +42,36 @@ class M_Pendataan extends MY_Model {
 			$kode = 1; //kalo belum buat kode
 		}
 		$kodemax = str_pad($kode,3,"0",STR_PAD_LEFT);
-		$kodejadi = 'K'.$kodemax;
+		$kodejadi = 'P'.$kodemax;
 
 		return $kodejadi;
 	}
-        
-	function simpan_pelamar($data)
+
+
+	function simpan_pelamar()
 	{
-		$this->db->insert('pelamar', $data);
+		if(isset($_POST['btn_simpan']))
+		{
+
+			$pelamar = array(
+				'id_pelamar' => $this->input->post('id_pelamar'),
+				'tgl_daftar' => $this->input->post('tgl_daftar'),
+				'nm_pelamar' => $this->input->post('nm_pelamar'),
+				'jk_pelamar' => $this->input->post('jk_pelamar'),
+				'tempat_lahir' => $this->input->post('tempat_lahir'),
+				'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+				'almt_pelamar' => $this->input->post('almt_pelamar'),
+				'no_ktp' => $this->input->post('no_ktp'),
+				'status' => $this->input->post('status'),
+				'nohp_pelamar' => $this->input->post('nohp_pelamar'),
+				'pendidikan_akhir' => $this->input->post('pendidikan_akhir'),
+			);
+
+			$this->db->set($pelamar);
+			$this->db->insert('pelamar');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
 	}
 		
 	function hapus_pelamar($id_pelamar)
@@ -57,11 +79,11 @@ class M_Pendataan extends MY_Model {
 		$this->db->where('id_pelamar', $id_pelamar);
 		$this->db->delete('pelamar');
 	}
-
-	function ubah_pelamar($id_pelamar, $data)
+	
+	function ubah_pelamar($where, $data, $table)
 	{
-		$this->db->where('id_pelamar', $id_pelamar);
-		$this->db->update('pelamar', $data);
+		$this->db->where($where);
+		$this->db->update($table, $data);
 	}
 
 	function ambil_data_pelamar()
@@ -121,16 +143,43 @@ class M_Pendataan extends MY_Model {
 
 		return $kodejadi;
 	}
-		
-	function simpan_kriteria($data)
+
+	function cari_kriteria($keyword)
 	{
-        $this->db->insert('kriteria', $data);
+		$this->db->like('id_kriteria', $keyword);
+		$this->db->or_like('nm_kriteria', $keyword);
+
+		$result = $this->db->get('kriteria')->result();
+		return $result;
+	}
+		
+	function simpan_kriteria()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$kriteria = array(
+				'id_kriteria' => $this->input->post('id_kriteria'),
+				'nm_kriteria' => $this->input->post('nm_kriteria'),
+				'bobot_kriteria' => $this->input->post('bobot_kriteria'),
+			);
+
+			$this->db->set($kriteria);
+			$this->db->insert('kriteria');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
 	}
 
 	function ambil_data_byidkriteria($id_kriteria)
 	{
 		$this->db->where('id_kriteria', $id_kriteria);
 		return $this->db->get('kriteria')->result();
+	}
+
+	function ubah_kriteria($where, $data, $table)
+	{
+		$this->db->where($where);
+		$this->db->update($table, $data);
 	}
 
 	function hapus_kriteria($id_kriteria)

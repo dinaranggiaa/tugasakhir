@@ -30,29 +30,47 @@ class C_Kriteria extends MY_Controller {
     
     function index()
 	{	
-		// $data['kriteria'] = $this->M_Pendataan->JmlKriteria();
 		$data['kode'] = $this->M_Pendataan->get_id_kriteria();
-		// print_r($data);
-		$this->load->view('admin/f_kriteria',$data);		
+		$data['kriteria'] = $this->M_Pendataan->ambil_data_kriteria();
+		$this->load->view('admin/F_Kriteria',$data);		
     }
     
-    function simpan_kriteria()
-    {
-        $id_kriteria = $this->input->post('id_kriteria');
-        $nm_kriteria = $this->input->post('nm_kriteria');
 
-        $data = ['id_kriteria' => $id_kriteria,
-            	 'nm_kriteria' => $nm_kriteria
-        ];
-        $data = $this->M_Pendataan->simpan_kriteria($data);
-        echo json_encode($data);
+	function simpan_kriteria()
+	{
+		$data['kriteria'] = $this->M_Pendataan->simpan_kriteria();
+		redirect('C_Kriteria/index');
 	}
 	
-	function hapus_kriteria()
+	function hapus_kriteria($id_kriteria)
+	{
+		$data['kriteria'] = $this->M_Pendataan->hapus_kriteria($id_kriteria);
+		redirect('C_Kriteria/index');
+	}
+
+	function ubah_kriteria()
 	{
 		$id_kriteria = $this->input->post('id_kriteria');
-		$data = $this->M_Pendataan->hapus_kriteria($id_kriteria);
-		echo json_encode($data);
+		$nm_kriteria = $this->input->post('nm_kriteria');
+		$bobot_kriteria = $this->input->post('bobot_kriteria');
+		
+		$data = array(
+			'nm_kriteria' => $nm_kriteria,
+			'bobot_kriteria' => $bobot_kriteria
+		);
+
+		$where = array('id_kriteria' => $id_kriteria);
+
+		$data['kriteria'] = $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
+		redirect('C_Kriteria/index');
+	}
+
+	function cari_keyword()
+	{
+		$data['keyword'] = $this->input->post("keyword");
+		$data['kode'] = $this->M_Pendataan->get_id_kriteria();
+		$data['kriteria']= $this->M_Pendataan->cari_kriteria($data['keyword']);
+		$this->load->view('admin/F_Kriteria', $data);
 	}
 
     function ambil_data_kriteria()

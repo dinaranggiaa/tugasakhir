@@ -34,7 +34,7 @@ class C_Periode extends MY_Controller {
 	{
 		$data['kode'] = $this->M_Pendataan->get_id_periode();
 		$data['periode'] = $this->M_Pendataan->ambil_data_periode();
-		$this->load->view('admin/f_periode', $data);
+		$this->load->view('admin/F_Periode', $data);
 	}
 
 	function simpan_periode()
@@ -69,8 +69,9 @@ class C_Periode extends MY_Controller {
 	function cari_keyword()
 	{
 		$data['keyword'] = $this->input->post("keyword");
+		$data['kode'] = $this->M_Pendataan->get_id_periode();
 		$data['periode']= $this->M_Pendataan->cari_periode($data['keyword']);
-		$this->load->view('admin/f_periode', $data);
+		$this->load->view('admin/F_Periode', $data);
 	}
 	
 		
