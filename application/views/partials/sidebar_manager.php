@@ -47,6 +47,7 @@
               <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fab fa-kickstarter'> &nbsp; </i>Data Kriteria</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='far fa-file-alt'> &nbsp; </i>Data Nilai Target</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Periode/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Periode</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Users/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Users</a>"; ?></ul>
 
             </div>
           </li>

@@ -165,11 +165,11 @@ input[type=text] {
 
 .home{
   border-width: 1px;
-  /* border-style: solid; */
   background-color: #ffffff;
-  float: left;
-  width: 564px;
-  margin: 70px 0 0 220px;
+  float: center;
+  width: 40%;
+  padding-top: 20%;
+  margin: auto;
   box-shadow: 5px 5px 15px;
 }
 

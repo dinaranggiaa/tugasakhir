@@ -35,7 +35,7 @@ class Dashboard extends MY_Controller {
 	public function dashboard_manager()
 	{
 		
-		$this->load->view("admin/dashboard");
+		$this->load->view("manager/dashboard");
 	}
 
 }

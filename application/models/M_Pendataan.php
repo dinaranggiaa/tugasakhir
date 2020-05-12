@@ -18,6 +18,13 @@ class M_Pendataan extends MY_Model {
 	public $bulan;
 	public $tgl_pembukaan;
 
+	private $users = 'users';
+	public $id_user;
+	public $nm_user;
+	public $username;
+	public $password;
+	public $level;
+
 	public function __construct()
 	{
 		$this->load->database();
@@ -389,6 +396,116 @@ class M_Pendataan extends MY_Model {
 
 		$result = $this->db->get('periode')->result();
 		return $result;
+	}
+
+
+// <!--PROSES PERIODE-->
+		
+	function get_id_users()
+	{
+		$this->db->select('RIGHT(users.id_user,2) as kode', false);
+		$this->db->order_by('kode','DESC');
+		$this->db->limit(1);
+
+		$query = $this->db->get('users');
+
+		//Mengecek sudah ada data atau belum
+		if($query->num_rows() <> 0)
+		{
+			$data = $query->row();
+			$kode = intval($data->kode)+1; //kalo udah +1
+		} else {
+				$kode = 1; //kalo belum buat kode
+			}
+		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
+		$kodejadi = 'U'.$kodemax;
+
+		return $kodejadi;
+	}
+
+	function simpan_users()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$users = array(
+				'id_user' => $this->input->post('id_user'),
+				'nm_user' => $this->input->post('nm_user'),
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password'),
+				'level' => $this->input->post('level'),
+			);
+
+			$this->db->set($users);
+			$this->db->insert('users');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
+	function ambil_data_users()
+	{
+		$result = array();
+		$this->db->SELECT('*')
+				->FROM('users')
+				->ORDER_BY('id_user','DESC');
+		$users = $this->db->get();
+
+		if($users->num_rows() > 0){
+				$result = $users->result();				
+		}
+		return $result;
+	}
+
+	function ambil_id_users()
+	{
+		$result = array();
+		$this->db->SELECT('*')
+				->FROM('users')
+				->ORDER_BY('id_user','DESC');
+		$users = $this->db->get();
+
+		if($users->num_rows() > 0){
+				$result = $users->result_array();				
+		}
+		return $result;
+	}
+
+	function hapus_users($id_user)
+	{
+		$this->db->where('id_user', $id_user);
+		$this->db->delete('users');
+	}
+
+
+	function ubah_users($where, $data, $table)
+	{
+		$this->db->where($where);
+		$this->db->update($table, $data);
+	}
+
+	function cari_users($keyword)
+	{
+		$this->db->like('id_user', $keyword);
+		$this->db->or_like('nm_user', $keyword);
+
+		$result = $this->db->get('users')->result();
+		return $result;
+	}
+
+	// <!--PROSES BUAT LAPORAN-->
+
+	public function get_periode($id_periode)
+	{
+		$result = $this->db->query("select * from periode
+									where id_periode = '$id_periode'");
+		return $result->result();
+	}
+
+	public function rekomendasi_pelamar($id_periode)
+	{
+		$result = $this->db->query("select pelamar.*, periode.* from pelamar, periode
+									where periode.id_periode = '$id_periode' order by pelamar.id_pelamar");
+		return $result->result();
 	}
 
 }
