@@ -23,16 +23,12 @@
     padding: 5px;
   }
 
-  table {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
-  }
-
   table th {
-    color: #8a7e7e;
-    font-size: 15px;
+    font-size: 19px;
     text-align: center;
-  }
+    color: #243f4d;
+  } 
+  
 </style>
 
 <div class="center-bar">
@@ -60,7 +56,7 @@
   <!-- Data pelamar -->
   <div class="panel-body">
     <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover">
+      <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:16px">
         <thead>
           <tr>
             <th>No</th>
@@ -111,7 +107,7 @@
           <form action="<?php echo base_url()?>index.php/C_Pelamar/simpan_pelamar" method="POST">
           <table>
           <tr>
-            <td><label for="id_pelamar">Kode pelamar</label></td>
+            <td><label for="id_pelamar">Kode Pelamar</label></td>
             <td>:</td>
             <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
           </tr>

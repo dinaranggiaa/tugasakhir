@@ -23,6 +23,7 @@ class C_ProsesAHP extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('M_Pendataan');
+		$this->load->model('M_Proses');
 		$this->load->helper('url');
 		$this->load->helper('form');
 	}
@@ -30,27 +31,30 @@ class C_ProsesAHP extends MY_Controller {
 	public function NilaiPerbandingan()
 	{
 
-		$data['JmlKriteria'] = $this->M_Pendataan->getJmlKriteria();
-		$data['NmKriteria'] = $this->M_Pendataan->getNamaKriteria()->result_array();
+		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
+		$data['NmKriteria'] = $this->M_Proses->getNamaKriteria()->result_array();
 		// print_r($data['NmKriteria']);
-		$data['IdKriteria'] = $this->M_Pendataan->getIdKriteria()->result_array();
-		$data['getNamaKriteria'] = $this->M_Pendataan->getNmKriteria()->result_array();
-		$data['getIdKriteria'] = $this->M_Pendataan->getIdKriteria()->result_array();
-		$this->load->view("admin/f_NilaiPerbandingan", $data);
+		$data['IdKriteria'] = $this->M_Proses->getIdKriteria()->result_array();
+		$data['getNamaKriteria'] = $this->M_Proses->getNmKriteria()->result_array();
+		$data['getIdKriteria'] = $this->M_Proses->getIdKriteria()->result_array();
+		$this->load->view("admin/F_NilaiPerbandingan", $data);
 		
 	}
 
 	public function inputNilaiPerbandingan()
 	{
-		$this->M_Pendataan->inputDataPerbandinganKriteria();
+		$this->M_Proses->inputDataPerbandinganKriteria();
 		redirect('C_ProsesAHP/getNilaiPerbandinganKriteria');
 	}
 
 	public function getNilaiPerbandinganKriteria()
 	{
-		$data['JmlKriteria'] = $this->M_Pendataan->getJmlKriteria();
-		$data['NilaiPerbandinganKriteria'] = $this->M_Pendataan->getNilaiPerbandinganKriteria()->result_array();
-		$data['getNamaKriteria'] = $this->M_Pendataan->getNmKriteria()->result_array();
+		$data['nama'] = $this->M_Proses->get_kriteria1();
+		$data['nperbandingan'] = $this->M_Proses->get_nilai_perbandingan();
+		
+		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
+		$data['NilaiPerbandinganKriteria'] = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
+		$data['getNamaKriteria'] = $this->M_Proses->getNmKriteria()->result_array();
 		// print_r($data['NilaiPerbandinganKriteria']);
 		$this->load->view("admin/h_PerhitunganAHP", $data);
 	}

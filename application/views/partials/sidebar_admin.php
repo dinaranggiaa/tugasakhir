@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <title>SISTEM PENDUKUNG KEPUTUSAN - SELEKSI CALON KARYAWAN PT DEALER HONDA JAYA UTAMA</title>
+  <link rel = "icon" type="image/png" href="<?php echo base_url('assets/img/honda.png');?>">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/styles.css');?>">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,19 +34,27 @@
 <body>
   <div class="container-fluid">
     <div class="left-bar">
-      <div class="top-text">PT HONDA JAYA UTAMA</div>
+      <div class="top-text">PT JAYA UTAMA MOTOR
+      </div>
+      <br>
+      <div class="left-bar-admin"><img src="<?php echo base_url();?>assets/img/honda.png"/></div>
+      <br>
         <hr>
         <ul>
-          <li ><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-tachometer-alt'> &nbsp; </i>Dashboard</a>"; ?></li>
+          
+          <li >
+              <?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-tachometer-alt'> &nbsp; </i>Dashboard</a>"; ?>
+          </li>
+            
           <li>
             <div class="dropdown">
               <button class="dropbtn"><i class='fas fa-pen'> &nbsp; </i>Form Entri Data &nbsp;<i class='fas fa-caret-down'></i></button>
             </div>
             <div class="dropdown-child">
               <ul><?php echo "<a href='".base_url()."C_Pelamar/index'><i class='fas fa-user-alt'> &nbsp; </i>Data Pelamar</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_Pelamar/index'><i class='fab fa-readme'> &nbsp; </i>Data Penilaian</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='fab fa-readme'> &nbsp; </i>Data Penilaian</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fab fa-kickstarter'> &nbsp; </i>Data Kriteria</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='far fa-file-alt'> &nbsp; </i>Data Nilai Target</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_NTarget/index'><i class='far fa-file-alt'> &nbsp; </i>Data Nilai Target</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Periode/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Periode</a>"; ?></ul>
 
             </div>
@@ -77,10 +86,10 @@
     <div class="header">
       <div class="menu">
 				<ul>
-          <li><?= $this->session->userdata('level'); ?>&nbsp;&nbsp;<i class='fas fa-angle-down'></i>
+          <li style="font-family: Raleway;"><?= $this->session->userdata('level'); ?>&nbsp;&nbsp;<i class='fas fa-angle-down'></i>
               <ul class="submenu">
-                <li class="listmenu"><?= $this->session->userdata('nama'); ?></li><br>
-                <li class="listmenu"><?php echo "<a href='".base_url()."Login/logout'>Logout</a>"; ?></li>
+                <li class="listmenu" style="font-family: Raleway;" ><?= $this->session->userdata('nama'); ?></li><br>
+                <li class="listmenu" style="font-family: Raleway; font-weight:normal; margin-right:10px;"><?php echo "<a href='".base_url()."Login/logout'>Logout</a>"; ?></li>
               </ul>
           </li>
 				</ul>

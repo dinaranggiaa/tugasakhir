@@ -4,15 +4,16 @@
 	<title>Laporan Rekomendasi Pelamar</title>
 </head>
 <body>
-	<table style="margin:auto; border: 0px solid black; ">
+	<table style="margin:auto; border: 0px solid black; width:100% ">
 		<tr>
-			<th style="border: 0px solid black; width:20%;"><img src="assets/img/logo-ppti.jpg" style="position: absolute; width: 80px; height: auto; margin-top: 10px"></th>
+			<th style="border: 0px solid black; width:30%; padding-left:35px;"><img src="assets/img/logo-honda.jpg" style="position: absolute; width: 120px; height: auto; margin-top: 20px;"></th>
 			<th style="margin: auto; border: 0px solid black; width:70%">
-				<span style="border: 0px solid black; line-height: 1.6; font-weight: bold; font-size: 26px; font-family: sans-serif; padding-top: 0px;">PT DEALER HONDA JAYA UTAMA</span><br>
-				<span style="border: 0px solid black; line-height: 1.6; font-weight: normal; font-size: 13px; padding-top: 0px;">Jl. R.C. Veteran No.33-35 Bintaro Jakarta Selatan, Indonesia</span><br>
-				<span style="border: 0px solid black; line-height: 1.6; font-weight: normal; font-size: 13px; padding-top: 0px;">Telp: (021) 722812</span><br>
+				<span style="border: 0px solid black; line-height: 1.6; font-weight: bold; font-size: 35px; font-family: sans-serif; padding-top: 0px; color:red; font-family:Verdana, Geneva, Tahoma, sans-serif";>PT JAYA UTAMA MOTOR</span><br>
+				<span style="border: 0px solid black; line-height: 1.6; font-weight: bold; font-size: 15px; font-family: sans-serif; padding-top: 0px; color:red; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">DEALER RESMI MOTOR HONDA & AHASS 06986</span><br>
+				<span style="border: 0px solid black; line-height: 1; font-weight: normal; font-size: 10px; padding-top: 0px; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Jl. R.C. VETERAN 33-35 JAKARTA, INDONESIA</span><br>
+				<span style="border: 0px solid black; line-height: 1; font-weight: normal; font-size: 10px; padding-top: 0px; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">TELP.(021)73771499, 73691158 FAX.(021)7354548</span><br>
+				<span style="border: 0px solid black; line-height: 1; font-weight: normal; font-size: 10px; padding-top: 0px; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Email : jmjayamotor@gmail.com / jaya_motor@hotmail.com</span><br>
 			</th>
-			<th style="border: 0px solid black; width:20%;"><img src="assets/img/logo-klinik.jpg" style="position: absolute; width: 80px; height: auto; float: right; margin-top: 10px"></th>
 		</tr>
 	</table>
 	
@@ -121,7 +122,7 @@
 					<br>
 					<br>
 					<br>
-					<span>(Luthfi Amin)</span> 
+					<span>(Lutfi Amin)</span> 
 				</td>
 			</tr>
 		</table>

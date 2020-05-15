@@ -40,17 +40,47 @@ input[type=text], select {
 
 <div class="center-bar">
 	<h3>
-		<i class='far fa-file-alt'></i>&nbsp;Tabel Nilai Perbandingan
+		<i class='far fa-file-alt'></i>&nbsp;Tabel Perbandingan Berpasangan
 	</h3> 
 
   	<div class="border"></div>
 	<br>
-	<?php
+	<!-- <div class="container-fluid">
+    <div class="table-responsive">
+
+				
+
+          <table class="table table-striped table-hover">
+        <tr>
+          <th><strong>Kriteria</strong></th>
+          <?php foreach ($nama as $key => $value) {
+          ?>
+          <th><strong><?php echo $value->nm_kriteria ; ?></strong></th>
+          <?php  }?>
+          
+        </tr>
+        <?php for ($x = 0; $x < 3; $x++) { ?>
+          <tr>
+            <th><strong><?= $nama[$x]->nm_kriteria ?></strong></th>
+            <?php for ($y = 0; $y < 3; $y++) { ?>
+              <?php $val = ($x*5)+$y ?>
+              <th><?= $nperbandingan[$val] -> nilai_pembanding ?></th>
+            <?php } ?>
+          </tr>
+        <?php } ?>
+    </table>
+    
+
+	  
+
+      </div>
+
+  </div>	 -->
+  <table>
+  <?php
 	  $n = $JmlKriteria['total'];
 	  $urutan=0;
-	?>
-	
-		<table>
+    ?>
 			<tbody>
 			<th>Kriteria</th>
 			<?php
@@ -74,5 +104,4 @@ input[type=text], select {
 ?>
 			</tbody>
 		</table>
-
 </div>

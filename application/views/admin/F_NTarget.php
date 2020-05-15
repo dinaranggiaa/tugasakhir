@@ -28,14 +28,16 @@
     text-align: center;
     color: #243f4d;
   } 
+
+  
 </style>
 
 <div class="center-bar">
-  <h3><i class='far fa-folder-open'></i>&nbsp;Data Kriteria</h3> 
+  <h3><i class='far fa-folder-open'></i>&nbsp;Data Nilai Target</h3> 
   <div class="border"></div>
   
   <br>
-  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
+  <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button> -->
   
   <div class="inputsearch">
     <?php echo form_open('C_Kriteria/cari_keyword')?>
@@ -56,7 +58,8 @@
                             <th>No</th>
                             <th>Kode Kriteria</th>
                             <th>Nama Kriteria</th>
-                            <th>Bobot Kriteria</th>
+                            <th>Nilai Target</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -67,10 +70,11 @@
                         <td><?= $no?></td>
                         <td><?= $Kriteria -> id_kriteria?></td>
                         <td><?= $Kriteria -> nm_kriteria?></td>
-                        <td><?= $Kriteria -> bobot_kriteria?></td>
+                        <td><?= $Kriteria -> nilai_target?></td>
+                        <td><?= $Kriteria -> status_kriteria?></td>
                         <td style="width: 15%;">
                           <a class="btn btn-info btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-eye"></span></a>
-                          <a class="btn btn-primary btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-edit"></span></a>
+                          <a class="btn btn-primary btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-plus"></span></a>
                           <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Kriteria/hapus_kriteria/'.$Kriteria -> id_kriteria)?>"><span class="fas fa-trash-alt"></span></a>
                         </td>
                       </tr>
@@ -141,25 +145,25 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Kriteria</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Nilai Target</h4>
               </div>
               <div class="modal-body">
-              <form action="<?php echo base_url()?>index.php/C_Kriteria/simpan_kriteria" method="POST">
+              <form action="<?php echo base_url()?>index.php/C_NTarget/simpan_kriteria" method="POST">
                   <table>
-                    <tr>
-                      <td><label for="id_kriteria">Kode Kriteria</label></td>
-                      <td>:</td>
-                      <td><?= $Kriteria -> id_kriteria?></td>
-                    </tr>
                     <tr>
                       <td><label for="nm_kriteria">Nama Kriteria</label></td>
                       <td>:</td>
                       <td><?= $Kriteria -> nm_kriteria?></td>
                     </tr>
                     <tr>
-                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
+                      <td><label for="nilai_target">Nilai Target</label></td>
                       <td>:</td>
-                      <td><?= $Kriteria -> bobot_kriteria?></td>
+                      <td><?= $Kriteria -> nilai_target?></td>
+                    </tr>
+                    <tr>
+                      <td><label for="status_kriteria">Status Kriteria</label></td>
+                      <td>:</td>
+                      <td><?= $Kriteria -> status_kriteria?></td>
                     </tr>
                   </table>
               </div>
@@ -188,7 +192,7 @@
                 <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Kriteria</h4>
               </div>
               <div class="modal-body">
-                <form action="<?php echo base_url()?>index.php/C_Kriteria/ubah_kriteria" method="POST">
+                <form action="<?php echo base_url()?>index.php/C_NTarget/ubah_kriteria" method="POST">
                   <table>
                     <tr>
                       <td><label for="id_kriteria">Kode Kriteria</label></td>
@@ -201,9 +205,27 @@
                       <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" value="<?= $Kriteria -> nm_kriteria?>" placeholder="<?= $Kriteria -> nm_kriteria?>" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
+                      <td><label for="nilai_target">Bobot Kriteria</label></td>
                       <td>:</td>
-                      <td><input type="text-form" name="bobot_kriteria" id="bobot_kriteria" value="<?= $Kriteria -> bobot_kriteria?>" placeholder="<?= $Kriteria -> bobot_kriteria?>" class="form-control"></td>
+                      <td>
+                        <select name="nilai_target">
+                        <option checked >--</option>
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><label for="status_kriteria">Status Kriteria</label></td>
+                      <td>:</td>
+                      <td>
+                        <select name="status_kriteria">
+                        <option checked >--</option>
+                        <option value="CF">Core Factor</option>
+                        <option value="SF">Secondary Factor</option>
+                      </td>
                     </tr>
                   </table>
               </div>

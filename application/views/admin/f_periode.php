@@ -22,6 +22,14 @@
   .modal-body td{
     padding: 5px;
   }
+
+
+  table th {
+    font-size: 19px;
+    text-align: center;
+    color: #243f4d;
+  }
+
 </style>
 
 <div class="center-bar">
@@ -44,7 +52,7 @@
   <!-- Data Periode -->
   <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
+            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:16px">
                     <thead>
                         <tr>
                             <th>No</th>

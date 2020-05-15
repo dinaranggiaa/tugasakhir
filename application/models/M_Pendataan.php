@@ -129,8 +129,31 @@ class M_Pendataan extends MY_Model {
 		return $result;
 	}
 
-// <!--PROSES KRITERIA-->
-		
+// <!--PROSES KRITERIA dan Nilai Target-->
+
+	public function ambil_data_ntarget()
+	{
+		$result = $this->db->query("select * from kriteria where tanda = '1'");
+		return $result->result();
+	}
+
+	function simpan_ntarget()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$ntarget = array(
+				'id_kriteria' => $this->input->post('id_kriteria'),
+				'nilai_target' => $this->input->post('nilai_target'),
+				'status_kriteria' => $this->input->post('status_kriteria'),
+			);
+
+			$this->db->set($ntarget);
+			$this->db->insert('nilai_target');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
 	function get_id_kriteria()
 	{
 		$this->db->select('RIGHT(kriteria.id_kriteria,2) as kode', false);
@@ -273,7 +296,12 @@ class M_Pendataan extends MY_Model {
 	// memasukkan bobot nilai perbandingan kriteria
 	function inputDataPerbandinganKriteria() 
 	{
-		$n = 3;
+		$this->db->SELECT('count(id_kriteria)')
+				 ->FROM('kriteria');
+			$n = $this->db->get();
+			print_r($n);
+
+		// $n = 3;
 		$urut=0;
 		
 
@@ -308,7 +336,75 @@ class M_Pendataan extends MY_Model {
 		$this->db->insert_batch('perbandingan_kriteria', $data);
 	}
 
-// <!--PROSES PERIODE-->
+// <!--PROSES Penilaian-->
+		
+
+	function simpan_penilaian()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$kriteria=3;
+
+			$data = array();
+			for($i=0; $i<$kriteria; $i++){
+				
+				$item = [
+					'id_pelamar' => $this->input->post('id_pelamar'),
+					'id_kriteria' => $this->input->post('id_kriteria'.$i),
+					'nilai_tes' => $this->input->post('nilai_tes'.$i)
+				];
+				array_push($data, $item);
+			}
+			
+			$this->db->insert_batch('nilai_alternatif', $data);
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
+	function ambil_data_penilaian()
+	{
+		$result = $this->db->query("select pelamar.id_pelamar, pelamar.nm_pelamar, nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria 
+									from pelamar, nilai_alternatif 
+									where pelamar.id_pelamar = nilai_alternatif.id_pelamar
+									and kriteria.id_kriteria = nilai_alternatif.id_kriteria
+									");
+        return $result->result_array();
+	}
+
+	function ambil_id_penilaian()
+	{
+		$result = $this->db->query("select pelamar.*, kriteria.id_kriteria, kriteria.nm_kriteria, nilai_alternatif.* 
+									from pelamar, nilai_alternatif, kriteria 
+									where pelamar.id_pelamar = nilai_alternatif.id_pelamar 
+									and kriteria.id_kriteria = nilai_alternatif.id_kriteria;
+		");
+
+        return $result->result();
+	}
+
+	function hapus_penilaian($id_pelamar, $id_kriteria)
+	{
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('periode');
+	}
+
+	function ubah_penilaian($where, $data, $table)
+	{
+		$this->db->where($where);
+		$this->db->update($table, $data);
+	}
+
+	function cari_penilaian($keyword)
+	{
+		$this->db->like('id_periode', $keyword);
+		$this->db->or_like('bulan', $keyword);
+
+		$result = $this->db->get('periode')->result();
+		return $result;
+	}
+
+	// <!--PROSES PERIODE-->
 		
 	function get_id_periode()
 	{
@@ -399,7 +495,8 @@ class M_Pendataan extends MY_Model {
 	}
 
 
-// <!--PROSES PERIODE-->
+
+// <!--PROSES User-->
 		
 	function get_id_users()
 	{

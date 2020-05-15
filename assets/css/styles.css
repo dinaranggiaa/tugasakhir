@@ -1,12 +1,14 @@
 body {
   /* font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui"; */
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  font-family: 'Monserrat';
   font-size: 15px; 
 }
 
 .container-fluid{
   padding: 0px;
-  background-color: #dcdde1;
+  background-color: rgba(208, 216, 219, 0.96);
+  /* background-color: #A3BBc8; */
   min-height: 625px;
   /* border: 2px solid black; */
 }
@@ -17,8 +19,9 @@ body {
   margin-top: 15px;
   margin-bottom: 0px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   margin-right: 10px;
+  font-family: 'Roboto';
 }
 
 hr {
@@ -33,7 +36,7 @@ hr {
   position: fixed;
   left: 0px;
   height: 700px;
-  background-color: #041A11;
+  background-color: #243f4d;
 }
 
 .left-bar-isi{
@@ -43,16 +46,13 @@ hr {
 }
 
 .left-bar-admin{
-  margin-top: 0px;
-  margin-left: 35px;
+  margin: auto;
 }
 
 .left-bar-admin img {
-  margin-top: 10px;
-  margin-left: 0px;
-  height: 50px;
-  width: 50px;
-  float: left;
+  margin-left: 55px;
+  height: auto;
+  width: 90px;
 }
 
 .clear {
@@ -79,6 +79,7 @@ a{
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  font-family: 'Raleway'; 
 }
 
 .button1 {
@@ -271,6 +272,7 @@ input[type=text] {
   min-height: 500px;
   background-color: #ffffff;
   border-radius: 10px;
+  font-family: 'Roboto'; 
 }
 
 .border{
@@ -321,7 +323,18 @@ li a {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: medium;
   display: block;
-  color: rgb(199, 216, 209);
+  /* color: rgb(199, 216, 209); */
+  color: #ffff;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+ul li a {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: medium;
+  display: block;
+  /* color: rgb(199, 216, 209); */
+  color: #ffff;
   padding: 8px 16px;
   text-decoration: none;
 }
@@ -329,7 +342,7 @@ li a {
   
  /* Change the link color on hover */
 li a:hover {
-   background-color: #555;
+   background-color: #436372;
    color: white;
    text-decoration: none;
    width: 240px;
@@ -345,8 +358,10 @@ li a:hover {
 }
 
 .dropbtn {
-  background-color: #041a11;
-  color: rgb(199, 216, 209);
+  /* background-color: #041a11; */
+  background-color: #243f4d;
+  /* color: rgb(199, 216, 209); */
+  color: #ffffff;
   padding: 5px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: medium;
@@ -354,12 +369,13 @@ li a:hover {
 }
 
 .dropdown-btn:hover {
-  color: #f1f1f1;
+  color: #ffffff;
 }
 
 .dropdown-child {
   display: none;
-  background-color: #041a11;
+  /* background-color: #041a11; */
+  background-color: #243f4d;
   margin-left: 20px;
 }
 
@@ -371,6 +387,7 @@ li a:hover {
 
 .dropdown-child ul{
   width: 220px;
+  color: #ffffff;
 }
 
 a:hover {
@@ -386,7 +403,8 @@ a:hover {
 }
 
 ul .submenu {
-  background-color: #041a11;
+  /* background-color: #041a11; */
+  background-color: #243f4d;
   color: #fff;
   position: absolute;
   top: 40px;
@@ -409,13 +427,14 @@ li .listmenu{
 ul .submenu li a{
   display: block;
   padding: 0px 40px;
-  color: rgb(199, 216, 209);
+  /* color: rgb(199, 216, 209); */
+  color: #ededed;
   padding-top: 0px;
   text-align: center;
 }
 
 ul .submenu li a:hover {
-  background-color: rgb(212, 54, 54);
+  background-color: #436372;
   color: white;
   width: 120px;
   margin-right: 40px;
