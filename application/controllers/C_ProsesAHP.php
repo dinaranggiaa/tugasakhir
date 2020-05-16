@@ -51,7 +51,7 @@ class C_ProsesAHP extends MY_Controller {
 	{
 		// $data['nama'] = $this->M_Proses->get_kriteria1();
 		$data['nperbandingan'] = $this->M_Proses->get_nilai_perbandingan();
-		$data['matriks'] = $this->M_Proses->get_nilai_perbandingan();
+		$data['matriks'] 	= $this->M_Proses->get_nilai_perbandingan();
 		
 		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
 		$data['NilaiPerbandinganKriteria'] = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
@@ -63,74 +63,63 @@ class C_ProsesAHP extends MY_Controller {
 	function get_nilai_perbandingan()
 	{
 
-		$A = $this->M_Proses->get_nilai_perbandingan();
-		print_r($A);
-
-		$a[1][1] = 2; $a[1][2] = 2; $a[1][3] = 1;
-		$a[2][1] = 1; $a[2][2] = 2; $a[2][3] = 3;
-		$a[3][1] = 3; $a[3][2] = 2; $a[3][3] = 0;
-
-		$b[1][1] = 2; $b[1][2] = 4;
-		$b[2][1] = 2; $b[2][2] = 2;
-		$b[3][1] = 1; $b[3][2] = 1;
-
-		$c[1][1] = 0; $c[1][2] = 0;
-		$c[2][1] = 0; $c[2][2] = 0;
-		$c[3][1] = 0; $c[3][2] = 0;
-
-		$baris_matriks_a = 3;
-		$kolom_matriks_a = 3;
-		$baris_matriks_b = 3;
-		$kolom_matriks_b = 2;
-		$baris_matriks_c = 3;
-		$kolom_matriks_c = 2;
-
-
-		/* inilah loop yang melakukan proses perkalian matriks */
-		for ($j = 1; $j <= $kolom_matriks_b; $j++) {
-		for ($i = 1; $i <= $baris_matriks_a; $i++) {
-			for ($k = 1; $k <= $kolom_matriks_a; $k++) {
-			$c[$i][$j] = $c[$i][$j] + ($a[$i][$k] * $b[$k][$j]);
-			// print_r($c[$i][$j]);?><br><?php
+		$nilaiA = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
+		echo "Nilai A: ";
+		print_r($nilaiA);
+		$n = 3;
+		$uruta = 0;
+		$matriksA = array();
+		for($i=0; $i<$n; $i++){
+			for($j=0; $j<$n; $j++){
+				
+				$matriksA[$i][$j] = $nilaiA[$uruta];
+				$uruta++;
 			}
 		}
-		}
 
-	// 	$nilaiA = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
-	// 	$n = 3;
-	// 	$urut = 0;
-	// 	$matriksA = array();
-	// 	for($i=1; $i<=$n; $i++){
-	// 		for($j=1; $j<=$n; $j++){
-	// 			$urut++;
-	// 			$matriksA[$i][$j] = $nilaiA;
-	// 		}
-	// 	}
+		?> <br><br><br><?php
+		echo 'Matriks A: ';
+		print_r($matriksA);
 		
-	// 	$matriksB = array();
-	// 	for($i=1; $i<=$n; $i++){
-	// 		for($j=1; $j<=$n; $j++){
-	// 			$urut++;
-	// 			$matriksB[$i][$j] = $nilaiA;
-	// 		}
-	// 	}
+		$urutb = 0;
+		$matriksB = array();
+		for($i=0; $i<3; $i++){
+			for($j=0; $j<3; $j++){
+				
+				$matriksB[$i][$j] = $nilaiA[$urutb];
+				$urutb++;
+			}
+		}
+		?> <br><br><br><?php
+		echo 'Matriks B : ';
+		print_r($matriksB);
 
-	// 	$matriksC = array();
+		$urutc[] = 0;
+		$matriksC = array();
+		for($i=0; $i<3; $i++){
+			for($j=0; $j<3; $j++){
+				
+				$matriksC[$i][$j] = $urutc;
+				$urutc++;
+			}
+		}
+		?> <br><br><br><?php
+		echo 'Matriks C: ';
+		print_r($matriksC);
+		
 
-	// 	for($x=1; $x<=$n; $x++){
-	// 		for($y=1; $y<=$n; $y++){
-	// 			for($z=1; $z<=$n; $z++){
-	// 				$matriksC[$y][$x] = $matriksC[$y][$z] + ($matriksA[$y][$z] * $matriksB[$z][$x]);
-	// 				print_r($matriksC[$y][$x]);
-	// 			}
-	// 		}
-	// 	}
+		$matrikshasil = array();
+		for($x=0; $x<$n; $x++){
+			for($y=0; $y<$n; $y++){
+				for($z=1; $z<=$n; $z++){
+					$matrikshasil[$y][$x] = $matriksC + ($matriksA[$y][$z] * $matriksB[$z][$x]);
+				}
+			}
+		}
+		?> <br><br><br><br><?php
+		echo "Hasil : ";
+		print_r($matrikshasil);
 
 	}
 
-
-
-	
-
 }
-

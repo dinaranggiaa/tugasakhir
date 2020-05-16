@@ -174,16 +174,40 @@ class M_Proses extends MY_Model {
 	// 	$this->db->empty_table('perbandingan_kriteria');
 	// 	$this->db->insert_batch('perbandingan_kriteria', $data);
 	// }
+	function get_jmlkriteria() {
+
+		$result = array();
+		$this->db->SELECT('count(id_kriteria) as total')
+				 ->FROM('kriteria');
+		$kriteria = $this->db->get();
+		if($kriteria->num_rows() > 0)
+		{
+			$result = $kriteria->row_array();
+		}
+		
+		return $result;
+
+	}
+	
 
 	function inputDataPerbandinganKriteria() 
-	{
-		$n = 3;
+	{		
+		// $n = $this->db->SELECT('count(id_kriteria) as total')
+		// 		 ->FROM('kriteria');
+		//$n = $this->db->get();
+		$n= 3;
+
+	//var_dump($n);
+	//exit;
+	//print_r($n);
+	//exit;
 		$urut=0;
 		
-
+		
 		$data = array();
 
-		for ($x=1; $x <= 4; $x++) {
+
+		for ($x=1; $x <= $n; $x++) {
 
 			for ($y=($x+1); $y <= 3 ; $y++) {	
 				if($x == ($y-1))
@@ -215,38 +239,41 @@ class M_Proses extends MY_Model {
 
 		$this->db->empty_table('perbandingan_kriteria', $data);
 		$this->db->insert_batch('perbandingan_kriteria', $data);
+		
 	}
+
+	
 
 	function get_nilai_perbandingan()
 	{
 		$n = 3;
 
-		for($i=1; $i<=$n; $i++){
-		$this->db->where('id_kriteria1',$i);
-		$tabel[$i] = $this->db->get('perbandingan_kriteria')->result();
-		}
-		// $n = 3;
-		// $urut = 0;
-		// $matriksA = array();
 		// for($i=1; $i<=$n; $i++){
-		// 	for($j=1; $j<=$n; $j++){
-		// 		$urut++;
-		// 		$this->db->where('id_kriteria1','ASC',$urut);
-		// 		$matriksA[$i][$j] = $this->db->get('perbandingan_kriteria')->result_array();
+		// $this->db->where('id_kriteria1',$i);
+		// $tabel[$i] = $this->db->get('perbandingan_kriteria')->result();
+		// }
+		$n = 3;
+		$urut = 0;
+		$matriksA = array();
+		for($i=1; $i<=$n; $i++){
+			for($j=1; $j<=$n; $j++){
+				$urut++;
+				$this->db->where('id_kriteria1','ASC',$urut);
+				$matriksA[$i][$j] = $this->db->get('perbandingan_kriteria')->result_array();
 
-		// 	}
-		// }		
+			}
+		}		
 
-	// 	$matriksB = array();
-	// 	$matriksC = array();
+		$matriksB = array();
+		$matriksC = array();
 
-	// 	for($x=1; $x<=$n; $x++){
-	// 		for($y=1; $y<=$n; $y++){
-	// 			for($z=1; $z<=$n; $z++){
-	// 				$matriksC[$y][$x] = $matriksC[$y][$z] + ($matriksA[$y][$z] * $matriksB[$z][$x]);
-	// 			}
-	// 		}
-	// 	}
+		for($x=1; $x<=$n; $x++){
+			for($y=1; $y<=$n; $y++){
+				for($z=1; $z<=$n; $z++){
+					$matriksC[$y][$x] = $matriksC[$y][$z] + ($matriksA[$y][$z] * $matriksB[$z][$x]);
+				}
+			}
+		}
 
 	}
 
