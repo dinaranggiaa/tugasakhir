@@ -40,7 +40,7 @@ input[type=text], select {
 
 <div class="center-bar">
 	<h3>
-		<i class='far fa-file-alt'></i>&nbsp;Tabel Perbandingan Berpasangan
+		<i class='far fa-file-alt'></i>&nbsp;Hasil Perbandingan Kriteria
 	</h3> 
 
   	<div class="border"></div>
@@ -103,5 +103,26 @@ input[type=text], select {
 				}
 ?>
 			</tbody>
-		</table>
+    </table>
+    
+    <br><br>
+
+    <table>
+          <tr>
+            <th><strong>Kriteria</strong></th>
+            <?php foreach ($nama as $key => $value){
+            ?>
+            <th><strong><?php echo $value->nm_kriteria ; ?></strong></th>
+            <?php  }?>
+          </tr>
+          <?php for ($i = 0; $i < $n; $i++) { ?>
+            <tr>
+              <th><strong><?= $nama[$i]->nm_kriteria ?></strong></th>
+              <?php for ($j = 0; $j < $n; $j++) { ?>
+                <?php $val = ($i*5)+$j ?>
+                <th><?= $data1[$val]->nilai_pembanding?></th>
+              <?php } ?>
+            </tr>
+          <?php } ?>
+        </table>
 </div>

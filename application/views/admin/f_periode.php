@@ -25,7 +25,7 @@
 
 
   table th {
-    font-size: 19px;
+    font-size: 16px;
     text-align: center;
     color: #243f4d;
   }
@@ -52,14 +52,14 @@
   <!-- Data Periode -->
   <div class="panel-body">
             <div class="table-responsive">
-            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:16px">
+            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:15px; width:100%; margin:auto">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Kode Periode</th>
-                            <th>Bulan</th>
+                            <th style="width: 20%">Bulan</th>
                             <th>Tanggal Pembukaan</th>
-                            <th>Action</th>
+                            <th style="width: 30%">Action</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -93,13 +93,88 @@ class M_Proses extends MY_Model {
 	function getNilaiPerbandinganKriteria() 
 	{
 		$this->db->select('nilai_pembanding')
-				 ->from('perbandingan_kriteria');
+				 ->from('perbandingan_kriteria')
+				 ->order_by('id_kriteria1', 'ASC');
 		$nilai = $this->db->get();
 		return $nilai;
 
 	}
 
 	// memasukkan bobot nilai perbandingan kriteria
+	// function inputDataPerbandinganKriteria() 
+	// {
+	// 	$n = 3;
+	// 	$data = array();
+	// 	$urut=0;
+
+	// 	// for ($x=0; $x <= ($n-2) ; $x++) {
+	// 	// 	for ($y=($x+1); $y <= ($n-1) ; $y++) {
+								
+	// 	// 		if($x === $x){
+	// 	// 			$item = [
+	// 	// 						'id_kriteria1' => $x,
+	// 	// 						'id_kriteria2' => $x,
+	// 	// 						'nilai_pembanding' => 1
+	// 	// 					];
+				
+	// 	// 					array_push($data, $item);
+	// 	// 		} elseif ($x < $y){
+
+	// 	// 			$item = [
+	// 	// 						'id_kriteria1' => $this->input->post('kriteria1_'.$urut),
+	// 	// 						'id_kriteria2' => $this->input->post('kriteria2_'.$urut),
+	// 	// 						'nilai_pembanding' => $this->input->post('nilai_pembanding'.$urut)
+	// 	// 					];
+	// 	// 					array_push($data, $item);
+
+	// 	// 		}
+								
+	// 	// 		$item = [
+	// 	// 			'id_kriteria1' => $this->input->post('kriteria2_'.$urut),
+	// 	// 			'id_kriteria2' => $this->input->post('kriteria1_'.$urut),
+	// 	// 			'nilai_pembanding' => 1/$this->input->post('nilai_pembanding'.$urut)
+	// 	// 		];
+	// 	// 			array_push($data, $item);
+
+	// 	// 		$urut++;
+	// 	// 	}			
+	// 	// }
+	// 	// $this->db->empty_table('perbandingan_kriteria');
+	// 	// $this->db->insert_batch('perbandingan_kriteria', $data);
+		
+
+	// 	for ($x=1; $x <= $n; $x++) {
+		
+	// 		for ($y=($x+1); $y <= $n ; $y++) {
+	// 			$urut;
+	// 			$item = [
+	// 				'id_kriteria1' => $this->input->post('kriteria1_'.$urut),
+	// 				'id_kriteria2' => $this->input->post('kriteria2_'.$urut),
+	// 				'nilai_pembanding' => $this->input->post('nilai_pembanding'.$urut)
+	// 			];
+	// 			array_push($data, $item);
+
+	// 			$item = [
+	// 				'id_kriteria1' => $this->input->post('kriteria2_'.$urut),
+	// 				'id_kriteria2' => $this->input->post('kriteria1_'.$urut),
+	// 				'nilai_pembanding' => 1/$this->input->post('nilai_pembanding'.$urut)
+	// 			];
+	// 			array_push($data, $item);
+	// 		}
+	// 		$item = [
+	// 			'id_kriteria1' => $x,
+	// 			'id_kriteria2' => $x,
+	// 			'nilai_pembanding' => 1
+	// 		];
+
+	// 		array_push($data, $item);
+
+	// 	}
+
+	// 	$this->db->empty_table('perbandingan_kriteria');
+	// 	$this->db->insert_batch('perbandingan_kriteria', $data);
+	// }
+
 	function inputDataPerbandinganKriteria() 
 	{
 		$n = 3;
@@ -108,16 +183,19 @@ class M_Proses extends MY_Model {
 
 		$data = array();
 
-		for ($x=1; $x <= 3; $x++) {
-			// $item = [
-			// 	'id_kriteria1' => $x,
-			// 	'id_kriteria2' => $x,
-			// 	'nilai_pembanding' => 1.0000
-			// ];
+		for ($x=1; $x <= 4; $x++) {
 
-			// array_push($data, $item);
-
-			for ($y=($x+1); $y <= 3 ; $y++) {
+			for ($y=($x+1); $y <= 3 ; $y++) {	
+				if($x == ($y-1))
+				{
+					$item = [
+						'id_kriteria1' => $x,
+						'id_kriteria2' => $x,
+						'nilai_pembanding' => 1
+					];
+		
+					array_push($data, $item);
+				}
 
 				$item = [
 					'id_kriteria1' => $this->input->post('kriteria1_'.$x.$y),
@@ -135,19 +213,42 @@ class M_Proses extends MY_Model {
 			}
 		}
 
+		$this->db->empty_table('perbandingan_kriteria', $data);
 		$this->db->insert_batch('perbandingan_kriteria', $data);
 	}
 
-	function get_kriteria1()
+	function get_nilai_perbandingan()
 	{
-	  $this->db->select('nm_kriteria');
-	  return $this->db->get('kriteria')->result();
+		$n = 3;
+
+		for($i=1; $i<=$n; $i++){
+		$this->db->where('id_kriteria1',$i);
+		$tabel[$i] = $this->db->get('perbandingan_kriteria')->result();
+		}
+		// $n = 3;
+		// $urut = 0;
+		// $matriksA = array();
+		// for($i=1; $i<=$n; $i++){
+		// 	for($j=1; $j<=$n; $j++){
+		// 		$urut++;
+		// 		$this->db->where('id_kriteria1','ASC',$urut);
+		// 		$matriksA[$i][$j] = $this->db->get('perbandingan_kriteria')->result_array();
+
+		// 	}
+		// }		
+
+	// 	$matriksB = array();
+	// 	$matriksC = array();
+
+	// 	for($x=1; $x<=$n; $x++){
+	// 		for($y=1; $y<=$n; $y++){
+	// 			for($z=1; $z<=$n; $z++){
+	// 				$matriksC[$y][$x] = $matriksC[$y][$z] + ($matriksA[$y][$z] * $matriksB[$z][$x]);
+	// 			}
+	// 		}
+	// 	}
+
 	}
 
-	function get_nilai_perbandingan()
-  {
-    $this->db->order_by('id_kriteria1','asc');
-    $this->db->order_by('id_kriteria2','asc');
-    return $this->db->get('perbandingan_kriteria')->result();
-  }
+
 }

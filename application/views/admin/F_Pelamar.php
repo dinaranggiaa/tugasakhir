@@ -24,7 +24,7 @@
   }
 
   table th {
-    font-size: 19px;
+    font-size: 16px;
     text-align: center;
     color: #243f4d;
   } 
@@ -56,7 +56,7 @@
   <!-- Data pelamar -->
   <div class="panel-body">
     <div class="table-responsive">
-      <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:16px">
+      <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:15px">
         <thead>
           <tr>
             <th>No</th>
@@ -95,7 +95,7 @@
   <!-- Modal Entri Data pelamar -->
   <div class="form-pendataan">
         <!-- Modal -->
-    <div class="modal fade" id="ModalAdd" role="dialog">
+        <div class="modal fade" id="ModalAdd" role="dialog">
       <div class="modal-dialog">  
         <!-- Modal content-->
         <div class="modal-content">

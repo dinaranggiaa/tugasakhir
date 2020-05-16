@@ -36,7 +36,7 @@
       <div class="top-text">PT HONDA JAYA UTAMA</div>
         <hr>
         <ul>
-          <li ><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-tachometer-alt'> &nbsp; </i>Dashboard</a>"; ?></li>
+          <li ><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
           <li>
             <div class="dropdown">
               <button class="dropbtn"><i class='fas fa-pen'> &nbsp; </i>Form Entri Data &nbsp;<i class='fas fa-caret-down'></i></button>

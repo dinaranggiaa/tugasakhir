@@ -43,19 +43,30 @@
         <ul>
           
           <li >
-              <?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-tachometer-alt'> &nbsp; </i>Dashboard</a>"; ?>
+              <?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?>
           </li>
             
           <li>
             <div class="dropdown">
-              <button class="dropbtn"><i class='fas fa-pen'> &nbsp; </i>Form Entri Data &nbsp;<i class='fas fa-caret-down'></i></button>
+              <button class="dropbtn"><i class='fas fa-pen'> &nbsp; </i>Entri Data Master&nbsp;<i class='fas fa-caret-down'></i></button>
             </div>
             <div class="dropdown-child">
               <ul><?php echo "<a href='".base_url()."C_Pelamar/index'><i class='fas fa-user-alt'> &nbsp; </i>Data Pelamar</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='fab fa-readme'> &nbsp; </i>Data Penilaian</a>"; ?></ul>
+              <!-- <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='fab fa-readme'> &nbsp; </i>Data Penilaian</a>"; ?></ul> -->
               <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fab fa-kickstarter'> &nbsp; </i>Data Kriteria</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_NTarget/index'><i class='far fa-file-alt'> &nbsp; </i>Data Nilai Target</a>"; ?></ul>
+              <!-- <ul><?php echo "<a href='".base_url()."C_NTarget/index'><i class='far fa-file-alt'> &nbsp; </i>Data Nilai Target</a>"; ?></ul> -->
               <ul><?php echo "<a href='".base_url()."C_Periode/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Periode</a>"; ?></ul>
+
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn"><i class='fas fa-archive'> &nbsp; </i>Entri Data Penilaian&nbsp;<i class='fas fa-caret-down'></i></button>
+            </div>
+            <div class="dropdown-child">
+              <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='far fa-list-alt'> &nbsp; </i>Penilaian Pelamar</a>"; ?></ul>
+              <!-- <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fab fa-kickstarter'> &nbsp; </i>Data Kriteria</a>"; ?></ul> -->
+              <ul><?php echo "<a href='".base_url()."C_NTarget/index'><i class='far fa-file-alt'> &nbsp; </i> Nilai Target Kriteria</a>"; ?></ul>
 
             </div>
           </li>

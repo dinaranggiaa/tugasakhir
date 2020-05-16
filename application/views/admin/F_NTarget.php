@@ -24,7 +24,7 @@
   }
 
   table th {
-    font-size: 19px;
+    font-size: 16px;
     text-align: center;
     color: #243f4d;
   } 
@@ -52,7 +52,7 @@
   <!-- Data Kriteria -->
   <div class="panel-body">
             <div class="table-responsive">
-            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:16px">
+            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:15px">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -75,7 +75,7 @@
                         <td style="width: 15%;">
                           <a class="btn btn-info btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-eye"></span></a>
                           <a class="btn btn-primary btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-plus"></span></a>
-                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Kriteria/hapus_kriteria/'.$Kriteria -> id_kriteria)?>"><span class="fas fa-trash-alt"></span></a>
+                          <!-- <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Kriteria/hapus_kriteria/'.$Kriteria -> id_kriteria)?>"><span class="fas fa-trash-alt"></span></a> -->
                         </td>
                       </tr>
                       <?php $no++?>

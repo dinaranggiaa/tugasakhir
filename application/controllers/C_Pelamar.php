@@ -95,7 +95,9 @@ class C_Pelamar extends MY_Controller {
 		{
 			$data['keyword'] = $this->input->post("keyword");
 			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
-			$data['pelamar']= $this->M_Pendataan->cari_pelamar($data['keyword']);
+			$data['periode'] = $this->M_Pendataan->ambil_data_periode();
+			$data['pelamar'] = $this->M_Pendataan->ambil_data_pelamar();
+			$data['c_pelamar']= $this->M_Pendataan->cari_pelamar($data['keyword']);
 			$this->load->view('admin/F_Pelamar', $data);
 		}
 

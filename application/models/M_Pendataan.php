@@ -73,6 +73,7 @@ class M_Pendataan extends MY_Model {
 				'status' => $this->input->post('status'),
 				'nohp_pelamar' => $this->input->post('nohp_pelamar'),
 				'pendidikan_akhir' => $this->input->post('pendidikan_akhir'),
+				'tanda' => 0
 			);
 
 			$this->db->set($pelamar);
@@ -292,61 +293,63 @@ class M_Pendataan extends MY_Model {
 		return $nilai;
 
 	}
+// <!--PROSES Penilaian-->
 
-	// memasukkan bobot nilai perbandingan kriteria
-	function inputDataPerbandinganKriteria() 
+	//Get By Id Pelamar
+	function cari_data_pelamar($keyword)
 	{
-		$this->db->SELECT('count(id_kriteria)')
-				 ->FROM('kriteria');
-			$n = $this->db->get();
-			print_r($n);
+		$this->db->SELECT('id_pelamar, nm_pelamar')
+				->FROM('pelamar')
+				->like('id_pelamar', $keyword)
+				->or_like('nm_pelamar', $keyword);
+		$pelamar = $this->db->get();
 
-		// $n = 3;
-		$urut=0;
-		
-
-		$data = array();
-
-		for ($x=0; $x<=($n-2); $x++) {
-			for($y=($x+1); $y<=($n-1); $y++) {
-				$urut++;
-				$item = [
-					'id_kriteria1' => $this->input->post('kriteria_'.$urut),
-					'id_kriteria2' => $this->input->post('kriteria_'.$urut),
-					'nilai_pembanding' => $this->input->post('nilai_pembanding'.$x.$y)
-				];
-				array_push($data, $item);
-
-				$item = [
-					'id_kriteria1' => $this->input->post('kriteria_'.$x.$y),
-					'id_kriteria2' => $this->input->post('kriteria_'.$x.$y),
-					'nilai_pembanding' => 1/$this->input->post('nilai_pembanding'.$x.$y)
-				];
-				array_push($data, $item);
-			}
-
-			$item = [
-				'id_kriteria1' => $x+1,
-				'id_kriteria2' => $x+1,
-				'nilai_pembanding' => 1
-			];
-			array_push($data, $item);
-		}
-
-		$this->db->insert_batch('perbandingan_kriteria', $data);
+				return $pelamar;
 	}
 
-// <!--PROSES Penilaian-->
+	function data_nilai_pelamar($id_pelamar)
+	{
+		$pelamar = $this->db->query("select pelamar.id_pelamar, pelamar.nm_pelamar, nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria 
+		from pelamar, nilai_alternatif, kriteria where pelamar.id_pelamar = nilai_alternatif.id_pelamar and kriteria.id_kriteria = nilai_alternatif.id_kriteria
+		and pelamar.id_pelamar='$id_pelamar'");
+
+		// $this->db->select('pelamar.nm_pelamar, pelamar.id_pelamar,kriteria.nm_kriteria, nilai_alternatif.nilai_tes')
+		// 		->from('pelamar')
+		// 		->join('pelamar','pelamar.id_pelamar=nilai_alternatif.id_pelamar')
+		// 		->join('kriteria.id_kriteria=nilai_alternatif.id_kriteria')
+		// 		->order_by('pelamar.id_pelamar');
+		// $this->db->where('pelamar.id_pelamar=', $id_pelamar);
+		// $pelamar = $this->db->get();
+
+		return $pelamar;
+	}
+
+	//Data Pelamar yang tandanya sudah 1
+	function data_pelamar()
+	{
+		$result = array();
+		$this->db->select('pelamar.*,periode.*')
+				->from('pelamar')
+				->join('periode','periode.id_periode=pelamar.id_periode')
+				->order_by('id_pelamar','DESC')
+				->where("pelamar.tanda = '1'");
+		$pelamar = $this->db->get();
+
+		if($pelamar->num_rows() > 0){
+				$result = $pelamar->result();				
+		}
+		return $result;
+	}
 		
 
 	function simpan_penilaian()
 	{
 		if(isset($_POST['btn_simpan']))
 		{
-			$kriteria=3;
+			$n = 3;
 
 			$data = array();
-			for($i=0; $i<$kriteria; $i++){
+			for($i=0; $i < $n; $i++){
 				
 				$item = [
 					'id_pelamar' => $this->input->post('id_pelamar'),

@@ -24,7 +24,7 @@
   }
 
   table th {
-    font-size: 19px;
+    font-size: 16px;
     text-align: center;
     color: #243f4d;
   } 
@@ -38,6 +38,10 @@
   <br>
   <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button> -->
   
+    <?php echo form_open('C_PenilaianPelamar/entri_penilaian')?>
+    <button class="btn btn-default" type='submit' href="<?php echo site_url('C_PenilaianPelamar/entri_penilaian')?>"><i class='fas fa-plus'></i> &nbsp;Add Data</button>
+    <?php echo form_close()?>
+
   <div class="inputsearch">
     <?php echo form_open('C_Penilaian/cari_keyword')?>
     <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
@@ -51,7 +55,7 @@
   <!-- Data Penilaian -->
   <div class="panel-body">
             <div class="table-responsive">
-            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:16px">
+            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:15px">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -62,7 +66,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="text-align: left">
                       <?php $no=1?>
                       <?php foreach ($pelamar as $Pelamar):?>
                       <tr>
@@ -72,7 +76,7 @@
                         <td><?= $Pelamar -> almt_pelamar?></td>
                         <td><?= $Pelamar -> nohp_pelamar?></td>
                         <td style="width: 15%;">
-                        <a class="btn btn-info btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalAdd<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-plus"></span></a>
+                        <a class="btn btn-info btn_edit" name = "<?= $Pelamar -> id_pelamar;?>" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalAdd<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-plus"></span></a>
                           <a class="btn btn-success btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-eye"></span></a>
                           <a class="btn btn-primary btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-edit"></span></a>
                         </td>
@@ -87,12 +91,12 @@
 
   <!-- Modal Entri Data Penilaian -->
   <div class="form-pendataan">
-  <?php $n = $JmlKriteria['total']; ?>
+   <?php $n = $JmlKriteria['total']; ?>
 
-  <?php foreach ($pelamar as $Pelamar):?>
+  <?php foreach ($pelamar as $Pelamar):?> -->
         <!-- Modal -->
-    <div class="modal fade" id="ModalAdd<?= $Pelamar -> id_pelamar?>" role="dialog">
-        <div class="modal-dialog">
+    <div class="modal fade" id="ModalAdd<?php echo $Pelamar -> id_pelamar; ?>" role="dialog">
+        <div class="modal-dialog"> -->
         
           <!-- Modal content-->
           <div class="modal-content">
@@ -102,7 +106,7 @@
                 <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Penilaian</h4>
               </div>
               <div class="modal-body">
-              <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/simpan_penilaian" method="POST">
+              <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/simpan_penilaian" method="POST"> -->
                   <table>
                     <tr>
                       <td><label for="id_pelamar">Kode Pelamar</label></td>
@@ -115,14 +119,15 @@
                       <td><?= $Pelamar -> nm_pelamar?><input type="hidden" class ="form-control" name="nm_pelamar" id="nm_pelamar" value="<?= $Pelamar -> nm_pelamar?>"></td>
                     </tr>
                     <tr>
-                    
+                    <?php endforeach?>
+                    <?php foreach($datanilai as $Pelamar) : ?>
                       <?php for($i=0; $i<$n; $i++){?>
                       <td><label for="nm_kriteria" name="nm_kriteria<?= $i?>"><?= $kriteria[$i]['nm_kriteria']?></label>
                           <input type="hidden" name="id_kriteria<?= $i?>" value="<?= $kriteria[$i]['id_kriteria']?>" class="form-control">
                     </td>
                       <td>:</td>
                       <td>
-                        <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required>
+                        <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required> <?= $Pelamar -> nilai_tes?>
                       </td>
                     </tr>
                     <?php } ?>
@@ -136,13 +141,13 @@
           </div>
         </div>
     </div>
-    <?php endforeach?>
+     <?php endforeach?>
 </div>
 
 
 <!-- Modal View Data Penilaian -->
 <?php $no=0; ?>
-<?php foreach ($penilaian as $Penilaian) : ?>
+<?php foreach ($datanilai as $Penilaian) : ?>
   <?php if ($no == 0) : ?>
   <div class="form-pendataan">
     
@@ -194,7 +199,7 @@
 
   <?php endif ?>
 <?php $no++; endforeach?>
-<?php foreach ($penilaian as $Penilaian) :?>
+<?php foreach ($datanilai as $Penilaian) :?>
                       <tr>
                       <td><label style="font-weight:normal" for="nm_kriteria"><?= $Penilaian -> nm_kriteria?></td>
                       <td>:</td>
@@ -210,6 +215,56 @@
     </div>
   </form>
 </div>
+
+ <!-- Modal Entri Data Penilaian -->
+ <div class="form-pendataan">
+    
+    <!-- Modal -->
+<div class="modal fade" id="ModalAdd" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Periode</h4>
+          </div>
+          <div class="modal-body">
+          <form action="<?php echo base_url()?>index.php/C_Periode/simpan_periode" method="POST">
+              <table>
+                <tr>
+                  <td><label for="id_pelamar">Kode Pelamar</label></td>
+                  <td>:</td>
+                  <td><input type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar"></td>
+                </tr>
+                <tr>
+                  <td><label for="nm_pelamar">Nama Lengkap</label></td>
+                  <td>:</td>
+                  <td><input type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control"></td>
+                </tr>
+                <?php for($i=0; $i<$n; $i++){?>
+                      <td><label for="nm_kriteria" name="nm_kriteria<?= $i?>"><?= $kriteria[$i]['nm_kriteria']?></label>
+                          <input type="hidden" name="id_kriteria<?= $i?>" value="<?= $kriteria[$i]['id_kriteria']?>" class="form-control">
+                    </td>
+                      <td>:</td>
+                      <td>
+                        <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required>
+                      </td>
+                    </tr>
+                    <?php } ?>
+              </table>
+          </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
+              <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Cancel</button>
+            </div>
+          </form>
+      </div>
+    </div>
+</div>
+</div>
+
 
 
 <!-- Modal Edit Data Penilaian -->

@@ -24,7 +24,8 @@ table th {
 
 <div class="center-bar">
 	<h3>
-		<i class='far fa-file-alt'></i>&nbsp;Tabel Nilai Perbandingan
+		<!-- <i class='far fa-file-alt'></i>&nbsp; -->
+		Tabel Nilai Perbandingan
 	</h3> 
 
   	<div class="border"></div>
@@ -58,7 +59,7 @@ table th {
   
   				<tr>
 					<td>		
-						<input name="kriteria1_<?php echo $x.$y?>" value="<?=$getIdKriteria[$x-1]['id_kriteria']?>" class="text";>
+					<input name="kriteria1_<?php echo $x.$y?>" value="<?= $x?>" class="hidden";>
 						<label><?php echo $getNamaKriteria[$x-1]['nm_kriteria']; ?></label>
 					</td>
 
@@ -86,7 +87,7 @@ table th {
 					</td>
 					
 					<td>		
-						<input name="kriteria2_<?php echo $x.$y?>" value="<?=$getIdKriteria[$y-1]['id_kriteria'];?>" class="text";>
+					<input name="kriteria2_<?php echo $x.$y?>" value="<?= $y?>" class="hidden";>
 						<label><?php echo $getNamaKriteria[$y-1]['nm_kriteria']; ?></label>
 					</td>
 					<!-- <td>

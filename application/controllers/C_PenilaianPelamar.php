@@ -33,11 +33,43 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function index()
 	{
+		$id_pelamar = $this->input->post('id_pelamar');
+		
+		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
 		$data['kriteria'] = $this->M_Proses->get_kriteria()->result_array();
-		$data['pelamar'] = $this->M_Pendataan->ambil_data_pelamar();
+		//where tanda=1
+		$data['pelamar'] = $this->M_Pendataan->data_pelamar();
+		//get berdasarkan id
+		$data['datanilai'] = $this->M_Pendataan->data_nilai_pelamar($id_pelamar)->result();
+
+		$data['penilaian'] = $this->M_Pendataan->ambil_id_penilaian();
+		
+		$this->load->view('admin/F_PenilaianPelamar', $data);
+	}
+
+	function entri_penilaian()
+	{
+		$data['kriteria'] = $this->M_Proses->get_kriteria()->result_array();
+		//where tanda=1
+		$data['pelamar'] = $this->M_Pendataan->data_pelamar();
 		$data['penilaian'] = $this->M_Pendataan->ambil_id_penilaian();
 		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
-		$this->load->view('admin/F_PenilaianPelamar', $data);
+		$this->load->view('admin/F_PenilaianPelamar_Entri', $data);
+	}
+
+	function input_data()
+	{
+		$data['simpan'] = $this->M_Pendataan->simpan_penilaian();
+		
+		$id_pelamar = $this->input->post('id_pelamar');
+		$tanda = 1;
+
+		$data = array(
+			'tanda' => $tanda
+		);
+
+		$where = array('id_pelamar' => $id_pelamar);
+		$data['penilaian'] = $this->M_Pendataan->ubah_pelamar($where, $data, 'pelamar');
 	}
 
 	function simpan_penilaian()
@@ -75,6 +107,15 @@ class C_PenilaianPelamar extends MY_Controller {
 		$data['kode'] = $this->M_Pendataan->get_id_PenilaianPelamar();
 		$data['penilaian']= $this->M_Pendataan->cari_PenilaianPelamar($data['keyword']);
 		$this->load->view('admin/F_PenilaianPelamar', $data);
+	}
+
+	function cari_data()
+	{
+		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
+		$data['kriteria'] = $this->M_Proses->get_kriteria()->result_array();
+		$data['keyword'] = $this->input->post("keyword");
+		$data['pelamar']= $this->M_Pendataan->cari_data_pelamar($data['keyword'])->row_array();
+		$this->load->view('admin/F_PenilaianPelamar_Entri2', $data);
 	}
 	
 		

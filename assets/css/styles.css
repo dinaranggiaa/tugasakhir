@@ -343,7 +343,7 @@ ul li a {
  /* Change the link color on hover */
 li a:hover {
    background-color: #436372;
-   color: white;
+   color: #fff;
    text-decoration: none;
    width: 240px;
 }
@@ -428,7 +428,7 @@ ul .submenu li a{
   display: block;
   padding: 0px 40px;
   /* color: rgb(199, 216, 209); */
-  color: #ededed;
+  color: #925757;
   padding-top: 0px;
   text-align: center;
 }
