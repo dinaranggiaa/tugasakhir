@@ -61,19 +61,19 @@ class M_Pendataan extends MY_Model {
 		{
 
 			$pelamar = array(
-				'id_pelamar' => $this->input->post('id_pelamar'),
-				'id_periode' => $this->input->post('id_periode'),
-				'tgl_daftar' => $this->input->post('tgl_daftar'),
-				'nm_pelamar' => $this->input->post('nm_pelamar'),
-				'jk_pelamar' => $this->input->post('jk_pelamar'),
-				'tempat_lahir' => $this->input->post('tempat_lahir'),
-				'tanggal_lahir' => $this->input->post('tanggal_lahir'),
-				'almt_pelamar' => $this->input->post('almt_pelamar'),
-				'no_ktp' => $this->input->post('no_ktp'),
-				'status' => $this->input->post('status'),
-				'nohp_pelamar' => $this->input->post('nohp_pelamar'),
-				'pendidikan_akhir' => $this->input->post('pendidikan_akhir'),
-				'tanda' => 0
+				'id_pelamar' 		=> $this->input->post('id_pelamar'),
+				'id_periode' 		=> $this->input->post('id_periode'),
+				'tgl_daftar' 		=> $this->input->post('tgl_daftar'),
+				'nm_pelamar'		=> $this->input->post('nm_pelamar'),
+				'jk_pelamar' 		=> $this->input->post('jk_pelamar'),
+				'tempat_lahir' 		=> $this->input->post('tempat_lahir'),
+				'tanggal_lahir' 	=> $this->input->post('tanggal_lahir'),
+				'almt_pelamar'		=> $this->input->post('almt_pelamar'),
+				'no_ktp' 			=> $this->input->post('no_ktp'),
+				'status' 			=> $this->input->post('status'),
+				'nohp_pelamar' 		=> $this->input->post('nohp_pelamar'),
+				'pendidikan_akhir' 	=> $this->input->post('pendidikan_akhir'),
+				'tanda' 			=> 0
 			);
 
 			$this->db->set($pelamar);
@@ -142,17 +142,37 @@ class M_Pendataan extends MY_Model {
 	{
 		if(isset($_POST['btn_simpan']))
 		{
-			$ntarget = array(
-				'id_kriteria' => $this->input->post('id_kriteria'),
-				'nilai_target' => $this->input->post('nilai_target'),
-				'status_kriteria' => $this->input->post('status_kriteria'),
-			);
 
-			$this->db->set($ntarget);
-			$this->db->insert('nilai_target');
-			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+			$data = array();
+				
+			$item = [
+					'id_kriteria' 		=> $this->input->post('id_kriteria'),
+					'nilai_target' 		=> $this->input->post('nilai_target'),
+					'status_kriteria' 	=> $this->input->post('status_kriteria'),
+			];
+				array_push($data, $item);
+			}
+			
+			$this->db->insert_batch('nilai_target', $data);
 
+		
+	}
+
+	//Data Kriteria yang tandanya sudah 1
+	function data_kriteria()
+	{
+		$result = array();
+		$this->db->select('kriteria.*,nilai_target.*')
+				->from('kriteria')
+				->join('nilai_target','nilai_target.id_kriteria=nilai_target.id_kriteria')
+				->order_by('kriteria.id_kriteria','DESC')
+				->where("kriteria.tanda = '1'");
+		$kriteria = $this->db->get();
+
+		if($kriteria->num_rows() > 0){
+				$result = $kriteria->result();				
 		}
+		return $result;
 	}
 
 	function get_id_kriteria()
@@ -191,9 +211,10 @@ class M_Pendataan extends MY_Model {
 		if(isset($_POST['btn_simpan']))
 		{
 			$kriteria = array(
-				'id_kriteria' => $this->input->post('id_kriteria'),
-				'nm_kriteria' => $this->input->post('nm_kriteria'),
-				'bobot_kriteria' => $this->input->post('bobot_kriteria'),
+				'id_kriteria' 		=> $this->input->post('id_kriteria'),
+				'nm_kriteria' 		=> $this->input->post('nm_kriteria'),
+				'bobot_kriteria' 	=> $this->input->post('bobot_kriteria'),
+				'tanda'				=> 0
 			);
 
 			$this->db->set($kriteria);
@@ -309,18 +330,10 @@ class M_Pendataan extends MY_Model {
 
 	function data_nilai_pelamar($id_pelamar)
 	{
-		$pelamar = $this->db->query("select pelamar.id_pelamar, pelamar.nm_pelamar, nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria 
+		$pelamar = $this->db->query("select pelamar.id_pelamar, pelamar.nm_pelamar, pelamar.nohp_pelamar, pelamar.almt_pelamar, 
+		nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria 
 		from pelamar, nilai_alternatif, kriteria where pelamar.id_pelamar = nilai_alternatif.id_pelamar and kriteria.id_kriteria = nilai_alternatif.id_kriteria
 		and pelamar.id_pelamar='$id_pelamar'");
-
-		// $this->db->select('pelamar.nm_pelamar, pelamar.id_pelamar,kriteria.nm_kriteria, nilai_alternatif.nilai_tes')
-		// 		->from('pelamar')
-		// 		->join('pelamar','pelamar.id_pelamar=nilai_alternatif.id_pelamar')
-		// 		->join('kriteria.id_kriteria=nilai_alternatif.id_kriteria')
-		// 		->order_by('pelamar.id_pelamar');
-		// $this->db->where('pelamar.id_pelamar=', $id_pelamar);
-		// $pelamar = $this->db->get();
-
 		return $pelamar;
 	}
 
@@ -346,7 +359,7 @@ class M_Pendataan extends MY_Model {
 	{
 		if(isset($_POST['btn_simpan']))
 		{
-			$n = 3;
+			$n = 5;
 
 			$data = array();
 			for($i=0; $i < $n; $i++){
@@ -360,7 +373,6 @@ class M_Pendataan extends MY_Model {
 			}
 			
 			$this->db->insert_batch('nilai_alternatif', $data);
-			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
 
 		}
 	}
@@ -594,14 +606,14 @@ class M_Pendataan extends MY_Model {
 
 	// <!--PROSES BUAT LAPORAN-->
 
-	public function get_periode($id_periode)
+	function get_periode($id_periode)
 	{
 		$result = $this->db->query("select * from periode
 									where id_periode = '$id_periode'");
 		return $result->result();
 	}
 
-	public function rekomendasi_pelamar($id_periode)
+	function rekomendasi_pelamar($id_periode)
 	{
 		$result = $this->db->query("select pelamar.*, periode.* from pelamar, periode
 									where periode.id_periode = '$id_periode' order by pelamar.id_pelamar");

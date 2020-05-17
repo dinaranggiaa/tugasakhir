@@ -33,15 +33,15 @@ class C_Pelamar extends MY_Controller {
 	//Menampilkan Form Pendataan pelamar
 		function index()
 		{
-			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
-			$data['periode'] = $this->M_Pendataan->ambil_data_periode();
-			$data['pelamar'] = $this->M_Pendataan->ambil_data_pelamar();
+			$data['kode'] 		= $this->M_Pendataan->get_id_pelamar();
+			$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
+			$data['pelamar'] 	= $this->M_Pendataan->ambil_data_pelamar();
 			$this->load->view('admin/F_Pelamar', $data);
 		}
 
 		function tambah_pelamar()
 		{
-			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
+			$data['kode'] 	= $this->M_Pendataan->get_id_pelamar();
 			$this->load->view('admin/F_Pelamar_Entri', $data);
 		}
 
@@ -59,55 +59,47 @@ class C_Pelamar extends MY_Controller {
 
 		function ubah_pelamar()
 		{
-			$id_pelamar = $this->input->post('id_pelamar');
-			$id_periode = $this->input->post('id_periode');
-			$tgl_daftar = $this->input->post('tgl_daftar');
-			$nm_pelamar = $this->input->post('nm_pelamar');
-			$jk_pelamar = $this->input->post('jk_pelamar');
-			$tempat_lahir = $this->input->post('tempat_lahir');
-			$tanggal_lahir = $this->input->post('tanggal_lahir');
-			$almt_pelamar = $this->input->post('almt_pelamar');
-			$no_ktp = $this->input->post('no_ktp');
-			$status = $this->input->post('status');
-			$nohp_pelamar = $this->input->post('nohp_pelamar');
-			$pendidikan_akhir = $this->input->post('pendidikan_akhir');
+			$id_pelamar 		= $this->input->post('id_pelamar');
+			$id_periode 		= $this->input->post('id_periode');
+			$tgl_daftar 		= $this->input->post('tgl_daftar');
+			$nm_pelamar 		= $this->input->post('nm_pelamar');
+			$jk_pelamar 		= $this->input->post('jk_pelamar');
+			$tempat_lahir 		= $this->input->post('tempat_lahir');
+			$tanggal_lahir 		= $this->input->post('tanggal_lahir');
+			$almt_pelamar 		= $this->input->post('almt_pelamar');
+			$no_ktp 			= $this->input->post('no_ktp');
+			$status 			= $this->input->post('status');
+			$nohp_pelamar 		= $this->input->post('nohp_pelamar');
+			$pendidikan_akhir 	= $this->input->post('pendidikan_akhir');
 	 
 			$data = array(
-				'tgl_daftar' => $tgl_daftar,
-				'nm_pelamar' => $nm_pelamar,
-				'jk_pelamar' => $jk_pelamar,
-				'tempat_lahir' => $tempat_lahir,
-				'tanggal_lahir' => $tanggal_lahir,
-				'almt_pelamar' => $almt_pelamar,
-				'no_ktp' => $no_ktp,
-				'status' => $status,
-				'nohp_pelamar' => $nohp_pelamar,
-				'pendidikan_akhir' => $pendidikan_akhir,
+				'tgl_daftar' 		=> $tgl_daftar,
+				'nm_pelamar' 		=> $nm_pelamar,
+				'jk_pelamar' 		=> $jk_pelamar,
+				'tempat_lahir' 		=> $tempat_lahir,
+				'tanggal_lahir' 	=> $tanggal_lahir,
+				'almt_pelamar' 		=> $almt_pelamar,
+				'no_ktp' 			=> $no_ktp,
+				'status' 			=> $status,
+				'nohp_pelamar' 		=> $nohp_pelamar,
+				'pendidikan_akhir' 	=> $pendidikan_akhir,
 			);
 	
-			$where = array('id_pelamar' => $id_pelamar);
+			$where 				= array('id_pelamar' => $id_pelamar);
 
-			$data['pelamar'] = $this->M_Pendataan->ubah_periode($where, $data, 'pelamar');
+			$data['pelamar']	= $this->M_Pendataan->ubah_periode($where, $data, 'pelamar');
 			redirect('C_Pelamar/index');
 		}
 
 		function cari_keyword()
 		{
-			$data['keyword'] = $this->input->post("keyword");
-			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
-			$data['periode'] = $this->M_Pendataan->ambil_data_periode();
-			$data['pelamar'] = $this->M_Pendataan->ambil_data_pelamar();
-			$data['c_pelamar']= $this->M_Pendataan->cari_pelamar($data['keyword']);
+			$data['keyword'] 	= $this->input->post("keyword");
+			$data['kode'] 		= $this->M_Pendataan->get_id_pelamar();
+			$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
+			$data['pelamar'] 	= $this->M_Pendataan->ambil_data_pelamar();
+			$data['c_pelamar']	= $this->M_Pendataan->cari_pelamar($data['keyword']);
 			$this->load->view('admin/F_Pelamar', $data);
 		}
-
-		function ambil_data_byidpelamar()
-		{
-			$id_pelamar = $this->input->post('id_pelamar');
-			$data = $this->M_Pendataan->ambil_data_byidpelamar($id_pelamar);
-			echo json_encode($data);
-		}
-
 
 		
 

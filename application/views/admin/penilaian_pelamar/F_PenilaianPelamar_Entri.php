@@ -75,17 +75,17 @@
     
     <div class="form-pendataan" style="padding-bottom: 25px;">
       <?php $n = $JmlKriteria['total']; ?>
-    <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/input_data" method="POST">
-              <table style="width: 70%;">
+    <form>
+              <table style="width: 70%">
               <tr>
                 <td style="width: 25%"><label for="id_pelamar">Kode pelamar</label></td>
                 <td style="width: 5%">:</td>
-                <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?= $pelamar['id_pelamar']?>"></td>
+                <td><input type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar"></td>
               </tr>
               <tr>
                 <td><label for="nm_pelamar">Nama Pelamar</label></td>
                 <td>:</td>
-                <td><input readonly type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control" value="<?= $pelamar['nm_pelamar']?>"></td>
+                <td><input type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control"></td>
               </tr>
                 <?php for($i=0; $i<$n; $i++){?>
                       <td><label for="nm_kriteria" name="nm_kriteria<?= $i?>"><?= $kriteria[$i]['nm_kriteria']?></label>
@@ -93,13 +93,38 @@
                     </td>
                       <td>:</td>
                       <td>
-                        <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required>
+                        <?php if($i > 2){
+                          if($kriteria[$i]['nm_kriteria'] == 'Penglaman Kerja'){ ?>
+                            <select name="nilai_tes<?= $i?>" required>
+                              <option>---</option>
+                              <option value="1">1 - (Ada)</option>
+                              <option value="2">2 - (Tidak Ada)</option>
+                            </select>
+                          <?php } else { ?>
+                            <select name="nilai_tes<?= $i?>" required>
+                              <option>---</option>
+                              <option value="1">1 - (Ada/SMA)</option>
+                              <option value="2">2 - (Tidak Ada/D3/S1)</option>
+                            </select>
+                          <?php } ?>
+                            
+                          <?php } else { ?>
+                            <select name="nilai_tes<?= $i?>" required>
+                            <option>---</option>
+                              <option value="5">5 - Sangat Baik</option>
+                              <option value="4">4 - Baik</option>
+                              <option value="3">3 - Cukup</option>
+                              <option value="2">2 - Kurang</option>
+                              <option value="1">1 - Sangat Kurang</option>
+                            </select>
+                           <?php  } ?>
+                        <!-- <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required> -->
                       </td>
                     </tr>
                     <?php } ?>
               </table>
           </div>
-            <div class="modal-footer" style="margin-right: 280px;">
+          <div class="modal-footer" style="margin-right: 280px;">
               <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
               <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Cancel</button>
             </div>

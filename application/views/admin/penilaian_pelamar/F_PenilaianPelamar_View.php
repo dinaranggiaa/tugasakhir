@@ -66,43 +66,54 @@
     <h3><i class='far fa-folder-open'></i>&nbsp;Penilaian Pelamar</h3> 
     <div class="border"></div>
 
-    <div class="center-pencarian" style="padding-top:30px;">
+    <!-- <div class="center-pencarian" style="padding-top:30px;">
         <?php echo form_open('C_PenilaianPelamar/cari_data')?>
           <input class="form-control" type="text-form" name="keyword" id="" placeholder="Masukkan Kode Pelamar / Nama Pelamar">
           <button class="button button1" type='submit'><i class='fas fa-search'></i></button>
         <?php echo form_close()?>
-    </div>
+    </div> -->
     
     <div class="form-pendataan" style="padding-bottom: 25px;">
       <?php $n = $JmlKriteria['total']; ?>
-    <form>
-              <table style="width: 70%">
+    <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/ubah_penilaian" method="POST">
+              <table style="width: 70%;">
+                <?php $no=0; ?>
+                  <?php foreach ($npelamar as $row) : ?>
+                    <?php if ($no == 0) : ?>
               <tr>
                 <td style="width: 25%"><label for="id_pelamar">Kode pelamar</label></td>
                 <td style="width: 5%">:</td>
-                <td><input type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar"></td>
+                <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?= $row -> id_pelamar?>"></td>
               </tr>
               <tr>
                 <td><label for="nm_pelamar">Nama Pelamar</label></td>
                 <td>:</td>
-                <td><input type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control"></td>
+                <td><input readonly type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control" value="<?= $row -> nm_pelamar?>"></td>
               </tr>
-                <?php for($i=0; $i<$n; $i++){?>
-                      <td><label for="nm_kriteria" name="nm_kriteria<?= $i?>"><?= $kriteria[$i]['nm_kriteria']?></label>
-                          <input type="hidden" name="id_kriteria<?= $i?>" value="<?= $kriteria[$i]['id_kriteria']?>" class="form-control">
-                    </td>
-                      <td>:</td>
-                      <td>
-                        <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required>
-                      </td>
-                    </tr>
-                    <?php } ?>
+              <tr>
+                <td><label for="nohp_pelamar">No Handphone</label></td>
+                <td>:</td>
+                <td><input readonly type="text-form" name="nohp_pelamar" id="nohp_pelamar" class="form-control" value="<?= $row -> nohp_pelamar?>"></td>
+              </tr>
+                  <?php endif ?>
+              <?php $no++;
+                endforeach ?>
+             
+             <?php foreach ($npelamar as $row) : ?>
+                <tr>
+                <td><label for="nm_kriteria"><?= $row -> nm_kriteria?></label></td>
+                <input type="hidden" name="id_kriteria" id="id_kriteria" class="form-control">
+                <td>:</td>
+                <td>
+                  <input readonly type="text-form" name="nilai_tes" id="nilai_tes" class="form-control" value="<?= $row -> nilai_tes?>"></td>
+              </tr>
+            <?php endforeach?>
+
+
               </table>
+
           </div>
-          <div class="modal-footer" style="margin-right: 280px;">
-              <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
-              <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Cancel</button>
-            </div>
+          
           </form>
     </div>
   </div>

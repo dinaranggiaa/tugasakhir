@@ -98,25 +98,49 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Kriteria</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Nilai Target Krtieria</h4>
               </div>
               <div class="modal-body">
-              <form action="<?php echo base_url()?>index.php/C_Kriteria/simpan_kriteria" method="POST">
+              <form action="<?php echo base_url()?>index.php/C_NTarget/input_data" method="POST">
                   <table>
                     <tr>
-                      <td><label for="id_kriteria">Kode Kriteria</label></td>
+                      <td><label for="id_periode">Nama Kriteria</label></td>
                       <td>:</td>
-                      <td><input readonly type="text-form" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
+                      <td>
+                      <?php
+                          echo "
+                          <select name='id_periode' id='id_periode' required>
+                          <option value='' disabled selected>Pilih Kriteria</option>";
+                            foreach ($kriteria as $Kriteria) {  
+                            echo "<option value='".$Kriteria->id_kriteria."'>".$Kriteria->nm_kriteria."</option>";
+                            }
+                            echo"
+                          </select>";
+                          ?>    
+                      </td>     
                     </tr>
                     <tr>
-                      <td><label for="nm_kriteria">Nama Kriteria</label></td>
+                      <td><label for="nilai_target">Nilai Target</label></td>
                       <td>:</td>
-                      <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" class="form-control"></td>
+                      <td>
+                        <select name="nilai_target">
+                        <option checked >--</option>
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                      </td>
                     </tr>
                     <tr>
-                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
+                      <td><label for="status_kriteria">Status Kriteria</label></td>
                       <td>:</td>
-                      <td><input type="text-form" name="bobot_kriteria" id="bobot_kriteria" class="form-control"></td>
+                      <td>
+                        <select name="status_kriteria">
+                        <option checked >--</option>
+                        <option value="CF">Core Factor</option>
+                        <option value="SF">Secondary Factor</option>
+                      </td>
                     </tr>
                   </table>
               </div>

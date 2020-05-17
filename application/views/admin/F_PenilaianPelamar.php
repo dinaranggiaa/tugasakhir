@@ -75,10 +75,10 @@
                         <td><?= $Pelamar -> nm_pelamar?></td>
                         <td><?= $Pelamar -> almt_pelamar?></td>
                         <td><?= $Pelamar -> nohp_pelamar?></td>
-                        <td style="width: 15%;">
-                        <a class="btn btn-info btn_edit" name = "<?= $Pelamar -> id_pelamar;?>" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalAdd<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-plus"></span></a>
-                          <a class="btn btn-success btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-eye"></span></a>
-                          <a class="btn btn-primary btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-edit"></span></a>
+                        <td style="width: 15%; text-align:center">
+                        <!-- <a class="btn btn-info btn_edit" name = "<?= $Pelamar -> id_pelamar;?>" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalAdd<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-plus"></span></a> -->
+                          <a class="btn btn-success btn_edit" href="<?php echo site_url('C_PenilaianPelamar/view_nilai_pelamar/'.$Pelamar->id_pelamar) ?>"><span class="fas fa-eye"></span></a>
+                          <a class="btn btn-primary btn_edit" href="<?php echo site_url('C_PenilaianPelamar/edit_nilai_pelamar/'.$Pelamar->id_pelamar) ?>"><span class="fas fa-edit"></span></a>
                         </td>
                       </tr>
                       <?php $no++?>

@@ -18,13 +18,9 @@
 	</table>
 	
 	<hr style="height: 3px; background-color: black;">
-	<?php foreach ($periode as $row): { ?>
-		<p style="text-align: center; font-size: 25px; margin: 10px;">Laporan Rekomendasi Pelamar <br> Periode <?= $row -> bulan ?></p>
-	<?php }?>
-	<?php endforeach?>
 	
-	<!-- <p style="text-align: center; margin-top: 0px;">Periode <?= $tglawal ?> s/d <?= $tglakhir?></p> -->
-
+		<p style="text-align: center; font-size: 25px; margin: 10px;">Form Hasil Penilaian <br></p>
+	
 	<style type="text/css">
 		.inti {
 			border-collapse: collapse;
@@ -39,41 +35,80 @@
 			padding: 3px 15px;
 		}
 	</style>
-	<br>
+    <br>
 
-	<table style="width: 100%;" class="inti">
+    <table style="font-size: medium; padding-bottom:20px;">  
+    <tr style="padding-bottom: 10px;">
+        <td style="font-weight: bold; padding-bottom: 13px;">Biodata Pelamar<br></td>
+    </tr>              
+    <tr>
+        <td style="padding-bottom: 10px;"><label>Nama Lengkap</label></td>
+        <td style="padding-bottom: 10px;">:</td>
+        <td style="padding-bottom: 10px;">................................................................................................</td>
+    </tr>   
+    <tr>
+        <td style="padding-bottom: 10px;"><label>Jenis Kelamin</label></td>
+        <td style="padding-bottom: 10px;">:</td>
+        <td style="padding-bottom: 10px;"> O Laki-Laki / O Wanita *</td>
+    </tr>
+    <tr>
+        <td style="padding-bottom: 10px;"><label>Pendidikan Terakhir</label></td>
+        <td style="padding-bottom: 10px;">:</td>
+        <td style="padding-bottom: 10px;">O SMA / O D3 / O S1 *
+        </td>
+    </tr>   
+    <tr>
+        <td style="padding-bottom: 10px;"><label>Pengalaman Kerja</label></td>
+        <td style="padding-bottom: 10px;">:</td>
+        <td style="padding-bottom: 10px;">................................................................................................</td>
+    </tr>
+    </table>
+        
+	<table style="width: 100%; " class="inti">
 		<tr>
-			<th>No</th>
-			<th>Kode Pelamar</th>
-			<th>Nama Pelamar</th>
-			<th>No HP Pelamar</th>
+			<th style="width:10%; text-align:center">No</th>
+			<th>Kriteria Penilaian</th>
+			<th>Nilai</th>
 		</tr>
 		<?php $no = 1; ?>
-		<?php foreach ($pelamar as $row) { ?>
+		<?php foreach ($kriteria as $row) { ?>
 
 		<tr>
-			<td>
+			<td  style="width:10%; text-align:center">
 				<?= $no; ?>
 			</td>
 
 			<td>
-				<?= $row -> id_pelamar; ?>
-			</td>
+                <?= $row -> nm_kriteria?>
+            </td>
+            <td></td>
 
-			<td>
-				<?= $row -> nm_pelamar; ?>
-			</td>
-
-			<td>
-				<?= $row -> nohp_pelamar; ?>
-			</td>
 			<?php $no++; ?>
-		</tr>
+        </tr>
+        
 	<?php } ?>
-	</table>
-
-	<p style="float: right; font-size: 10px;">Printed by : <?= $this->session->userdata('nama'); ?> <br>
-		<?= $tgl; ?> WIB</p>
+    </table>
+    
+    <table style="font-size: smaller; padding-top:20px; width:40%">  
+        <tr style="padding-bottom: 10px;">
+            <td style="font-weight: bold; font-size: smaller;">Aspek Penilaian<br></td>
+        </tr>              
+        <tr>
+            <td style="font-size: smaller; width:2%"><label>1 : Kurang Baik </label></td>
+        </tr>
+        <tr>
+            <td style="font-size: smaller; width:2%"><label>2 : Bagus</label></td>
+        </tr>
+        <tr>
+            <td style="font-size: smaller; width:2%"><label>3 : Cukup</label></td>
+        </tr>  
+        <tr>
+            <td style="font-size: smaller; width:2%"><label>4 : Baik</label></td>
+        </tr>
+        <tr>
+            <td style="font-size: smaller; width:2%"><label>5 : Sangat Baik</label></td>
+        </tr>        
+    </table>
 
 		<br style="clear: both;"><br><br>
 
@@ -109,12 +144,12 @@
 		    .demo-table tbody td {
 		      color: #353535;
 		    }
-  		</style>
-
-		<table class="demo-table" style="margin: auto;">
+          </style>
+          
+          <table class="demo-table" style="margin: auto;">
 			<tr>
-				<td style="text-align: center;">
-				
+                <td style="text-align: left">
+                    <span>.............................................</span><br> 
 					<span>Kepala Cabang</span><br> 
 					<span>PT Dealer Honda Jaya Utama</span>
 					<br> 
@@ -127,6 +162,13 @@
 				</td>
 			</tr>
 		</table>
+        
+        <table style="font-size: smaller; padding-top:20px; width:40%">  
+        <tr style="padding-bottom: 10px;">
+            <td style="font-size: smaller;">* : Beri tanda silang (X) pada pilihan yang sesuai<br></td>
+        </tr>                  
+    </table>
+
 	</body>
 </html>
 

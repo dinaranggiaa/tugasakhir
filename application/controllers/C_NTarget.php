@@ -30,15 +30,29 @@ class C_NTarget extends MY_Controller {
     
     function index()
 	{	
-		$data['kode'] = $this->M_Pendataan->get_id_kriteria();
-		$data['kriteria'] = $this->M_Pendataan->ambil_data_kriteria();
+		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
+		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria();
+		//where tanda=1
+		$data['tkriteria'] 	= $this->M_Pendataan->data_kriteria();
 		$this->load->view('admin/F_NTarget',$data);		
     }
     
 
-	function simpan_kriteria()
+	function input_data()
 	{
-		$data['kriteria'] = $this->M_Pendataan->simpan_kriteria();
+		$data['simpan'] 	= $this->M_Pendataan->simpan_ntarget();
+		$id_kriteria 		= $this->input->post('id_kriteria');
+		$nilai_target		= $this->input->post('nilai_target');
+		$status_kriteria	= $this->input->post('status_kriteria');
+		$tanda 				= 1;
+		
+		$data 				= array('tanda' 			=> $tanda,
+									'nilai_target'		=> $nilai_target,
+									'status_kriteria'	=> $status_kriteria);
+
+		$where 				= array('id_kriteria' 		=> $id_kriteria);
+
+		$data['kriteria'] 	= $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
 		redirect('C_NTarget/index');
 	}
 	
@@ -50,44 +64,28 @@ class C_NTarget extends MY_Controller {
 
 	function ubah_kriteria()
 	{
-		$id_kriteria = $this->input->post('id_kriteria');
-		$nilai_target = $this->input->post('nilai_target');
-		$status_kriteria = $this->input->post('status_kriteria');
+		$id_kriteria 		= $this->input->post('id_kriteria');
+		$nilai_target 		= $this->input->post('nilai_target');
+		$status_kriteria 	= $this->input->post('status_kriteria');
 		
 		$data = array(
-			'nilai_target' => $nilai_target,
-			'status_kriteria' => $status_kriteria
+			'nilai_target' 		=> $nilai_target,
+			'status_kriteria' 	=> $status_kriteria
 		);
 
 		$where = array('id_kriteria' => $id_kriteria);
 
-		$data['kriteria'] = $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
+		$data['kriteria']	= $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
 		redirect('C_NTarget/index');
 	}
 
 	function cari_keyword()
 	{
-		$data['keyword'] = $this->input->post("keyword");
-		$data['kode'] = $this->M_Pendataan->get_id_kriteria();
-		$data['kriteria']= $this->M_Pendataan->cari_kriteria($data['keyword']);
+		$data['keyword'] 	= $this->input->post("keyword");
+		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
+		$data['kriteria']	= $this->M_Pendataan->cari_kriteria($data['keyword']);
 		$this->load->view('admin/F_Kriteria', $data);
 	}
-
-    function ambil_data_kriteria()
-	{
-		$data = $this->M_Pendataan->ambil_data_kriteria();
-		// $this->load->view('admin/f_kriteria', $data);
-		echo json_encode($data);
-	}
-
-	function ambil_data_byidkriteria()
-	{
-		$id_kriteria = $this->input->post('id_kriteria');
-		$data = $this->M_Pendataan->ambil_data_byidkriteria($id_kriteria);
-		echo json_encode($data);
-	}
-
-	
 
 	
 }

@@ -34,7 +34,7 @@ table th {
       $n = $JmlKriteria['total'];
 	?>
 	
-    <form action="<?php echo base_url()?>index.php/C_ProsesAHP/inputNilaiPerbandingan" method="POST">
+    <form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_perbandingan_kriteria" method="POST">
 	<div class="panel-body">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" style="width: 75%; font-size:13px; font-weight:normal;">	

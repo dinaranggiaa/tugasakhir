@@ -32,45 +32,43 @@ class C_Periode extends MY_Controller {
 
 	function index()
 	{
-		$data['kode'] = $this->M_Pendataan->get_id_periode();
-		$data['periode'] = $this->M_Pendataan->ambil_data_periode();
+		$data['kode'] 		= $this->M_Pendataan->get_id_periode();
+		$data['periode']	= $this->M_Pendataan->ambil_data_periode();
 		$this->load->view('admin/F_Periode', $data);
 	}
 
 	function simpan_periode()
 	{
-		$data['periode'] = $this->M_Pendataan->simpan_periode();
+		$data['periode'] 	= $this->M_Pendataan->simpan_periode();
 		redirect('C_Periode/index');
 	}
 
 	function hapus_periode($id_periode)
 	{
-		$data['periode'] = $this->M_Pendataan->hapus_periode($id_periode);
+		$data['periode'] 	= $this->M_Pendataan->hapus_periode($id_periode);
 		redirect('C_Periode/index');
 	}
 
 	function ubah_periode()
 	{
-		$id_periode = $this->input->post('id_periode');
-		$bulan = $this->input->post('bulan');
-		$tgl_pembukaan = $this->input->post('tgl_pembukaan');
-		
-		$data = array(
-			'bulan' => $bulan,
-			'tgl_pembukaan' => $tgl_pembukaan
-		);
+		$id_periode 		= $this->input->post('id_periode');
+		$bulan 				= $this->input->post('bulan');
+		$tgl_pembukaan 		= $this->input->post('tgl_pembukaan');
 
-		$where = array('id_periode' => $id_periode);
+		$data 				= array('bulan' 		=> $bulan,
+									'tgl_pembukaan' => $tgl_pembukaan);
 
-		$data['periode'] = $this->M_Pendataan->ubah_periode($where, $data, 'periode');
+		$where 				= array('id_periode' 	=> $id_periode);
+
+		$data['periode'] 	= $this->M_Pendataan->ubah_periode($where, $data, 'periode');
 		redirect('C_Periode/index');
 	}
 
 	function cari_keyword()
 	{
-		$data['keyword'] = $this->input->post("keyword");
-		$data['kode'] = $this->M_Pendataan->get_id_periode();
-		$data['periode']= $this->M_Pendataan->cari_periode($data['keyword']);
+		$data['keyword'] 	= $this->input->post("keyword");
+		$data['kode'] 		= $this->M_Pendataan->get_id_periode();
+		$data['periode']	= $this->M_Pendataan->cari_periode($data['keyword']);
 		$this->load->view('admin/F_Periode', $data);
 	}
 	

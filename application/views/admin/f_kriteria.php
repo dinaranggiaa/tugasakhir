@@ -109,11 +109,11 @@
                       <td>:</td>
                       <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" class="form-control"></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                       <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
                       <td>:</td>
                       <td><input type="text-form" name="bobot_kriteria" id="bobot_kriteria" class="form-control"></td>
-                    </tr>
+                    </tr> -->
                   </table>
               </div>
               <div class="modal-footer">

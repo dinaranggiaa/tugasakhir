@@ -30,8 +30,8 @@ class C_Kriteria extends MY_Controller {
     
     function index()
 	{	
-		$data['kode'] = $this->M_Pendataan->get_id_kriteria();
-		$data['kriteria'] = $this->M_Pendataan->ambil_data_kriteria();
+		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
+		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria();
 		$this->load->view('admin/F_Kriteria',$data);		
     }
     
@@ -50,41 +50,25 @@ class C_Kriteria extends MY_Controller {
 
 	function ubah_kriteria()
 	{
-		$id_kriteria = $this->input->post('id_kriteria');
-		$nm_kriteria = $this->input->post('nm_kriteria');
-		$bobot_kriteria = $this->input->post('bobot_kriteria');
+		$id_kriteria 		= $this->input->post('id_kriteria');
+		$nm_kriteria 		= $this->input->post('nm_kriteria');
+		$bobot_kriteria 	= $this->input->post('bobot_kriteria');
 		
-		$data = array(
-			'nm_kriteria' => $nm_kriteria,
-			'bobot_kriteria' => $bobot_kriteria
-		);
+		$data 				= array('nm_kriteria'	 => $nm_kriteria,
+									'bobot_kriteria' => $bobot_kriteria);
 
-		$where = array('id_kriteria' => $id_kriteria);
+		$where 				= array('id_kriteria' => $id_kriteria);
 
-		$data['kriteria'] = $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
+		$data['kriteria'] 	= $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
 		redirect('C_Kriteria/index');
 	}
 
 	function cari_keyword()
 	{
-		$data['keyword'] = $this->input->post("keyword");
-		$data['kode'] = $this->M_Pendataan->get_id_kriteria();
-		$data['kriteria']= $this->M_Pendataan->cari_kriteria($data['keyword']);
+		$data['keyword'] 	= $this->input->post("keyword");
+		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
+		$data['kriteria']	= $this->M_Pendataan->cari_kriteria($data['keyword']);
 		$this->load->view('admin/F_Kriteria', $data);
-	}
-
-    function ambil_data_kriteria()
-	{
-		$data = $this->M_Pendataan->ambil_data_kriteria();
-		// $this->load->view('admin/f_kriteria', $data);
-		echo json_encode($data);
-	}
-
-	function ambil_data_byidkriteria()
-	{
-		$id_kriteria = $this->input->post('id_kriteria');
-		$data = $this->M_Pendataan->ambil_data_byidkriteria($id_kriteria);
-		echo json_encode($data);
 	}
 
 	

@@ -88,8 +88,10 @@
               <ul><?php echo "<a href='".base_url()."C_Laporan/index'><i class='fas fa-medal'> &nbsp; </i>Rekomendasi Pelamar</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Laporan/index''><i class='far fa-list-alt'> &nbsp; </i>Karyawan Diterima</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Laporan/index''><i class='far fa-address-book'> &nbsp; </i>Data Karyawan Baru</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_Laporan/cetak_form_penilaian''><i class='far fa-address-book'> &nbsp; </i>Form Penilaian</a>"; ?></ul>
             </div>
           </li>
+          
         </ul>
   </div>
 

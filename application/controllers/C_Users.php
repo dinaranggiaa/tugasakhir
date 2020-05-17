@@ -32,8 +32,8 @@ class C_users extends MY_Controller {
 
 	function index()
 	{
-		$data['kode'] = $this->M_Pendataan->get_id_users();
-		$data['users'] = $this->M_Pendataan->ambil_data_users();
+		$data['kode'] 	= $this->M_Pendataan->get_id_users();
+		$data['users'] 	= $this->M_Pendataan->ambil_data_users();
 		$this->load->view('manager/F_users', $data);
 	}
 
@@ -51,30 +51,28 @@ class C_users extends MY_Controller {
 
 	function ubah_users()
 	{
-		$id_user = $this->input->post('id_user');
-		$nm_user = $this->input->post('nm_user');
-		$username = $this->input->post('username');
-		$level = $this->input->post('level');
-		$password = $this->input->post('password');
+		$id_user 		= $this->input->post('id_user');
+		$nm_user 		= $this->input->post('nm_user');
+		$username 		= $this->input->post('username');
+		$level 			= $this->input->post('level');
+		$password 		= $this->input->post('password');
 		
-		$data = array(
-			'nm_user' => $nm_user,
-			'username' => $username,
-			'level' => $level,
-			'password' => $password,
-		);
+		$data 			= array('nm_user'	=> $nm_user,
+								'username' 	=> $username,
+								'level' 	=> $level,
+								'password' 	=> $password);
 
-		$where = array('id_user' => $id_user);
+		$where 			= array('id_user' 	=> $id_user);
 
-		$data['users'] = $this->M_Pendataan->ubah_users($where, $data, 'users');
+		$data['users']	= $this->M_Pendataan->ubah_users($where, $data, 'users');
 		redirect('C_users/index');
 	}
 
 	function cari_keyword()
 	{
-		$data['keyword'] = $this->input->post("keyword");
-		$data['kode'] = $this->M_Pendataan->get_id_users();
-		$data['users']= $this->M_Pendataan->cari_users($data['keyword']);
+		$data['keyword'] 	= $this->input->post("keyword");
+		$data['kode']		= $this->M_Pendataan->get_id_users();
+		$data['users']		= $this->M_Pendataan->cari_users($data['keyword']);
 		$this->load->view('admin/F_users', $data);
 	}
 	

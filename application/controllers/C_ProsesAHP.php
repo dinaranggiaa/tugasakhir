@@ -31,12 +31,12 @@ class C_ProsesAHP extends MY_Controller {
 	public function NilaiPerbandingan()
 	{
 
-		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
-		$data['NmKriteria'] = $this->M_Proses->getNamaKriteria()->result_array();
-		// print_r($data['NmKriteria']);
-		$data['IdKriteria'] = $this->M_Proses->getIdKriteria()->result_array();
-		$data['getNamaKriteria'] = $this->M_Proses->getNmKriteria()->result_array();
-		$data['getIdKriteria'] = $this->M_Proses->getIdKriteria()->result_array();
+		// $data['JmlKriteria'] 		= $this->M_Proses->getJmlKriteria();
+		$data['JmlKriteria'] 		= $this->M_Proses->get_jmlkriteria();
+		$data['NmKriteria'] 		= $this->M_Proses->getNamaKriteria()->result_array();
+		$data['IdKriteria'] 		= $this->M_Proses->getIdKriteria()->result_array();
+		$data['getNamaKriteria']	= $this->M_Proses->getNmKriteria()->result_array();
+		$data['getIdKriteria'] 		= $this->M_Proses->getIdKriteria()->result_array();
 		$this->load->view("admin/F_NilaiPerbandingan", $data);
 		
 	}
@@ -49,28 +49,90 @@ class C_ProsesAHP extends MY_Controller {
 
 	public function getNilaiPerbandinganKriteria()
 	{
-		// $data['nama'] = $this->M_Proses->get_kriteria1();
-		$data['nperbandingan'] = $this->M_Proses->get_nilai_perbandingan();
-		$data['matriks'] 	= $this->M_Proses->get_nilai_perbandingan();
-		
-		$data['JmlKriteria'] = $this->M_Proses->getJmlKriteria();
-		$data['NilaiPerbandinganKriteria'] = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
-		$data['getNamaKriteria'] = $this->M_Proses->getNmKriteria()->result_array();
-		// print_r($data['NilaiPerbandinganKriteria']);
+		// $data['nperbandingan'] 				= $this->M_Proses->get_nilai_perbandingan();
+		// $data['matriks'] 					= $this->M_Proses->get_nilai_perbandingan();
+		$data['JmlKriteria'] 				= $this->M_Proses->get_jmlkriteria();
+		$data['NilaiPerbandinganKriteria'] 	= $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
+		$data['getNamaKriteria'] 			= $this->M_Proses->getNmKriteria()->result_array();
+		$data['matriks']					= $this->get_nilai_matriks();
 		$this->load->view("admin/h_PerhitunganAHP", $data);
 	}
 
-	function get_nilai_perbandingan()
+	function input_perbandingan_kriteria()
+	{
+
+		// $n = $this->M_Proses->getJmlKriteria();
+		// $n = $this->M_Proses->get_jmlkriteria();
+		$jml_kriteria = 5;
+		$urut=0;		
+		$data = array();
+
+
+		for ($x=1; $x<= $jml_kriteria; $x++) {
+			for ($y=1; $y <= $jml_kriteria ; $y++) {	
+				
+				if($x == $y)
+				{
+					$item = [
+						'id_kriteria1' 		=> $x,
+						'id_kriteria2' 		=> $x,
+						'nilai_pembanding' 	=> 1
+					];
+		
+					array_push($data, $item);
+				} elseif ($x<$y) {
+					
+					if($this->input->post('nilai_pembanding') < 1){
+						$nilai_pembanding = 1/$this->input->post('nilai_pembanding'.$x.$y);
+					} else {
+						$nilai_pembanding = $this->input->post('nilai_pembanding'.$x.$y);
+					}
+					$item = [
+						'id_kriteria1' 		=> $this->input->post('kriteria1_'.$x.$y),
+						'id_kriteria2' 		=> $this->input->post('kriteria2_'.$x.$y),
+						'nilai_pembanding' 	=> $nilai_pembanding
+					];
+					array_push($data, $item);
+
+				} 
+				elseif($x>$y) {
+					
+					if($this->input->post('nilai_pembanding') < 1){
+						$nilai_pembanding = 1/$this->input->post('nilai_pembanding'.$x.$y);
+					} else {
+						$nilai_pembanding = $this->input->post('nilai_pembanding'.$x.$y);
+					}
+
+					$item = [
+						'id_kriteria1' 		=> $this->input->post('kriteria2_'.$y.$x),
+						'id_kriteria2' 		=> $this->input->post('kriteria1_'.$y.$x),
+						'nilai_pembanding' 	=> $this->input->post('nilai_pembanding'.$y.$x)
+					];
+
+					array_push($data, $item);
+				}
+					
+			}
+		}
+
+		$this->db->empty_table('perbandingan_kriteria', $data);
+		$this->db->insert_batch('perbandingan_kriteria', $data);
+
+		redirect('C_ProsesAHP/getNilaiPerbandinganKriteria');
+	}
+
+	function get_nilai_matriks()
 	{
 
 		$nilaiA = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
 		echo "Nilai A: ";
 		print_r($nilaiA);
-		$n = 3;
+		// $n = $this->M_Proses->get_jmlkriteria();
+		$jml_kriteria = 5;
 		$uruta = 0;
 		$matriksA = array();
-		for($i=0; $i<$n; $i++){
-			for($j=0; $j<$n; $j++){
+		for($i=0; $i<$jml_kriteria; $i++){
+			for($j=0; $j<$jml_kriteria; $j++){
 				
 				$matriksA[$i][$j] = $nilaiA[$uruta];
 				$uruta++;
@@ -90,9 +152,8 @@ class C_ProsesAHP extends MY_Controller {
 				$urutb++;
 			}
 		}
-		?> <br><br><br><?php
+		
 		echo 'Matriks B : ';
-		print_r($matriksB);
 
 		$urutc[] = 0;
 		$matriksC = array();
@@ -103,22 +164,20 @@ class C_ProsesAHP extends MY_Controller {
 				$urutc++;
 			}
 		}
-		?> <br><br><br><?php
+		
 		echo 'Matriks C: ';
-		print_r($matriksC);
+		// print_r($matriksC);
 		
 
 		$matrikshasil = array();
-		for($x=0; $x<$n; $x++){
-			for($y=0; $y<$n; $y++){
-				for($z=1; $z<=$n; $z++){
-					$matrikshasil[$y][$x] = $matriksC + ($matriksA[$y][$z] * $matriksB[$z][$x]);
+		for($x=0; $x<$jml_kriteria; $x++){
+			for($y=0; $y<$jml_kriteria; $y++){
+				for($z=1; $z<=$jml_kriteria; $z++){
+					//$matrikshasil[$y][$x] = $matriksC[$y][$z] + ($matriksA[$y][$z] * $matriksB[$z][$x]);
 				}
 			}
 		}
-		?> <br><br><br><br><?php
-		echo "Hasil : ";
-		print_r($matrikshasil);
+		$this->load->view('admin/h_perhitunganAHP', $matriksB);
 
 	}
 
