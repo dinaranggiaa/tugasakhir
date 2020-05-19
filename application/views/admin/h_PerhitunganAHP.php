@@ -78,11 +78,11 @@ input[type=text], select {
   </div>	 -->
   <h4>Matriks Perbandingan Per Kriteria</h4>
   <table style="width: 80%">
-  <?php
-	  $n = $JmlKriteria['total'];
-	  $urutan=0;
-    ?>
-			<tbody>
+	<?php
+		$n = $JmlKriteria['total'];
+		$urutan=0;
+	?>
+		<tbody>
 			<th>Kriteria</th>
 			<?php
 				for ($x=0; $x <= ($n-1); $x++) {
@@ -103,7 +103,7 @@ input[type=text], select {
 					echo "</tr>";
 				}
 ?>
-			</tbody>
+		</tbody>
     </table>
     
     <br><br>
@@ -113,6 +113,9 @@ input[type=text], select {
   <?php
 	  $n = $JmlKriteria['total'];
 	  $urutan=0;
+	  $jml_kriteria = $JmlKriteria['total'];
+	  $uruta = 0;
+	  $matriksA = array();
     ?>
 			<tbody>
 			<th>Kriteria</th>
@@ -122,54 +125,59 @@ input[type=text], select {
 				}
 			?>
 			<?php
-				for ($y=0; $y <= ($n-1); $y++) {
+				//Matriks A
+				
+				for ($y=0; $y < $n; $y++) {  //Kolom pada tabel
 					echo "<tr>";
 					echo "<td>".$getNamaKriteria[$y]['nm_kriteria']."</td>";
-					
-							for($z=0; $z<=$n-1; $z++) {
-								$Nilai[$y][$z] = $NilaiPerbandinganKriteria[$urutan]['nilai_pembanding'];
-								$urutan++;
-								echo "<td>".$Nilai[$y][$z]."</td>";								
-							}
-						
+					for($z=0; $z<$jml_kriteria; $z++){
+						$matriksA[$y][$z] = $NilaiPerbandinganKriteria[$urutan]['nilai_pembanding'];
+						$urutan++;
+						echo "<td>".$matriksA[$y][$z]."</td>";	
+					}
 					echo "</tr>";
 				}
-?>
+
+				
+
+				//Matriks B
+				for ($y=0; $y <= ($n-1); $y++) {
+					$jml_kriteria = $JmlKriteria['total'];
+					$urutb = 0;
+					$matriksB = array();
+					for($z=0; $z<$jml_kriteria; $z++){
+						$matriksB[$y][$z] = $NilaiPerbandinganKriteria[$urutb]['nilai_pembanding'];
+						$urutan++;	
+					}
+				}
+
+
+				$jml_kriteria = 5;
+				$hasilkali= array(); //hasil perkalian matriks A dan B
+				for($x=0; $x<$jml_kriteria; $x++){
+					$tempjml = 0;
+					for($y=0; $y<$jml_kriteria; $y++){
+						$temp = 0;
+						for($z=0; $z<$jml_kriteria; $z++){
+							$matrikA = $matriksA[$x][$z]['nilai_pembanding'];
+							print_r($matrikA);
+							$matrikB = $matriksB[$z][$y]['nilai_pembanding'];
+							$temp += $matrikA * $matrikB;
+						}
+						$hasilkali[$x][$y] = $temp; //Hasil perkalian matriks
+						// echo "hasil kali :";
+						$tempjml += $hasilkali[$x][$y];
+						
+						// echo "hasil kalikali :<br>";
+						//  $hasiljumlahkali[$y] = $tempjml;
+						
+					}
+					//Hasil jumlah kali per kolom
+					$hasiljumlahkali[$x] = $tempjml;	
+					// print_r($hasiljumlahkali[$x] = $tempjml);
+				}
+			?>
 			</tbody>
 	</table>
-	
-	<?php
-		$nilaiA[] = $NilaiPerbandinganKriteria;
-		// print_r($nilaiA); ?> <br><br> <?php
-		// echo "Nilai A: ";
-		// print_r($nilaiA);
-		// $n = $this->M_Proses->get_jmlkriteria();
-		$jml_kriteria = 5;
-		$uruta = 0;
-		$matriksA = array();
-		for($i=0; $i<$n; $i++){
-			for($j=0; $j<$n; $j++){
-				$matriksA[$i][$j] = $nilaiA[$uruta];
-				$uruta++;
-			}
-		}?>
 
-		<?php
-		
-				for ($y=0; $y <= ($n-1); $y++) {
-					echo "<tr>";
-					echo "<td>".$getNamaKriteria[$y]['nm_kriteria']."</td>";
-					
-							for($z=0; $z<=$n-1; $z++) {
-								$matriksA[$y][$z] = $nilaiA[$uruta]['nilai_pembanding'];
-								$uruta++;
-								echo "<td>".$matriksA[$y][$z]."</td>";								
-							}
-						
-					echo "</tr>";
-				}
-?>
-		<br><br> <?php
-	?>
-	
 </div>

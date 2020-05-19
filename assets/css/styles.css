@@ -321,7 +321,7 @@ ul {
 
 li a {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: medium;
+  font-size: small;
   display: block;
   /* color: rgb(199, 216, 209); */
   color: #ffff;
@@ -331,7 +331,7 @@ li a {
 
 ul li a {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: medium;
+  font-size: small;
   display: block;
   /* color: rgb(199, 216, 209); */
   color: #ffff;
@@ -364,7 +364,7 @@ li a:hover {
   color: #ffffff;
   padding: 5px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: medium;
+  font-size: small;
   border: none;
 }
 

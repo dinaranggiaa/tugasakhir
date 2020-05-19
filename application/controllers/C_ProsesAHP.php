@@ -37,6 +37,7 @@ class C_ProsesAHP extends MY_Controller {
 		$data['IdKriteria'] 		= $this->M_Proses->getIdKriteria()->result_array();
 		$data['getNamaKriteria']	= $this->M_Proses->getNmKriteria()->result_array();
 		$data['getIdKriteria'] 		= $this->M_Proses->getIdKriteria()->result_array();
+		$data['get_ahp']			= $this->get_nilai_matriks();
 		$this->load->view("admin/F_NilaiPerbandingan", $data);
 		
 	}
@@ -54,7 +55,6 @@ class C_ProsesAHP extends MY_Controller {
 		$data['JmlKriteria'] 				= $this->M_Proses->get_jmlkriteria();
 		$data['NilaiPerbandinganKriteria'] 	= $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
 		$data['getNamaKriteria'] 			= $this->M_Proses->getNmKriteria()->result_array();
-		$data['matriks']					= $this->get_nilai_matriks();
 		$this->load->view("admin/h_PerhitunganAHP", $data);
 	}
 
@@ -125,60 +125,181 @@ class C_ProsesAHP extends MY_Controller {
 	{
 
 		$nilaiA = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
-		echo "Nilai A: ";
-		print_r($nilaiA);
-		// $n = $this->M_Proses->get_jmlkriteria();
+		
+		//Mengubah nilaiA menjadi matriks A
 		$jml_kriteria = 5;
 		$uruta = 0;
 		$matriksA = array();
 		for($i=0; $i<$jml_kriteria; $i++){
 			for($j=0; $j<$jml_kriteria; $j++){
-				
 				$matriksA[$i][$j] = $nilaiA[$uruta];
 				$uruta++;
 			}
 		}
 
-		?> <br><br><br><?php
-		echo 'Matriks A: ';
-		print_r($matriksA);
-		
+		//Mengubah nilaiA menjadi matriks B
 		$urutb = 0;
 		$matriksB = array();
-		for($i=0; $i<3; $i++){
-			for($j=0; $j<3; $j++){
+		for($i=0; $i<$jml_kriteria; $i++){
+			for($j=0; $j<$jml_kriteria; $j++){
 				
 				$matriksB[$i][$j] = $nilaiA[$urutb];
 				$urutb++;
 			}
 		}
-		
-		echo 'Matriks B : ';
 
-		$urutc[] = 0;
-		$matriksC = array();
-		for($i=0; $i<3; $i++){
-			for($j=0; $j<3; $j++){
-				
-				$matriksC[$i][$j] = $urutc;
-				$urutc++;
-			}
-		}
-		
-		echo 'Matriks C: ';
-		// print_r($matriksC);
-		
+		// $hasilkali = array();
+		// for($x=0; $x<$jml_kriteria; $x++){
+		// 	$tempjml = 0;
+		// 	for($y=0; $y<$jml_kriteria; $y++){
+		// 		$temp = 0;
+		// 		for($z=0; $z<$jml_kriteria; $z++){
+		// 			// $temp[$y][$x] += ($matriksA[$y][$z]['nilai_pembanding'] * $matriksB[$z][$x]['nilai_pembanding']);
+		// 		}
+		// 		$hasilkali[$x][$y] = $temp;
+		// 		// print_r($hasilkali[$x][$y]); ?> <br><br><?php
+		// 		$tempjml += $hasilkali[$x][$y];
+		// 		$hasiljumlahkali[$y] = $tempjml;
+		// 	}
+		// 	//Hasil jumlah kali per kolom
+		// 	$hasiljumlahkali[$x] = $tempjml;
+		// }
+		// // echo "Matriks Hasi <br>";
+		// // print_r($temp);
 
-		$matrikshasil = array();
+
+		
+		//Hasil Perkalia Matriks A dan B
+		$jml_kriteria = 5;
+		$hasilkali= array(); //hasil perkalian matriks A dan B
 		for($x=0; $x<$jml_kriteria; $x++){
+			$tempjml = 0;
 			for($y=0; $y<$jml_kriteria; $y++){
-				for($z=1; $z<=$jml_kriteria; $z++){
-					//$matrikshasil[$y][$x] = $matriksC[$y][$z] + ($matriksA[$y][$z] * $matriksB[$z][$x]);
+				$temp = 0;
+				for($z=0; $z<$jml_kriteria; $z++){
+					$temp += $matriksA[$x][$z]['nilai_pembanding'] * $matriksB[$z][$y]['nilai_pembanding'];
 				}
+				$hasilkali[$x][$y] = $temp; //Hasil perkalian matriks
+				// echo "hasil kali :";
+				$tempjml += $hasilkali[$x][$y];
+				
+				// echo "hasil kalikali :<br>";
+				//  $hasiljumlahkali[$y] = $tempjml;
+				
 			}
+			//Hasil jumlah kali per kolom
+			$hasiljumlahkali[$x] = $tempjml;	
+			// print_r($hasiljumlahkali[$x] = $tempjml);
 		}
-		$this->load->view('admin/h_perhitunganAHP', $matriksB);
 
+		echo "Hasil Perkalian Matriks : <br>";
+		print_r($hasilkali); ?><br><br><?php
+
+
+		echo "Hasil Penjumlahan Tiap Kolom Matriks : <br>";
+		print_r($hasiljumlahkali); ?><br><br><?php
+
+		
+		//Total perkalian
+		$totaljmlkali = 0;
+		for($x=0; $x<$jml_kriteria; $x++){
+			$totaljmlkali += $hasiljumlahkali[$x];
+		}
+		echo "Total baris perkalian matrik : <br>";
+		print_r($totaljmlkali); ?><br><br><?php
+		 
+
+		//Normalisasi eigen vector
+		for($x=0; $x<count($hasiljumlahkali); $x++){
+			$hasiljmlkalibagi[$x] = $hasiljumlahkali[$x]/$totaljmlkali; //Hasil egienvector
+			// print_r($hasiljmlkalibagi[$x]); 
+		}
+		echo "Eigen Vector <br>";
+		print_r($hasiljmlkalibagi); ?> <br><br> <?php
+
+		//Perhitungan pengujian konsistensi
+		
+		//perkalian matriks dengan egien vector
+		for($x=0; $x<$jml_kriteria; $x++){
+			$matriksxeigen =0;
+			for($y=0; $y<$jml_kriteria; $y++){
+				// echo "hasilkalibagi<br>";
+				// print_r($hasiljmlkalibagi[$y]);
+				$matriksxeigen += $matriksA[$x][$y]['nilai_pembanding'] * $hasiljmlkalibagi[$y];
+			}
+			$hasilmatriksxeigen[$x] = $matriksxeigen;	
+		}
+		
+		echo "Matriks x Eigen <br>";
+		print_r($hasilmatriksxeigen); ?><br><br> <?php
+
+		//Consistency Vector
+		$cv = array();
+		for($x=0; $x<$jml_kriteria; $x++){
+			$cv[$x] = $hasilmatriksxeigen[$x]/$hasiljmlkalibagi[$x];
+		}
+		echo "Consistency Vector <br>";
+		print_r($cv); ?><br><br> <?php
+
+
+		//Jumlah Consistency Vector
+		$jmlcv = 0;
+		$lamdamax = 0;
+		for($x=0; $x<count($cv); $x++){
+			$jmlcv += $cv[$x];
+		}
+		$lamdamax = $jmlcv / $jml_kriteria; //Mencari lamda eigen max
+
+		echo "Rata-rata CV : <br>";
+		print_r($lamdamax); ?><br><br> <?php
+
+		
+		
+		//Menghitung CI
+		$CI = ($lamdamax - $jml_kriteria) / ($jml_kriteria - 1);
+		echo "Menghitung CI <br>";
+		print_r($CI); ?><br><br> <?php
+
+		//Menghitung CR
+		$RI = 0;
+		if(count($hasilmatriksxeigen) == 1){
+			$RI = 0;
+		} elseif(count($hasilmatriksxeigen) == 2){
+			$RI = 0;
+		} elseif(count($hasilmatriksxeigen) == 3){
+			$RI = 0.58;
+		} elseif(count($hasilmatriksxeigen) == 4){
+			$RI = 0.9;
+		} elseif(count($hasilmatriksxeigen) == 5){
+			$RI = 1.12;
+		} elseif(count($hasilmatriksxeigen) == 6){
+			$RI = 1.24;
+		} elseif(count($hasilmatriksxeigen) == 7){
+			$RI = 1.32;
+		} elseif(count($hasilmatriksxeigen) == 8){
+			$RI = 1.41;
+		} elseif(count($hasilmatriksxeigen) == 9){
+			$RI = 1.45;
+		} elseif(count($hasilmatriksxeigen) == 10){
+			$RI = 1.49;
+		} elseif(count($hasilmatriksxeigen) == 11){
+			$RI = 1.51;
+		} elseif(count($hasilmatriksxeigen) == 12){
+			$RI = 1.48;
+		} elseif(count($hasilmatriksxeigen) == 13){
+			$RI = 1.56;
+		} elseif(count($hasilmatriksxeigen) == 14){
+			$RI = 1.57;
+		} elseif(count($hasilmatriksxeigen) == 15){
+			$RI = 1.59;
+		}
+		$CR = 0;
+		$CR = $CI/$RI;
+		echo"CR <br>";
+		print_r($CR);
+
+		
 	}
+
 
 }

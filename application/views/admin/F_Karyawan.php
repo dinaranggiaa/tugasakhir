@@ -61,9 +61,9 @@
           <tr>
             <th>No</th>
             <th>Kode Pelamar</th>
-            <th>Periode</th>
             <th>Nama Lengkap</th>
             <th>No HP</th>
+            <th>Alamat</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -76,6 +76,7 @@
             <td><?= $Pelamar -> bulan?></td>
             <td><?= $Pelamar -> nm_pelamar?></td>
             <td><?= $Pelamar -> nohp_pelamar?></td>
+            <td><?= $Pelamar -> almt_pelamar?></td>
             <td style="width: 15%;">
               <a class="btn btn-info btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-eye"></span></a>
               <a class="btn btn-primary btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-edit"></span></a>

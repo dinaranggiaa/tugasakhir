@@ -31,6 +31,7 @@ class M_Pendataan extends MY_Model {
 	}
 	
 // <!--PROSES PELAMAR-->
+
     // Menampilkan id pelamar
 	function get_id_pelamar()
 	{
@@ -95,6 +96,24 @@ class M_Pendataan extends MY_Model {
 		$this->db->update($table, $data);
 	}
 
+	//Dipake untuk buat page
+	function list_data_pelamar($limit, $start)
+	{
+		$this->db->limit($limit, $start);
+    	$result = array();
+        $this->db->SELECT('pelamar.*,periode.*')
+				 ->FROM('pelamar')
+				 ->join('periode','periode.id_periode=pelamar.id_periode')
+                 ->ORDER_BY('id_pelamar','DESC');
+        $pelamar = $this->db->get();
+
+		if($pelamar->num_rows() > 0){
+				$result = $pelamar->result();				
+        }
+        return $result;
+	}
+
+	//Dipake untuk menampilkan hasil pencarian
 	function ambil_data_pelamar()
 	{
     	$result = array();
