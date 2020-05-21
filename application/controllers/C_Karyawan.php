@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_Pelamar extends MY_Controller {
+class C_Karyawan extends MY_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -24,110 +24,96 @@ class C_Pelamar extends MY_Controller {
 
 		parent::__construct();
 		$this->load->model('M_Pendataan');
+		$this->load->model('M_Proses');
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->library('pagination');
 
 	}
 
-	//Menampilkan Form Pendataan pelamar
-		function index()
-		{
-			//Pagination
-			$config['base_url'] 		= site_url('C_Pelamar/index'); // site_url
-			$config['total_rows'] 		= $this->db->count_all('pelamar');
-			$config['per_page'] 		= 5; // record yang ditampilkan per halaman
-			$config["uri segment"] 		= 3; // uri parameter
-			$choice 					= $config["total_rows"] / $config["per_page"];
-			$config["num_links"] 		= floor($choice);
+	function index()
+	{
+		$this->load->view( 'admin/karyawan/F_Karyawan_Entri');
+	}
 
-
-			//Bootstrap -> Style pagination
-			$config['first_link']		= 'First';
-			$config['last_link'] 		= 'Last';
-			$config['next_link']		= 'Next';
-			$config['prev_link'] 		= 'Prev';
-			$config['full_tag_open'] 	= '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-			$config['full_tag_close'] 	= '</ul></nav></div>';
-			$config['first_tag_open'] 	= '<li class="page-item"><span class="page-link">';
-			$config['last_tag_open'] 	= '<li class="page-item"><span class="page-link">';
-			$config['last_tag1_close'] 	= '</span></li>';
-
-			$this->pagination->initialize($config);
-
-			$data['page'] 				= ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-
-			$data['pagination'] 		= $this->pagination->create_links();
-
-			$data['kode'] 				= $this->M_Pendataan->get_id_pelamar();
-			$data['periode'] 			= $this->M_Pendataan->ambil_data_periode();
-			$data['pelamar'] 			= $this->M_Pendataan->list_data_pelamar($config['per_page'], $data['page']);
-			$this->load->view('admin/F_Pelamar', $data);
-		}
-
-		function tambah_pelamar()
-		{
-			$data['kode'] 	= $this->M_Pendataan->get_id_pelamar();
-			$this->load->view('admin/F_Pelamar_Entri', $data);
-		}
-
-		function simpan_pelamar()
-		{
-			$data['pelamar'] = $this->M_Pendataan->simpan_pelamar();
-			redirect('C_Pelamar/index');
-		}
-
-		function hapus_pelamar($id_pelamar)
-		{
-			$data['pelamar'] = $this->M_Pendataan->hapus_pelamar($id_pelamar);
-			redirect('C_Pelamar/index');
-		}
-
-		function ubah_pelamar()
-		{
-			$id_pelamar 		= $this->input->post('id_pelamar');
-			$id_periode 		= $this->input->post('id_periode');
-			$tgl_daftar 		= $this->input->post('tgl_daftar');
-			$nm_pelamar 		= $this->input->post('nm_pelamar');
-			$jk_pelamar 		= $this->input->post('jk_pelamar');
-			$tempat_lahir 		= $this->input->post('tempat_lahir');
-			$tanggal_lahir 		= $this->input->post('tanggal_lahir');
-			$almt_pelamar 		= $this->input->post('almt_pelamar');
-			$no_ktp 			= $this->input->post('no_ktp');
-			$status 			= $this->input->post('status');
-			$nohp_pelamar 		= $this->input->post('nohp_pelamar');
-			$pendidikan_akhir 	= $this->input->post('pendidikan_akhir');
-	 
-			$data = array(
-				'tgl_daftar' 		=> $tgl_daftar,
-				'nm_pelamar' 		=> $nm_pelamar,
-				'jk_pelamar' 		=> $jk_pelamar,
-				'tempat_lahir' 		=> $tempat_lahir,
-				'tanggal_lahir' 	=> $tanggal_lahir,
-				'almt_pelamar' 		=> $almt_pelamar,
-				'no_ktp' 			=> $no_ktp,
-				'status' 			=> $status,
-				'nohp_pelamar' 		=> $nohp_pelamar,
-				'pendidikan_akhir' 	=> $pendidikan_akhir,
-			);
-	
-			$where 				= array('id_pelamar' => $id_pelamar);
-
-			$data['pelamar']	= $this->M_Pendataan->ubah_periode($where, $data, 'pelamar');
-			redirect('C_Pelamar/index');
-		}
-
-		function cari_keyword()
-		{
-			$data['keyword'] 	= $this->input->post("keyword");
-			$data['kode'] 		= $this->M_Pendataan->get_id_pelamar();
-			$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
-			$data['pelamar'] 	= $this->M_Pendataan->ambil_data_pelamar();
-			$data['c_pelamar']	= $this->M_Pendataan->cari_pelamar($data['keyword']);
-			$this->load->view('admin/F_Pelamar', $data);
-		}
-
+	function entri_karyawan()
+	{
+		$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
+		//where tanda=1
+		$data['pelamar'] 		= $this->M_Pendataan->data_pelamar();
+		$data['karyawan'] 		= $this->M_Pendataan->ambil_id_karyawan();
+		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
 		
+		$this->load->view('admin/penilaian_pelamar/F_Karyawan_Entri', $data);
+	}
 
+	function input_data()
+	{
+		$data['simpan'] 	= $this->M_Pendataan->simpan_karyawan();
+		$id_pelamar 		= $this->input->post('id_pelamar');
+		$tanda 				= 1;
+		$data 				= array('tanda' => $tanda);
+		$where 				= array('id_pelamar' => $id_pelamar);
+		$data['karyawan'] 	= $this->M_Pendataan->ubah_pelamar($where, $data, 'pelamar');
+		redirect('C_Karyawan/index');
+	}
+
+	function simpan_karyawan()
+	{
+		$data['karyawan'] = $this->M_Pendataan->simpan_karyawan();
+		redirect('C_karyawanPelamar/index');
+	}
+
+	function hapus_karyawan($id_pelamar, $id_kriteria)
+	{
+		$data['karyawan'] = $this->M_Pendataan->simpan_karyawan($id_pelamar, $id_kriteria);
+		redirect('C_Karyawan/index');
+	}
+
+	function ubah_karyawan()
+	{
+		$id_pelamar 		= $this->input->post('id_pelamar');
+		$id_kriteria 		= $this->input->post('id_kriteria');
+		$nilai_tes 			= $this->input->post('nilai_tes');
+		
+		$data 				= array('nilai_tes' 	=> $nilai_tes);
+		$where 				= array('id_pelamar' 	=> $id_pelamar,
+									'id_kriteria' 	=> $id_kriteria);
+
+		$data['karyawan'] 	= $this->M_Pendataan->simpan_karyawan($where, $data, 'nilai_alternatif');
+		redirect('C_Karyawan/index');
+	}
+
+	function cari_keyword()
+	{
+		$data['keyword'] 	= $this->input->post("keyword");
+		$data['kode'] 		= $this->M_Pendataan->get_id_karyawanPelamar();
+		$data['karyawan']	= $this->M_Pendataan->cari_karyawanPelamar($data['keyword']);
+		$this->load->view('admin/F_Karyawan', $data);
+	}
+
+	function cari_data()
+	{
+		$data['keyword'] 		= $this->input->post("keyword");
+		$data['JmlKriteria']	= $this->M_Pendataan->getJmlKriteria();
+		$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
+		$data['pelamar']		= $this->M_Pendataan->cari_data_pelamar($data['keyword'])->row_array();
+		$this->load->view('admin/karyawan/F_Karyawan_Entri2', $data);
+	}
+
+	function edit_nilai_pelamar($id_pelamar)
+	{
+		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
+		$data['npelamar'] 		= $this->M_Pendataan->data_nilai_pelamar($id_pelamar)->result();
+		$this->load->view('admin/karyawan_pelamar/F_karyawanPelamar_Edit', $data);
+	}
+
+	function view_nilai_pelamar($id_pelamar)
+	{
+		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
+		$data['npelamar'] 		= $this->M_Pendataan->data_nilai_pelamar($id_pelamar)->result();
+		$this->load->view('admin/karyawan_pelamar/F_karyawanPelamar_View', $data);
+	}
+	
+		
 }

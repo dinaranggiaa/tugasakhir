@@ -34,7 +34,7 @@ table th {
       $n = $JmlKriteria['total'];
 	?>
 	
-    <form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_perbandingan_kriteria" method="POST">
+    <form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_data_perbandingan" method="POST">
 	<div class="panel-body">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" style="width: 75%; font-size:13px; font-weight:normal;">	
@@ -75,14 +75,22 @@ table th {
 							<option value="3">3 - Sedikit lebih penting dari</option>
 							<option value="2">2 - Mendekati sedikit lebih penting dari</option>
 							<option value="1">1 - Sama penting dengan</option>
-							<option value="0.5">0.5 - 1 bagi mendekati sedikit lebih penting dari </option>
+							<option value="-2">-2 - Mendekati sedikit lebih penting dari </option>
+							<option value="-3">-3 - Sedikit lebih penting dari </option>
+							<option value="-4">-4 - Mendekati lebih penting dari </option>
+							<option value="-5">-5 - Lebih penting dari </option>
+							<option value="-6">-6 - Mendekati sangat penting dari  </option>
+							<option value="-7">-7 - Sangat penting dari </option>
+							<option value="-8">-8 - Mendekati mutlak dari </option>
+							<option value="-9">-9 - Mutlak sangat penting dari </option>
+							<!-- <option value="0.5">0.5 - 1 bagi mendekati sedikit lebih penting dari </option>
 							<option value="0.333">0.333 - 1 bagi sedikit lebih penting dari </option>
 							<option value="0.25">0.25 - 1 bagi mendekati lebih penting dari </option>
 							<option value="0.2">0.2 - 1 bagi lebih penting dari </option>
 							<option value="0.167">0.167 - 1 bagi mendekati sangat penting dari  </option>
 							<option value="0.143">0.143 - 1 bagi sangat penting dari </option>
 							<option value="0.125">0.125 - 1 bagi mendekati mutlak dari </option>
-							<option value="0.1">0.1 - 1 bagi mutlak sangat penting dari </option>
+							<option value="0.1">0.1 - 1 bagi mutlak sangat penting dari </option> -->
 						</select>
 					</td>
 					

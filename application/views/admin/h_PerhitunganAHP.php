@@ -1,5 +1,9 @@
 
-<?php $this->view('partials/sidebar_admin')?>
+<?php
+
+use PhpParser\Node\Stmt\Echo_;
+
+$this->view('partials/sidebar_admin')?>
 
 <style>
 
@@ -13,6 +17,7 @@ table {
   border-collapse: collapse;
   width: 50%;
   padding-left: 10px;
+  text-align: center;
 }
 
 th {
@@ -45,42 +50,13 @@ input[type=text], select {
 
   	<div class="border"></div>
 	<br>
-	<!-- <div class="container-fluid">
-    <div class="table-responsive">
 
-				
-
-          <table class="table table-striped table-hover">
-        <tr>
-          <th><strong>Kriteria</strong></th>
-          <?php foreach ($nama as $key => $value) {
-          ?>
-          <th><strong><?php echo $value->nm_kriteria ; ?></strong></th>
-          <?php  }?>
-          
-        </tr>
-        <?php for ($x = 0; $x < 3; $x++) { ?>
-          <tr>
-            <th><strong><?= $nama[$x]->nm_kriteria ?></strong></th>
-            <?php for ($y = 0; $y < 3; $y++) { ?>
-              <?php $val = ($x*5)+$y ?>
-              <th><?= $nperbandingan[$val] -> nilai_pembanding ?></th>
-            <?php } ?>
-          </tr>
-        <?php } ?>
-    </table>
-    
-
-	  
-
-      </div>
-
-  </div>	 -->
   <h4>Matriks Perbandingan Per Kriteria</h4>
   <table style="width: 80%">
 	<?php
+		$jml_kriteria = $JmlKriteria['total'];
 		$n = $JmlKriteria['total'];
-		$urutan=0;
+		$urutan=0;	
 	?>
 		<tbody>
 			<th>Kriteria</th>
@@ -104,18 +80,17 @@ input[type=text], select {
 				}
 ?>
 		</tbody>
-    </table>
+	</table>
     
     <br><br>
 
     <h4>Hasil Perkalian Matriks</h4>
   <table style="width: 80%">
   <?php
-	  $n = $JmlKriteria['total'];
-	  $urutan=0;
 	  $jml_kriteria = $JmlKriteria['total'];
-	  $uruta = 0;
-	  $matriksA = array();
+	   //Memanggil hasil perkalian matriks
+	 
+	 
     ?>
 			<tbody>
 			<th>Kriteria</th>
@@ -125,59 +100,122 @@ input[type=text], select {
 				}
 			?>
 			<?php
-				//Matriks A
-				
-				for ($y=0; $y < $n; $y++) {  //Kolom pada tabel
+				for ($y=0; $y <= ($n-1); $y++) {
 					echo "<tr>";
 					echo "<td>".$getNamaKriteria[$y]['nm_kriteria']."</td>";
-					for($z=0; $z<$jml_kriteria; $z++){
-						$matriksA[$y][$z] = $NilaiPerbandinganKriteria[$urutan]['nilai_pembanding'];
-						$urutan++;
-						echo "<td>".$matriksA[$y][$z]."</td>";	
-					}
+						
 					echo "</tr>";
 				}
+?>
+		</tbody>
+	</table>
 
+	<h4>Jumlah Baris</h4>
+	<table>
+		<thead>
+			<tr>
+				<th><label>Kriteria</label></th>
+				<th><label>Jumlah Baris</label></th>
+			</tr>
+		</thead>
+			<tbody>
+    			<?php
+					//inisialisasi
+					$urut = 0;
+
+					for ($x=0; $x < $jml_kriteria; $x++) {?>	
+						<tr>
+							<td><?= $getNamaKriteria[$x]['nm_kriteria']?></td>
+							<td style="text-align:right"><?= $sum_row_kriteria[$x]?></td>
+					<?php } ?>
+						</tr>
+						<td style="font-weight: bold; background:cornflowerblue;">Total Baris</td>
+						<td style="font-weight: bold; background:cornflowerblue; text-align:right"><?= $total_row?></td>
 				
-
-				//Matriks B
-				for ($y=0; $y <= ($n-1); $y++) {
-					$jml_kriteria = $JmlKriteria['total'];
-					$urutb = 0;
-					$matriksB = array();
-					for($z=0; $z<$jml_kriteria; $z++){
-						$matriksB[$y][$z] = $NilaiPerbandinganKriteria[$urutb]['nilai_pembanding'];
-						$urutan++;	
-					}
-				}
-
-
-				$jml_kriteria = 5;
-				$hasilkali= array(); //hasil perkalian matriks A dan B
-				for($x=0; $x<$jml_kriteria; $x++){
-					$tempjml = 0;
-					for($y=0; $y<$jml_kriteria; $y++){
-						$temp = 0;
-						for($z=0; $z<$jml_kriteria; $z++){
-							$matrikA = $matriksA[$x][$z]['nilai_pembanding'];
-							print_r($matrikA);
-							$matrikB = $matriksB[$z][$y]['nilai_pembanding'];
-							$temp += $matrikA * $matrikB;
-						}
-						$hasilkali[$x][$y] = $temp; //Hasil perkalian matriks
-						// echo "hasil kali :";
-						$tempjml += $hasilkali[$x][$y];
-						
-						// echo "hasil kalikali :<br>";
-						//  $hasiljumlahkali[$y] = $tempjml;
-						
-					}
-					//Hasil jumlah kali per kolom
-					$hasiljumlahkali[$x] = $tempjml;	
-					// print_r($hasiljumlahkali[$x] = $tempjml);
-				}
-			?>
 			</tbody>
 	</table>
+
+	<h4>Eigen Vector Kriteria</h4>
+	<table>
+		<thead>
+			<tr>
+				<th><label>Nama Kriteria</label></th>
+				<th><label>Eigen Vector</label></th>
+			</tr>
+		</thead>
+			<tbody>
+    			<?php
+					//inisialisasi
+					$urut = 0;
+
+					for ($x=0; $x < $jml_kriteria; $x++) 
+					{?>	
+						<tr>
+						<td><?= $getNamaKriteria[$x]['nm_kriteria']?></td>
+						<td style="text-align: right"><?= $eigenvector[$x]?></td>					
+					<?php } ?>
+					</tr>
+					<td style="font-weight: bold; background:cornflowerblue;">Total Eigen Vector</td>
+					<td style="text-align: right; font-weight: bold; background:cornflowerblue;"><?= round($jmleigen)?></td>
+			</tbody>
+	</table>
+
+	<h4>Consistency Vector</h4>
+	<table>
+		<thead>
+			<tr>
+				<th><label>Bobot</label></th>
+				<th><label>:</label></th>
+				<th><label>Eigen Vector</label></th>
+				<th><label>=</label></th>
+				<th><label>Consistency Vector</label></th>
+			</tr>
+		</thead>
+			<tbody>
+    			<?php
+					//inisialisasi
+					$urut = 0;
+
+					for ($x=0; $x < $jml_kriteria; $x++) 
+					{?>	
+						<tr>
+							<td style="text-align: center"><?= $bobot[$x]?></td>
+							<td style="text-align: center">:</td>
+							<td style="text-align: center"><?= $eigenvector[$x]?></td>
+							<td style="text-align: center">=</td>
+							<td style="text-align: right;"><?= $CV[$x]?></td>
+					<?php } ?>
+						</tr>
+						<td colspan='4' style="font-weight: bold; background:cornflowerblue;">Total Consistency Vector</td>
+						<td style="text-align: right; font-weight: bold; background:cornflowerblue;"><?= $sum_cv?></td>
+				
+			</tbody>
+	</table>
+	
+	<h4>Pengujian Consistency</h4>
+	<table>
+		<?php
+			$CV = $sum_cv;
+			$CI = $CI;
+			$CR = $CR; 
+		?>
+		<tr>
+			<td><label>Consistency Vector</label></td>
+			<td style="text-align: center; font-weight:bold;"><?= round($CV,4)?></label></td>
+		</tr>
+		<tr>
+			<td><label>Consistency Index</label></td>
+			<td style="text-align: center; font-weight:bold;"><?= round($CI,4)?></td>
+		</tr>
+		<tr>
+			<td><label>Consistency Ratio</label></td>
+			<td style="text-align: center; font-weight:bold;"><?= round($CR,4)?></td>
+		</tr>
+		<tr>
+			<td style="text-align: left; background:cornflowerblue;"><label>Hasil Konsistensi</label></td>
+			<td style="text-align: center; font-weight:bold; background:cornflowerblue;"><?= $pesan?></td>
+		</tr>
+	</table>
+
 
 </div>
