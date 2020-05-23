@@ -1,4 +1,7 @@
 <?php
+
+use PhpParser\Node\Stmt\Echo_;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class C_ProsesAHP extends MY_Controller {
@@ -39,6 +42,18 @@ class C_ProsesAHP extends MY_Controller {
 		$data['getIdKriteria'] 		= $this->M_Proses->getIdKriteria()->result_array();
 
 		$this->load->view("admin/F_NilaiPerbandingan", $data);
+		
+	}
+
+	function hasil_perbandingan()
+	{
+		$perbandingan_kriteria = $this->db->count_all('perbandingan_kriteria');
+		if($perbandingan_kriteria != 0){
+			redirect('C_ProsesAHP/get_hasil_perbandingan');
+		} else {
+			echo "Data Tidak Ada";
+			redirect('C_ProsesAHP/input_nilai_perbandingan');
+		}
 		
 	}
 
@@ -114,9 +129,24 @@ class C_ProsesAHP extends MY_Controller {
 		for($x=0; $x<count($hasiljumlahkali); $x++){
 			$hasiljmlkalibagi[$x] = round($hasiljumlahkali[$x]/$totaljmlkali,4); //Hasil egienvector
 			$jmleigen += $hasiljmlkalibagi[$x];
-			$egienvector = [$hasiljmlkalibagi[$x]];
+			$egienvector[$x] = [$hasiljmlkalibagi[$x]];
 		}	
 		
+		$id_kriteria = $this->M_Proses->getIdKriteria()->result_array();
+		// print_r($id_kriteria);
+		// print_r($egienvector);
+		
+		// for($x=0; $x<$jml_kriteria; $x++){
+		// 	$bobot = [
+		// 		'bobot_kriteria' => $egienvector
+		// 	];
+			
+		// 	$kriteria = [
+		// 		'id_kriteria' => $id_kriteria
+		// 	];
+		// 	print_r($kriteria);
+		// }
+		// $this->db->update('kriteria', $bobot, $kriteria);
 		
 		
 		//Perhitungan pengujian konsistensi
@@ -196,7 +226,10 @@ class C_ProsesAHP extends MY_Controller {
 		} else {
 			$pesan = "BELUM KONSISTEN";
 		}
-		
+
+		//Proses Update Data Kriteria
+	
+
 		//Proses AHP
 		$data['matriks'] 			= $hasilkali; //hasil perkalian matriks
 		$data['sum_row_kriteria'] 	= $hasiljumlahkali; //hasil penjumlahan tiap baris matriks

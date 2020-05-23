@@ -25,11 +25,18 @@ table th {
 <div class="center-bar">
 	<h3>
 		<!-- <i class='far fa-file-alt'></i>&nbsp; -->
-		Tabel Nilai Perbandingan
+		Tabel Nilai Perbandingan 
 	</h3> 
 
   	<div class="border"></div>
 	<br>
+	
+	<div class="inputsearch">
+    <?php echo form_open('C_ProsesAHP/hasil_perbandingan')?>
+    <button class="btn btn-primary fas fa-eye" type='submit' href="<?php echo site_url('C_Kriteria/index')?>">&nbsp; Hasil Perbandingan</button>
+    <?php echo form_close()?>
+  </div>
+
 	<?php
       $n = $JmlKriteria['total'];
 	?>
@@ -117,6 +124,7 @@ table th {
 			</tbody>
 			</table>
 			<button type="submit" class="button button1" name="submit" id="btn_simpan" style="float: right; margin-right: 130px;"><i class='fas fa-sync'></i>&nbsp;Process</button>
+
 		</div>
 	</div>
 	

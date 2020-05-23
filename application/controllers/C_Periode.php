@@ -54,8 +54,10 @@ class C_Periode extends MY_Controller {
 		$id_periode 		= $this->input->post('id_periode');
 		$bulan 				= $this->input->post('bulan');
 		$tgl_pembukaan 		= $this->input->post('tgl_pembukaan');
+		$tahun		 		= $this->input->post('tahun');
 
 		$data 				= array('bulan' 		=> $bulan,
+									'tahun' 		=> $tahun,
 									'tgl_pembukaan' => $tgl_pembukaan);
 
 		$where 				= array('id_periode' 	=> $id_periode);

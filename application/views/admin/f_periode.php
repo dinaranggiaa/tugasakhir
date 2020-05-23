@@ -58,7 +58,7 @@
                             <th>No</th>
                             <th>Kode Periode</th>
                             <th style="width: 20%">Bulan</th>
-                            <th>Tanggal Pembukaan</th>
+                            <th>Tahun</th>
                             <th style="width: 30%">Action</th>
                         </tr>
                     </thead>
@@ -69,7 +69,7 @@
                         <td><?= $no?></td>
                         <td><?= $Periode -> id_periode?></td>
                         <td><?= $Periode -> bulan?></td>
-                        <td><?= $Periode -> tgl_pembukaan?></td>
+                        <td><?= $Periode -> tahun?></td>
                         <td style="width: 15%;">
                           <a class="btn btn-info btn_edit" id="<?= $Periode -> id_periode;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Periode -> id_periode; ?>"><span class="fas fa-eye"></span></a>
                           <a class="btn btn-primary btn_edit" id="<?= $Periode -> id_periode;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Periode -> id_periode; ?>"><span class="fas fa-edit"></span></a>
@@ -109,7 +109,27 @@
                     <tr>
                       <td><label for="bulan">Bulan</label></td>
                       <td>:</td>
-                      <td><input type="text-form" name="bulan" id="bulan" class="form-control"></td>
+                      <td><select name="bulan" id="bulan" class="form-control">
+                            <option>Pilih Bulan</option>
+                            <option>Januari</option>
+                            <option>Februari</option>
+                            <option>Maret</option>
+                            <option>April</option>
+                            <option>Mei</option>
+                            <option>Juni</option>
+                            <option>Juli</option>
+                            <option>Agustus</option>
+                            <option>September</option>
+                            <option>Oktober</option>
+                            <option>November</option>
+                            <option>Desember</option>
+                          </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><label for="tahun">Tahun</label></td>
+                      <td>:</td>
+                      <td><input type="text-form" name="tahun" id="tahun" value="<?= date('Y')?>" class="form-control"></td>
                     </tr>
                     <tr>
                       <td><label for="tgl_pembukaan">Tanggal Pembukaan</label></td>
@@ -159,6 +179,11 @@
                       <td><?= $Periode -> bulan?></td>
                     </tr>
                     <tr>
+                      <td><label for="tahun">Tahun</label></td>
+                      <td>:</td>
+                      <td><?= $Periode -> tahun?></td>
+                    </tr>
+                    <tr>
                       <td><label for="tgl_pembukaan">Tanggal Pembukaan</label></td>
                       <td>:</td>
                       <td><?= $Periode -> tgl_pembukaan?></td>
@@ -201,6 +226,11 @@
                       <td><label for="bulan">Bulan</label></td>
                       <td>:</td>
                       <td><input type="text-form" name="bulan" id="bulan" value="<?= $Periode -> bulan?>" placeholder="<?= $Periode -> bulan?>" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td><label for="tahun">Tahun</label></td>
+                      <td>:</td>
+                      <td><input type="text-form" name="tahun" id="tahun" value="<?= $Periode -> tahun?>" placeholder="<?= $Periode -> tahun?>" class="form-control"></td>
                     </tr>
                     <tr>
                       <td><label for="tgl_pembukaan">Tanggal Pembukaan</label></td>

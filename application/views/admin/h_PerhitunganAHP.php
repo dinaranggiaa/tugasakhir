@@ -95,19 +95,47 @@ input[type=text], select {
 			<tbody>
 			<th>Kriteria</th>
 			<?php
-				for ($x=0; $x <= ($n-1); $x++) {
-					echo "<th>".$getNamaKriteria[$x]['nm_kriteria']."</th>";
-				}
+				for ($x=0; $x <= ($n-1); $x++) {?>
+					<th><?= $getNamaKriteria[$x]['nm_kriteria']?></th>
+				<?php }
 			?>
 			<?php
-				for ($y=0; $y <= ($n-1); $y++) {
-					echo "<tr>";
-					echo "<td>".$getNamaKriteria[$y]['nm_kriteria']."</td>";
-						
-					echo "</tr>";
-				}
-?>
+				for ($y=0; $y <= ($n-1); $y++) { ?>
+					<tr>
+						<td><?= $getNamaKriteria[$y]['nm_kriteria']?></td>
+					</tr>
+
+				<?php } ?>
+
 		</tbody>
+	</table>
+	<br><br>
+	<table>
+		<tr>
+			<th>Kriteria</th>
+				<?php foreach ($getNamaKriteria as $value){ ?>
+			<th><?= $value['nm_kriteria'] ?></th>
+				<?php } ?>
+		</tr>
+		<tr>
+			<td>
+				<?php foreach ($getNamaKriteria as $value){ ?>
+				<th><?= $value['nm_kriteria'] ?></th>
+				<?php } ?>
+				
+				<?php foreach ($matriks as $key => $value) {
+				if($key == $jml_kriteria);{ ?>
+			</td>
+			<tr>
+				
+			</tr>	
+			<?php }?>
+			
+			<?php foreach ($value as $keys => $val) {?>
+			<td><?= ($val); ?></td>
+		<?php }
+		}?>
+		</tr>
 	</table>
 
 	<h4>Jumlah Baris</h4>
@@ -216,6 +244,5 @@ input[type=text], select {
 			<td style="text-align: center; font-weight:bold; background:cornflowerblue;"><?= $pesan?></td>
 		</tr>
 	</table>
-
 
 </div>

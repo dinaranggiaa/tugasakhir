@@ -43,10 +43,10 @@
     <?php echo form_close()?>
 
   <div class="inputsearch">
-    <?php echo form_open('C_Penilaian/cari_keyword')?>
+    <?php echo form_open('C_PenilaianPelamar/cari_keyword')?>
     <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
     <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
-    <button class="btn-link" type='submit' href="<?php echo site_url('C_Penilaian/index')?>"><i class='fas fa-undo'></i></button>
+    <button class="btn-link" type='submit' href="<?php echo site_url('C_PenilaianPelamar/index')?>"><i class='fas fa-undo'></i></button>
     <?php echo form_close()?>
   </div>
   <br>
@@ -68,7 +68,7 @@
                     </thead>
                     <tbody style="text-align: left">
                       <?php $no=1?>
-                      <?php foreach ($pelamar as $Pelamar):?>
+                      <?php foreach ($n_pelamar as $Pelamar):?>
                       <tr>
                         <td><?= $no?></td>
                         <td><?= $Pelamar -> id_pelamar?></td>
@@ -79,6 +79,7 @@
                         <!-- <a class="btn btn-info btn_edit" name = "<?= $Pelamar -> id_pelamar;?>" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalAdd<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-plus"></span></a> -->
                           <a class="btn btn-success btn_edit" href="<?php echo site_url('C_PenilaianPelamar/view_nilai_pelamar/'.$Pelamar->id_pelamar) ?>"><span class="fas fa-eye"></span></a>
                           <a class="btn btn-primary btn_edit" href="<?php echo site_url('C_PenilaianPelamar/edit_nilai_pelamar/'.$Pelamar->id_pelamar) ?>"><span class="fas fa-edit"></span></a>
+                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_PenilaianPelamar/hapus_npelamar/'.$Pelamar -> id_pelamar)?>"><span class="fas fa-trash-alt"></span></a>
                         </td>
                       </tr>
                       <?php $no++?>
@@ -93,7 +94,7 @@
   <div class="form-pendataan">
    <?php $n = $JmlKriteria['total']; ?>
 
-  <?php foreach ($pelamar as $Pelamar):?> -->
+  <?php foreach ($n_pelamar as $Pelamar):?> -->
         <!-- Modal -->
     <div class="modal fade" id="ModalAdd<?php echo $Pelamar -> id_pelamar; ?>" role="dialog">
         <div class="modal-dialog"> -->

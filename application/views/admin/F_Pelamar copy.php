@@ -42,11 +42,12 @@
   <?php echo form_close()?> -->
 
   <div class="inputsearch">
-    <?php echo form_open('C_Pelamar/cari_keyword')?>
+    <?php echo form_open('C_Pelamar/cari_pelamar')?>
     <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
     <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
     <button class="btn-link" type='submit' href="<?php echo site_url('C_Pelamar/index')?>"><i class='fas fa-undo'></i></button>
     <?php echo form_close()?>
+    
   </div>
   
   <br>
@@ -138,14 +139,54 @@
             <td><input type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control"></td>
           </tr>
           <tr>
+            <td><label for="jk_pelamar">Jenis Kelamin</label></td>
+            <td>:</td>
+            <td><input type="radio" name="jk_pelamar" value="Pria"> Pria
+                &nbsp; &nbsp;<input type="radio" name="jk_pelamar" value="Wanita"> Wanita</td>
+          </tr>
+          <tr>
+            <td><label for="tempat_lahir">Tempat Lahir</label></td>
+            <td>:</td>
+            <td><input type="text-form" name="tempat_lahir" id="tempat_lahir" class="form-control"></td>
+          </tr>
+          <tr>
+            <td><label for="tanggal_lahir">Tanggal Lahir</label></td>
+            <td>:</td>
+            <td style="padding-bottom: 13px;"><input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control"></td>
+          </tr>
+          <tr>
             <td><label for="almt_pelamar">Alamat</label></td>
             <td>:</td>
             <td><textarea name='almt_pelamar' id='almt_pelamar' cols='25' rows='3' class="form-control"></textarea></td>
           </tr>
           <tr>
+            <td><label for="no_ktp">No KTP</label></td>
+            <td>:</td>
+            <td><input type="text-form" name="no_ktp" id="no_ktp" class="form-control"></td>
+          </tr>
+          <tr>
+            <td><label for="status">Status</label></td>
+            <td>:</td>
+            <td><input type="radio" name="status" value="Menikah">  Menikah
+                &nbsp; &nbsp;<input type="radio" name="status" value="Lajang">  Lajang</td>
+          </tr>
+          <tr>
             <td><label for="nohp_pelamar">No HP</label></td>
             <td>:</td>
             <td><input type="text-form" name="nohp_pelamar" id="nohp_pelamar" class="form-control"></td>
+          </tr>
+          <tr>
+            <td><label for="pendidikan_akhir">Pendidikan Terakhir</label></td>
+            <td>:</td>
+            <td>
+              <select name="pendidikan_akhir" id="pendidikan_akhir" class="form-control">
+              <option value="">--Pendidikan Akhir--</option>
+              <option value="SMA">SMA</option>
+              <option value="D3">D3</option>
+              <option value="S1">S1</option>
+              <option value="S2">S2</option>
+              </select>
+            </td>
           </tr>
         </table>
           </div>
@@ -187,23 +228,57 @@
                     <td><label for="id_periode">Periode</label></td>
                     <td>:</td>
                     <td><?= $Pelamar -> bulan?></td>
-                  </tr>                  
+                  </tr>
+                  <tr>
+                    <td><label for="tgl_daftar">Tanggal Daftar</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> tgl_daftar?></td>
+                  </tr>
                   <tr>
                     <td><label for="nm_pelamar">Nama</label></td>
                     <td>:</td>
                     <td><?= $Pelamar -> nm_pelamar?></td>
-                  </tr>              
+                  </tr>
+                  <tr>
+                    <td><label for="jk_pelamar">Jenis Kelamin</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> jk_pelamar?></td>
+                  </tr>
+                  <tr>
+                    <td><label for="tempat_lahir">Tempat Lahir</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> tempat_lahir?></td>
+                  </tr>
+                  <tr>
+                    <td><label for="tanggal_lahir">Tanggal Lahir</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> tanggal_lahir?></td>
+                  </tr>
                   <tr>
                     <td><label for="almt_pelamar">Alamat</label></td>
                     <td>:</td>
                     <td><?= $Pelamar -> almt_pelamar?></td>
-                  </tr>              
+                  </tr>
+                  <tr>
+                    <td><label for="no_ktp">No KTP</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> no_ktp?></td>
+                  </tr>
+                  <tr>
+                    <td><label for="status">Status</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> status?></td>
+                  </tr>
                   <tr>
                     <td><label for="nohp_pelamar">No Handphoe</label></td>
                     <td>:</td>
                     <td><?= $Pelamar -> nohp_pelamar?></td>
                   </tr>
-                
+                  <tr>
+                    <td><label for="pendidikan_akhir">Pendidikan AKhir</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> pendidikan_akhir?></td>
+                  </tr>
                 </table>
             </div>
             </form>
@@ -253,21 +328,46 @@
                     <td>:</td>
                     <td><input type="text-form" class ="form-control" name="nm_pelamar" id="nm_pelamar" value="<?= $Pelamar -> nm_pelamar?>" placeholder="<?= $Pelamar -> nm_pelamar?>"></td>
                   </tr>
-       
-       
+                  <tr>
+                    <td><label for="jk_pelamar">Jenis Kelamin</label></td>
+                    <td>:</td>
+                    <td><input type="text-form" class ="form-control" name="jk_pelamar" id="jk_pelamar" value="<?= $Pelamar -> id_pelamar?>" placeholder="<?= $Pelamar -> id_pelamar?>"></td>
+                  </tr>
+                  <tr>
+                    <td><label for="tempat_lahir">Tempat Lahir</label></td>
+                    <td>:</td>
+                    <td><input type="text-form" class ="form-control" name="tempat_lahir" id="tempat_lahir" value="<?= $Pelamar -> tempat_lahir?>" placeholder="<?= $Pelamar -> tempat_lahir?>"></td>
+                  </tr>
+                  <tr>
+                    <td><label for="tanggal_lahir">Tanggal Lahir</label></td>
+                    <td>:</td>
+                    <td><input type="text-form" class ="form-control" name="tanggal_lahir" id="tanggal_lahir" value="<?= $Pelamar -> tanggal_lahir?>" placeholder="<?= $Pelamar -> tanggal_lahir?>"></td>
+                  </tr>
                   <tr>
                     <td><label for="almt_pelamar">Alamat</label></td>
                     <td>:</td>
                     <td><input type="text-form" class ="form-control" name="almt_pelamar" id="almt_pelamar" value="<?= $Pelamar -> almt_pelamar?>" placeholder="<?= $Pelamar -> almt_pelamar?>"></td>
                   </tr>
-       
-       
+                  <tr>
+                    <td><label for="no_ktp">No KTP</label></td>
+                    <td>:</td>
+                    <td><input type="text-form" class ="form-control" name="no_ktp" id="no_ktp" value="<?= $Pelamar -> no_ktp?>" placeholder="<?= $Pelamar -> no_ktp?>"></td>
+                  </tr>
+                  <tr>
+                    <td><label for="status">Status</label></td>
+                    <td>:</td>
+                    <td><input type="text-form" class ="form-control" name="status" id="status" value="<?= $Pelamar -> status?>" placeholder="<?= $Pelamar -> status?>"></td>
+                  </tr>
                   <tr>
                     <td><label for="nohp_pelamar">No Handphoe</label></td>
                     <td>:</td>
                     <td><input type="text-form" class ="form-control" name="nohp_pelamar" id="nohp_pelamar" value="<?= $Pelamar -> nohp_pelamar?>" placeholder="<?= $Pelamar -> nohp_pelamar?>"></td>
                   </tr>
-
+                  <tr>
+                    <td><label for="pendidikan_akhir">Pendidikan AKhir</label></td>
+                    <td>:</td>
+                    <td><input type="text-form" class ="form-control" name="pendidikan_akhir" id="pendidikan_akhir" value="<?= $Pelamar -> pendidikan_akhir?>" placeholder="<?= $Pelamar -> pendidikan_akhir?>"></td>
+                  </tr>
                 </table>
             </div>
               <div class="modal-footer">

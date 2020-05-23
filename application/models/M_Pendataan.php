@@ -66,14 +66,14 @@ class M_Pendataan extends MY_Model {
 				'id_periode' 		=> $this->input->post('id_periode'),
 				'tgl_daftar' 		=> $this->input->post('tgl_daftar'),
 				'nm_pelamar'		=> $this->input->post('nm_pelamar'),
-				'jk_pelamar' 		=> $this->input->post('jk_pelamar'),
-				'tempat_lahir' 		=> $this->input->post('tempat_lahir'),
-				'tanggal_lahir' 	=> $this->input->post('tanggal_lahir'),
+				// 'jk_pelamar' 		=> $this->input->post('jk_pelamar'),
+				// 'tempat_lahir' 		=> $this->input->post('tempat_lahir'),
+				// 'tanggal_lahir' 	=> $this->input->post('tanggal_lahir'),
 				'almt_pelamar'		=> $this->input->post('almt_pelamar'),
-				'no_ktp' 			=> $this->input->post('no_ktp'),
-				'status' 			=> $this->input->post('status'),
+				// 'no_ktp' 			=> $this->input->post('no_ktp'),
+				// 'status' 			=> $this->input->post('status'),
 				'nohp_pelamar' 		=> $this->input->post('nohp_pelamar'),
-				'pendidikan_akhir' 	=> $this->input->post('pendidikan_akhir'),
+				// 'pendidikan_akhir' 	=> $this->input->post('pendidikan_akhir'),
 				'tanda' 			=> 0
 			);
 
@@ -94,23 +94,6 @@ class M_Pendataan extends MY_Model {
 	{
 		$this->db->where($where);
 		$this->db->update($table, $data);
-	}
-
-	//Dipake untuk buat page
-	function list_data_pelamar($limit, $start)
-	{
-		$this->db->limit($limit, $start);
-    	$result = array();
-        $this->db->SELECT('pelamar.*,periode.*')
-				 ->FROM('pelamar')
-				 ->join('periode','periode.id_periode=pelamar.id_periode')
-                 ->ORDER_BY('id_pelamar','DESC');
-        $pelamar = $this->db->get();
-
-		if($pelamar->num_rows() > 0){
-				$result = $pelamar->result();				
-        }
-        return $result;
 	}
 
 	//Dipake untuk menampilkan hasil pencarian
@@ -347,6 +330,19 @@ class M_Pendataan extends MY_Model {
 				return $pelamar;
 	}
 
+	function data_npelamar()
+	{
+		$npelamar = $this->db->query("SELECT DISTINCT pelamar.id_pelamar, nm_pelamar, nohp_pelamar, almt_pelamar
+		FROM pelamar inner join nilai_alternatif ON pelamar.id_pelamar = nilai_alternatif.id_pelamar");
+		return $npelamar;
+	}
+
+	function hapus_npelamar($id_pelamar)
+	{
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('nilai_alternatif');
+	}
+
 	function data_nilai_pelamar($id_pelamar)
 	{
 		$pelamar = $this->db->query("select pelamar.id_pelamar, pelamar.nm_pelamar, pelamar.nohp_pelamar, pelamar.almt_pelamar, 
@@ -354,6 +350,14 @@ class M_Pendataan extends MY_Model {
 		from pelamar, nilai_alternatif, kriteria where pelamar.id_pelamar = nilai_alternatif.id_pelamar and kriteria.id_kriteria = nilai_alternatif.id_kriteria
 		and pelamar.id_pelamar='$id_pelamar'");
 		return $pelamar;
+	}
+
+	function cari_npelamar($keyword)
+	{
+		$this->db->like('id_pelamar', $keyword);
+
+		$result = $this->db->get('pelamar')->result();
+		return $result;
 	}
 
 	//Data Pelamar yang tandanya sudah 1
@@ -467,9 +471,10 @@ class M_Pendataan extends MY_Model {
 		if(isset($_POST['btn_simpan']))
 		{
 			$periode = array(
-				'id_periode' => $this->input->post('id_periode'),
-				'bulan' => $this->input->post('bulan'),
-				'tgl_pembukaan' => $this->input->post('tgl_pembukaan'),
+				'id_periode' 		=> $this->input->post('id_periode'),
+				'bulan' 			=> $this->input->post('bulan'),
+				'tgl_pembukaan' 	=> $this->input->post('tgl_pembukaan'),
+				'tahun'		 		=> $this->input->post('tahun')
 			);
 
 			$this->db->set($periode);

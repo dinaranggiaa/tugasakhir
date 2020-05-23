@@ -213,7 +213,7 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Kriteria</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Nilai Target</h4>
               </div>
               <div class="modal-body">
                 <form action="<?php echo base_url()?>index.php/C_NTarget/ubah_kriteria" method="POST">
@@ -229,7 +229,7 @@
                       <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" value="<?= $Kriteria -> nm_kriteria?>" placeholder="<?= $Kriteria -> nm_kriteria?>" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td><label for="nilai_target">Bobot Kriteria</label></td>
+                      <td><label for="nilai_target">Nilai Target</label></td>
                       <td>:</td>
                       <td>
                         <select name="nilai_target">

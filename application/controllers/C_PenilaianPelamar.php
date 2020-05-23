@@ -33,16 +33,9 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function index()
 	{
-		$id_pelamar = $this->input->post('id_pelamar');
-		
 		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
-		$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
-		//where tanda=1
-		$data['pelamar'] 		= $this->M_Pendataan->data_pelamar();
-		//get berdasarkan id
-		$data['npelamar'] 		= $this->M_Pendataan->data_nilai_pelamar($id_pelamar)->result();
+		$data['n_pelamar']		= $this->M_Pendataan->data_npelamar()->result();
 		$data['penilaian']		= $this->M_Pendataan->ambil_id_penilaian();
-		
 		$this->load->view( 'admin/F_PenilaianPelamar', $data);
 	}
 
@@ -68,9 +61,16 @@ class C_PenilaianPelamar extends MY_Controller {
 		redirect('C_PenilaianPelamar/index');
 	}
 
+	function hapus_npelamar($id_pelamar)
+	{
+		$data['npelamar'] 	= $this->M_Pendataan->hapus_npelamar($id_pelamar);
+		redirect('C_PenilaianPelamar/index');
+	}
+
 	function simpan_penilaian()
 	{
-		$data['penilaian'] = $this->M_Pendataan->simpan_penilaian();
+		
+		$data['penilaian'] 	= $this->M_Pendataan->simpan_penilaian();
 		redirect('C_PenilaianPelamar/index');
 	}
 
@@ -96,9 +96,10 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function cari_keyword()
 	{
-		$data['keyword'] 	= $this->input->post("keyword");
-		$data['kode'] 		= $this->M_Pendataan->get_id_PenilaianPelamar();
-		$data['penilaian']	= $this->M_Pendataan->cari_PenilaianPelamar($data['keyword']);
+		$data['keyword'] 			= $this->input->post("keyword");
+		$data['JmlKriteria'] 		= $this->M_Pendataan->getJmlKriteria();
+		$data['n_pelamar']			= $this->M_Pendataan->data_npelamar()->result();
+		$data['penilaian']			= $this->M_Pendataan->cari_npelamar($data['keyword']);
 		$this->load->view('admin/F_PenilaianPelamar', $data);
 	}
 
@@ -124,6 +125,7 @@ class C_PenilaianPelamar extends MY_Controller {
 		$data['npelamar'] 		= $this->M_Pendataan->data_nilai_pelamar($id_pelamar)->result();
 		$this->load->view('admin/penilaian_pelamar/F_PenilaianPelamar_View', $data);
 	}
+
 	
 		
 }
