@@ -141,5 +141,35 @@ class M_Proses extends MY_Model {
 
 	}
 
+	// <!--  PROSES PROFILE MATCHING -->
+	function get_alternatif($bulan,$tahun)
+	{
+		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, d.id_kriteria, d.nm_kriteria,
+		c.nilai_tes, b.bulan, b.tahun
+		from pelamar a, periode b, nilai_alternatif c, kriteria d 
+		where a.id_periode = b.id_periode
+		and a.id_pelamar = c.id_pelamar
+		and c.id_kriteria = d.id_kriteria
+		and b.bulan = '$bulan' and b.tahun='$tahun'");
+		return $result->result_array();
+	}
+
+	function data_alternatif()
+	{
+		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, d.id_kriteria, d.nm_kriteria,
+		c.nilai_tes, b.bulan, b.tahun
+		from pelamar a, periode b, nilai_alternatif c, kriteria d 
+		where a.id_periode = b.id_periode
+		and a.id_pelamar = c.id_pelamar
+		and c.id_kriteria = d.id_kriteria");
+		return $result;
+	}
+	function data_penilaian()
+	{
+		$result = $this->db->query("select * from nilai_alternatif a join kriteria b
+		using (id_kriteria);");
+		return $result;
+	}
+
 
 }

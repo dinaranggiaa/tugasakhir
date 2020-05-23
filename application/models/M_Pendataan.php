@@ -498,6 +498,12 @@ class M_Pendataan extends MY_Model {
         return $result;
 	}
 
+	function ambil_data_tahun()
+	{
+		$result = $this->db->query("SELECT DISTINCT tahun FROM periode ");
+        return $result->result();
+	}
+
 	function ambil_id_periode()
 	{
 		$result = array();

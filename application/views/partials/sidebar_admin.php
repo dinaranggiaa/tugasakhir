@@ -78,7 +78,7 @@
             <div class="dropdown-child">
               <ul><?php echo "<a href='".base_url()."C_ProsesAHP/input_nilai_perbandingan'><i class=' 	fas fa-sync'> &nbsp; </i>Perhitungan AHP</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='far        fa-list-alt'> &nbsp; </i>Penilaian Pelamar</a>"; ?></ul>
-              <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-sync'> &nbsp; </i>Perhitungan PM</a>"; ?></ul>
+              <ul><?php echo "<a href='".base_url()."C_ProsesPM/index'><i class='fas fa-sync'> &nbsp; </i>Perhitungan PM</a>"; ?></ul>
               <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fas fa-newspaper'> &nbsp; </i>Hasil Keputusan</a>"; ?></ul>
             </div>
           </li>
