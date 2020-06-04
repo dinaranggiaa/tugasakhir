@@ -33,7 +33,7 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function index()
 	{
-		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
+		$data['JmlKriteria'] 	= $this->M_Pendataan->getjmlsubkriteria();
 		$data['n_pelamar']		= $this->M_Pendataan->data_npelamar()->result();
 		$data['penilaian']		= $this->M_Pendataan->ambil_id_penilaian();
 		$this->load->view( 'admin/F_PenilaianPelamar', $data);
@@ -41,13 +41,26 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function entri_penilaian()
 	{
-		$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
+		//$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
+		$data['kriteria'] 		= $this->M_Pendataan->get_subkriteria()->result_array();
+		
 		//where tanda=1
 		$data['pelamar'] 		= $this->M_Pendataan->data_pelamar();
 		$data['penilaian'] 		= $this->M_Pendataan->ambil_id_penilaian();
-		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
+		$data['JmlKriteria'] 	= $this->M_Pendataan->getjmlsubkriteria();
 		
 		$this->load->view('admin/penilaian_pelamar/F_PenilaianPelamar_Entri', $data);
+	}
+
+	
+	function cari_data()
+	{
+		$data['keyword'] 		= $this->input->post("keyword");
+		$data['JmlKriteria']	= $this->M_Pendataan->getjmlsubkriteria();
+		//$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
+		$data['kriteria'] 		= $this->M_Pendataan->get_subkriteria()->result_array();
+		$data['pelamar']		= $this->M_Pendataan->cari_data_pelamar($data['keyword'])->row_array();
+		$this->load->view('admin/penilaian_pelamar/F_PenilaianPelamar_Entri2', $data);
 	}
 
 	function input_data()
@@ -57,7 +70,7 @@ class C_PenilaianPelamar extends MY_Controller {
 		$tanda 				= 1;
 		$data 				= array('tanda' => $tanda);
 		$where 				= array('id_pelamar' => $id_pelamar);
-		$data['penilaian'] 	= $this->M_Pendataan->ubah_pelamar($where, $data, 'pelamar');
+		$data['penilaian'] 	= $this->M_Pendataan->ubah_data($where, $data, 'pelamar');
 		redirect('C_PenilaianPelamar/index');
 	}
 
@@ -69,8 +82,27 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function simpan_penilaian()
 	{
+		if(isset($_POST['btn_simpan']))
+		{
+			//$n = 8;
+			$n = $this->db->count_all('subkriteria');
+
+			$data = array();
+			for($i=0; $i < $n; $i++){
+				
+				$item = [
+					'id_pelamar' 		=> $this->input->post('id_pelamar'),
+					'id_subkriteria'	=> $this->input->post('id_subkriteria'.$i),
+					'nilai_tes' 		=> $this->input->post('nilai_tes'.$i)
+				];
+				array_push($data, $item);
+			}
+			
+			$this->db->insert_batch('nilai_alternatif', $data);
+
+		}
 		
-		$data['penilaian'] 	= $this->M_Pendataan->simpan_penilaian();
+		//$data['penilaian'] 	= $this->M_Pendataan->simpan_penilaian();
 		redirect('C_PenilaianPelamar/index');
 	}
 
@@ -94,34 +126,34 @@ class C_PenilaianPelamar extends MY_Controller {
 		redirect('C_PenilaianPelamar/index');
 	}
 
+	// function cari_keyword()
+	// {
+	// 	$data['keyword'] 			= $this->input->post("keyword");
+	// 	$data['JmlKriteria'] 		= $this->M_Pendataan->getjmlsubkriteria();
+	// 	$data['n_pelamar']			= $this->M_Pendataan->data_npelamar()->result();
+	// 	$data['penilaian']			= $this->M_Pendataan->cari_npelamar($data['keyword']);
+	// 	$this->load->view('admin/F_PenilaianPelamar', $data);
+	// }
+
 	function cari_keyword()
 	{
-		$data['keyword'] 			= $this->input->post("keyword");
-		$data['JmlKriteria'] 		= $this->M_Pendataan->getJmlKriteria();
-		$data['n_pelamar']			= $this->M_Pendataan->data_npelamar()->result();
-		$data['penilaian']			= $this->M_Pendataan->cari_npelamar($data['keyword']);
+		$data['pagination'] = $this->pagination->create_links();
+		$data['keyword'] 	= $this->input->post("keyword");
+		$data['n_pelamar']	= $this->M_Pendataan->cari_npelamar($data['keyword']);
 		$this->load->view('admin/F_PenilaianPelamar', $data);
 	}
 
-	function cari_data()
-	{
-		$data['keyword'] 		= $this->input->post("keyword");
-		$data['JmlKriteria']	= $this->M_Pendataan->getJmlKriteria();
-		$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
-		$data['pelamar']		= $this->M_Pendataan->cari_data_pelamar($data['keyword'])->row_array();
-		$this->load->view('admin/penilaian_pelamar/F_PenilaianPelamar_Entri2', $data);
-	}
 
 	function edit_nilai_pelamar($id_pelamar)
 	{
-		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
+		$data['JmlKriteria'] 	= $this->M_Pendataan->getjmlsubkriteria();
 		$data['npelamar'] 		= $this->M_Pendataan->data_nilai_pelamar($id_pelamar)->result();
 		$this->load->view('admin/penilaian_pelamar/F_PenilaianPelamar_Edit', $data);
 	}
 
 	function view_nilai_pelamar($id_pelamar)
 	{
-		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
+		$data['JmlKriteria'] 	= $this->M_Pendataan->getjmlsubkriteria();
 		$data['npelamar'] 		= $this->M_Pendataan->data_nilai_pelamar($id_pelamar)->result();
 		$this->load->view('admin/penilaian_pelamar/F_PenilaianPelamar_View', $data);
 	}

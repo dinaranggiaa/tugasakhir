@@ -29,10 +29,18 @@ class C_Laporan extends MY_Controller {
 		$this->load->library('pagination');
     }
     
-    function index()
+    function Periode_Rekomendasi()
 	{	
 		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
+		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
 		$this->load->view('admin/P_RekomendasiPelamar', $data);		
+	}
+	
+	function Periode_Keputusan()
+	{	
+		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
+		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
+		$this->load->view('admin/P_LKeputusan', $data);		
 	}
 
 	function cetak_form_penilaian()
@@ -49,13 +57,28 @@ class C_Laporan extends MY_Controller {
 	
 	public function Cetak_RekomendasiPelamar()
 	{
+		$bulan				= $this->input->post('bulan');
+		$tahun				= $this->input->post('tahun');
+		$data['bulan']		= $bulan;
+		$data['tahun']		= $tahun;
 		$data['tgl'] 		= date('d M Y h:i:s');
 		$id_periode 		= $this->input->post('id_periode');	
 		$periode 			= $this->M_Pendataan->ambil_data_periode();
-		$pelamar 			= $this->M_Pendataan->rekomendasi_pelamar($id_periode);
 		$data['periode']	= $this->M_Pendataan->get_periode($id_periode);
-		$data['pelamar']	= $this->M_Pendataan->ambil_data_pelamar();
+		$data['pelamar']	= $this->M_Pendataan->rekomendasi_pelamar($bulan, $tahun)->result();
 		$this->mypdf->generate('admin/L_RekomendasiPelamar',$data,true);
+	}
+
+	public function Cetak_KeputusanPelamar()
+	{
+		$bulan				= $this->input->post('bulan');
+		$tahun				= $this->input->post('tahun');
+		
+		$data['bulan']		= $bulan;
+		$data['tahun']		= $tahun;
+		$data['tgl'] 		= date('d M Y h:i:s');
+		$data['pelamar']	= $this->M_Pendataan->keputusan_pelamar($bulan, $tahun)->result();
+		$this->mypdf->generate('admin/L_KeputusanPelamar',$data,true);
 	}
     
 }

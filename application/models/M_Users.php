@@ -118,7 +118,7 @@ class M_Users extends CI_Model{
 
 			return true;
 		}
-		$this->session->set_userdata($session_petugas);
-		return $query;
+		// $this->session->set_userdata($session_petugas);
+		// return $query;
 	}
 }

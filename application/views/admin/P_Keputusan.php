@@ -1,4 +1,3 @@
-
 <?php $this->view('partials/sidebar_admin')?>
 <style>
   
@@ -51,11 +50,11 @@
   
 </style>
 <div class="center-bar">
-  <h3><i class='far fa-folder-open'></i>&nbsp;Analisis Penilaian Pelamar</h3> 
+  <h3><i class='far fa-folder-open'></i>&nbsp;Rekomendasi Pelamar</h3> 
   <div class="border"></div>
   <div class="home-periode">
     <div class="home-judul"><span>Periode Pendaftaran</span></div>
-        <?php echo form_open('C_ProsesPM/proses_alternatif')?>
+      <?php echo form_open('C_ProsesPM/entri_keputusan')?>
           <table>
             <tr>
               <td style="padding-right: 15px;">

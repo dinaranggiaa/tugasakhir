@@ -29,17 +29,15 @@ class M_Pendataan extends MY_Model {
 	{
 		$this->load->database();
 	}
-	
-// <!--PROSES PELAMAR-->
 
-    // Menampilkan id pelamar
-	function get_id_pelamar()
+	// <!--Function Create ID -->
+	function get_id_karyawan()
 	{
-		$this->db->select('RIGHT(pelamar.id_pelamar,3) as kode', false);
+		$this->db->select('RIGHT(karyawan.id_karyawan,3) as kode', false);
 		$this->db->order_by('kode','DESC');
 		$this->db->limit(1);
 
-		$query = $this->db->get('pelamar');
+		$query = $this->db->get('karyawan');
 
 		//Mengecek sudah ada data atau belum
 		if($query->num_rows() <> 0)
@@ -50,11 +48,370 @@ class M_Pendataan extends MY_Model {
 			$kode = 1; //kalo belum buat kode
 		}
 		$kodemax = str_pad($kode,3,"0",STR_PAD_LEFT);
+		$kodejadi = 'SM'.$kodemax;
+
+		return $kodejadi;
+	}
+
+		function get_id_pelamar()
+	{
+		$this->db->select('RIGHT(pelamar.id_pelamar,2) as kode', false);
+		$this->db->order_by('kode','DESC');
+		$this->db->limit(1);
+
+		$query = $this->db->get('pelamar');
+
+		if($query->num_rows() <> 0)
+		{
+			$data = $query->row();
+			$kode = intval($data->kode)+1;
+		} else {
+			$kode = 1;
+		}
+		$kodemax = str_pad($kode,3,"0",STR_PAD_LEFT);
+		$kodejadi = 'PL'.$kodemax;
+
+		return $kodejadi;
+	}
+
+	function get_id_subkriteria()
+	{
+		$this->db->select('RIGHT(subkriteria.id_subkriteria,2) as kode', false);
+		$this->db->order_by('kode','DESC');
+		$this->db->limit(1);
+
+		$query = $this->db->get('subkriteria');
+
+		if($query->num_rows() <> 0)
+		{
+			$data = $query->row();
+			$kode = intval($data->kode)+1; 
+		} else {
+				$kode = 1; 
+			}
+		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
+		$kodejadi = 'SK'.$kodemax;
+
+		return $kodejadi;
+	}
+	
+	function get_id_divisi()
+	{
+		$this->db->select('RIGHT(divisi.id_divisi,2) as kode', false);
+		$this->db->order_by('kode','DESC');
+		$this->db->limit(1);
+
+		$query = $this->db->get('divisi');
+
+		if($query->num_rows() <> 0)
+		{
+			$data = $query->row();
+			$kode = intval($data->kode)+1;
+		} else {
+				$kode = 1; 
+			}
+		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
+		$kodejadi = 'D'.$kodemax;
+
+		return $kodejadi;
+	}
+
+
+	function get_id_kriteria()
+	{
+		$this->db->select('RIGHT(kriteria.id_kriteria,2) as kode', false);
+		$this->db->order_by('kode','DESC');
+		$this->db->limit(1);
+
+		$query = $this->db->get('kriteria');
+
+		if($query->num_rows() <> 0)
+		{
+			$data = $query->row();
+			$kode = intval($data->kode)+1;
+		} else {
+				$kode = 1; 
+			}
+		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
+		$kodejadi = 'C'.$kodemax;
+
+		return $kodejadi;
+	}
+
+		function get_id_periode()
+	{
+		$this->db->select('RIGHT(periode.id_periode,2) as kode', false);
+		$this->db->order_by('kode','DESC');
+		$this->db->limit(1);
+
+		$query = $this->db->get('periode');
+
+		if($query->num_rows() <> 0)
+		{
+			$data = $query->row();
+			$kode = intval($data->kode)+1; 
+		} else {
+				$kode = 1;
+			}
+		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
 		$kodejadi = 'P'.$kodemax;
 
 		return $kodejadi;
 	}
 
+	function get_id_users()
+	{
+		$this->db->select('RIGHT(users.id_user,2) as kode', false);
+		$this->db->order_by('kode','DESC');
+		$this->db->limit(1);
+
+		$query = $this->db->get('users');
+
+		if($query->num_rows() <> 0)
+		{
+			$data = $query->row();
+			$kode = intval($data->kode)+1;
+		} else {
+				$kode = 1; 
+			}
+		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
+		$kodejadi = 'U'.$kodemax;
+
+		return $kodejadi;
+	}
+
+	// <!--Function Ubah Data-->
+	function ubah_data($where, $data, $table)
+	{
+		$this->db->where($where);
+		$this->db->update($table, $data);
+	}
+
+	// <--Function Hapus Data-->
+	function hapus_karyawan($id_karyawan)
+	{
+		$this->db->where('id_karyawan', $id_karyawan);
+		$this->db->delete('karyawan');
+
+		$this->db->where('id_karyawan', $id_karyawan);
+		$this->db->delete('kontak_darurat');
+	}
+
+	function hapus_pelamar($id_pelamar)
+	{
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('pelamar');
+	}
+
+	function hapus_users($id_user)
+	{
+		$this->db->where('id_user', $id_user);
+		$this->db->delete('users');
+	}
+
+	function hapus_periode($id_periode)
+	{
+		$this->db->where('id_periode', $id_periode);
+		$this->db->delete('periode');
+	}
+
+	function hapus_penilaian($id_pelamar, $id_kriteria)
+	{
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('periode');
+	}
+
+	function hapus_npelamar($id_pelamar)
+	{
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('nilai_alternatif');
+	}
+
+	function hapus_kriteria($id_kriteria)
+	{
+		$this->db->where('id_kriteria', $id_kriteria);
+		$this->db->delete('kriteria');
+	}
+
+	function hapus_divisi($id_divisi)
+	{
+		$this->db->where('id_divisi', $id_divisi);
+		$this->db->delete('divisi');
+	}
+
+	function hapus_subkriteria($id_subkriteria)
+	{
+		$this->db->where('id_subkriteria', $id_subkriteria);
+		$this->db->delete('subkriteria');
+	}
+
+	// <--Function Cari Data-->
+	function cari_kriteria($keyword)
+	{
+		$this->db->like('id_kriteria', $keyword);
+		$this->db->or_like('nm_kriteria', $keyword);
+
+		$result = $this->db->get('kriteria')->result();
+		return $result;
+	}
+
+	
+	function cari_subkriteria($keyword)
+	{
+		$this->db->SELECT('kriteria.nm_kriteria, subkriteria.*')
+				->FROM('kriteria')
+				->join('subkriteria','subkriteria.id_kriteria=kriteria.id_kriteria')
+				->like('id_subkriteria', $keyword)
+				->or_like('nm_subkriteria', $keyword)
+				->or_like('nm_kriteria', $keyword);
+
+		$result = $this->db->get();
+
+		return $result;
+	}
+	
+	function cari_data_pelamar($keyword)
+	{
+		$this->db->SELECT('id_pelamar, nm_pelamar')
+				->FROM('pelamar')
+				->like('id_pelamar', $keyword)
+				->or_like('nm_pelamar', $keyword);
+		$pelamar = $this->db->get();
+
+		
+		return $pelamar;
+	}
+
+	//Form Entri Data Karyawan
+	function get_data_pelamar($keyword)
+	{
+		$this->db->SELECT('id_pelamar, nm_pelamar, almt_pelamar, nohp_pelamar, pelamar.id_periode')
+				->FROM('pelamar')
+				->join('periode','periode.id_periode=pelamar.id_periode')
+				->like('id_pelamar', $keyword)
+				->or_like('nm_pelamar', $keyword);
+		$pelamar = $this->db->get();
+
+				return $pelamar;
+	}
+
+	function cari_npelamar($keyword)
+	{
+		$result = $this->db->query("SELECT DISTINCT nilai_alternatif.id_pelamar, nm_pelamar, nohp_pelamar, almt_pelamar
+		FROM pelamar inner join nilai_alternatif ON pelamar.id_pelamar = nilai_alternatif.id_pelamar LIKE pelamar.id_pelamar = '$keyword'");
+
+		$result = $this->db->get('pelamar')->result();
+		return $result;
+	}
+
+	function cari_penilaian($keyword)
+	{
+		$this->db->like('id_periode', $keyword);
+		$this->db->or_like('bulan', $keyword);
+
+		$result = $this->db->get('periode')->result();
+		return $result;
+	}
+
+	function cari_periode($keyword)
+	{
+		$this->db->like('id_periode', $keyword);
+		$this->db->or_like('bulan', $keyword);
+
+		$result = $this->db->get('periode')->result();
+		return $result;
+	}
+
+	function cari_users($keyword)
+	{
+		$this->db->like('id_user', $keyword);
+		$this->db->or_like('nm_user', $keyword);
+
+		$result = $this->db->get('users')->result();
+		return $result;
+	}
+
+	function cari_data_karyawan($keyword)
+	{
+    	$result = array();
+        $this->db->SELECT('karyawan.*, kontak_darurat.*')
+				 ->FROM('karyawan')
+				 ->join('kontak_darurat','kontak_darurat.id_karyawan = karyawan.id_karyawan')
+				 ->WHERE('status_kerja = "Aktif" ')
+				 ->ORDER_BY('karyawan.id_karyawan','DESC');
+		$this->db->like('karyawan.id_karyawan', $keyword);
+		$this->db->or_like('nm_karyawan', $keyword);
+				 
+        $karyawan = $this->db->get();
+
+		if($karyawan->num_rows() > 0){
+				$result = $karyawan->result();				
+        }
+        return $result;
+	}
+
+	function cari_pelamar($keyword)
+	{
+		$this->db->SELECT('pelamar.*, periode.bulan')
+				->FROM('pelamar')
+				->join('periode','periode.id_periode=pelamar.id_periode')
+				->like('id_pelamar', $keyword)
+				->or_like('nm_pelamar', $keyword)
+				->or_like('bulan', $keyword);
+
+		$result = $this->db->get()->result();
+		return $result;
+	}
+	
+	function cari_divisi($keyword)
+	{
+		$this->db->like('id_divisi', $keyword);
+		$this->db->or_like('nm_divisi', $keyword);
+
+		$result = $this->db->get('divisi')->result();
+		return $result;
+	}
+
+	// <!--FUNCTION SIMPAN -->
+	function simpan_karyawan()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+
+			$karyawan = array(
+				'id_karyawan' 			=> $this->input->post('id_karyawan'),
+				'id_pelamar' 			=> $this->input->post('id_pelamar'),
+				'id_periode' 			=> $this->input->post('id_periode'),
+				'nm_karyawan' 			=> $this->input->post('nm_karyawan'),
+				'tempat_lahir' 			=> $this->input->post('tempat_lahir'),
+				'tanggal_lahir' 		=> $this->input->post('tanggal_lahir'),
+				'almt_karyawan'			=> $this->input->post('almt_karyawan'),
+				'no_ktp' 				=> $this->input->post('no_ktp'),
+				'status_marital'		=> $this->input->post('status_marital'),
+				'nohp_karyawan'			=> $this->input->post('nohp_karyawan'),
+				'pendidikan_terakhir' 	=> $this->input->post('pendidikan_terakhir'),
+				'tglmasukkerja' 		=> $this->input->post('tglmasukkerja'),
+				'nm_ortu'				=> $this->input->post('nm_ortu'),
+				'almt_ortu'				=> $this->input->post('almt_ortu'),
+				'status_kerja'			=> 'Aktif'
+			);
+
+			$kontak_darurat = array(
+				'id_karyawan' 		=> $this->input->post('id_karyawan'),
+				'nm_hub' 			=> $this->input->post('nm_hub'),
+				'stat_hub'			=> $this->input->post('stat_hub'),
+				'almt_hub' 			=> $this->input->post('almt_hub'),
+				'nohp_hub' 			=> $this->input->post('nohp_hub')
+			);
+
+			$this->db->set($karyawan);
+			$this->db->insert('karyawan');
+			$this->db->set($kontak_darurat);
+			$this->db->insert('kontak_darurat');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
 
 	function simpan_pelamar()
 	{
@@ -66,14 +423,8 @@ class M_Pendataan extends MY_Model {
 				'id_periode' 		=> $this->input->post('id_periode'),
 				'tgl_daftar' 		=> $this->input->post('tgl_daftar'),
 				'nm_pelamar'		=> $this->input->post('nm_pelamar'),
-				// 'jk_pelamar' 		=> $this->input->post('jk_pelamar'),
-				// 'tempat_lahir' 		=> $this->input->post('tempat_lahir'),
-				// 'tanggal_lahir' 	=> $this->input->post('tanggal_lahir'),
 				'almt_pelamar'		=> $this->input->post('almt_pelamar'),
-				// 'no_ktp' 			=> $this->input->post('no_ktp'),
-				// 'status' 			=> $this->input->post('status'),
 				'nohp_pelamar' 		=> $this->input->post('nohp_pelamar'),
-				// 'pendidikan_akhir' 	=> $this->input->post('pendidikan_akhir'),
 				'tanda' 			=> 0
 			);
 
@@ -83,19 +434,167 @@ class M_Pendataan extends MY_Model {
 
 		}
 	}
-		
-	function hapus_pelamar($id_pelamar)
+
+	function simpan_ntarget()
 	{
-		$this->db->where('id_pelamar', $id_pelamar);
-		$this->db->delete('pelamar');
-	}
+		if(isset($_POST['btn_simpan']))
+		{
+			$data = array(
+				'id_subkriteria	'	=> $this->input->post('id_subkriteria'),
+				'nm_subkriteria	'	=> $this->input->post('nm_subkriteria'),
+				'id_kriteria' 		=> $this->input->post('id_kriteria'),
+				'nilai_target' 		=> $this->input->post('nilai_target'),
+				'status_subkriteria'=> $this->input->post('status_subkriteria'),
+				
+			);
+
+			$this->db->set($data);
+			$this->db->insert('subkriteria');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
 	
-	function ubah_pelamar($where, $data, $table)
-	{
-		$this->db->where($where);
-		$this->db->update($table, $data);
 	}
 
+	function simpan_divisi()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$divisi = array(
+				'id_divisi' 		=> $this->input->post('id_divisi'),
+				'nm_divisi' 		=> $this->input->post('nm_divisi'),
+			);
+
+			$this->db->set($divisi);
+			$this->db->insert('divisi');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
+	function simpan_kriteria()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$kriteria = array(
+				'id_kriteria' 		=> $this->input->post('id_kriteria'),
+				'nm_kriteria' 		=> $this->input->post('nm_kriteria'),
+			);
+
+			$this->db->set($kriteria);
+			$this->db->insert('kriteria');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
+	function simpan_penilaian()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$n = 8;
+
+			$data = array();
+			for($i=0; $i < $n; $i++){
+				
+				$item = [
+					'id_pelamar' => $this->input->post('id_pelamar'),
+					'id_kriteria' => $this->input->post('id_subkriteria'.$i),
+					'nilai_tes' => $this->input->post('nilai_tes'.$i)
+				];
+				array_push($data, $item);
+			}
+			
+			$this->db->insert_batch('nilai_alternatif', $data);
+
+		}
+	}
+
+	function simpan_periode()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$periode = array(
+				'id_periode' 		=> $this->input->post('id_periode'),
+				'bulan' 			=> $this->input->post('bulan'),
+				'tgl_pembukaan' 	=> $this->input->post('tgl_pembukaan'),
+				'tahun'		 		=> $this->input->post('tahun')
+			);
+
+			$this->db->set($periode);
+			$this->db->insert('periode');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
+	function simpan_users()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$users = array(
+				'id_user' => $this->input->post('id_user'),
+				'nm_user' => $this->input->post('nm_user'),
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password'),
+				'level' => $this->input->post('level'),
+			);
+
+			$this->db->set($users);
+			$this->db->insert('users');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
+		// <!--FUNCTION MENGHITUNG JUMLAH-->
+	function getjmlsubkriteria()
+	{
+		$result = array();
+		$this->db->SELECT('count(id_subkriteria) as total')
+				 ->FROM('subkriteria');
+		$kriteria = $this->db->get();
+		if($kriteria->num_rows() > 0)
+		{
+			$result = $kriteria->row_array();
+		}
+		return $result;
+	}
+
+	function getJmlKriteria()
+	{
+		$result = array();
+		$this->db->SELECT('count(id_kriteria) as total')
+				 ->FROM('kriteria');
+		$kriteria = $this->db->get();
+		if($kriteria->num_rows() > 0)
+		{
+			$result = $kriteria->row_array();
+		}
+		return $result;
+	}
+	
+	// <!--FUNCTION AMBIL DATA-->
+
+	// <--DATA KARYAWAN-->
+	function ambil_data_karyawan()
+	{
+    	$result = array();
+        $this->db->SELECT('karyawan.*, kontak_darurat.*')
+				 ->FROM('karyawan')
+				 ->join('kontak_darurat','kontak_darurat.id_karyawan = karyawan.id_karyawan')
+				 ->WHERE('status_kerja = "Aktif" ')
+				 ->ORDER_BY('karyawan.id_karyawan','DESC');
+				 
+        $karyawan = $this->db->get();
+
+		if($karyawan->num_rows() > 0){
+				$result = $karyawan->result();				
+        }
+        return $result;
+	}
+
+	// <--DATA PELAMAR-->
 	//Dipake untuk menampilkan hasil pencarian
 	function ambil_data_pelamar()
 	{
@@ -112,52 +611,14 @@ class M_Pendataan extends MY_Model {
         return $result;
 	}
 		
-	function ambil_data_byidpelamar($id_pelamar)
+	// <--DATA SUBKRITERIA-->
+	public function ambil_data_subkriteria()
 	{
-		$this->db->where('id_pelamar', $id_pelamar);
-		return $this->db->get('pelamar')->result();
-	}
-
-    function pagination_data_pelamar($limit, $start)
-    {
-        return $this->db->get('pelamar', $limit, $start) ->result_array();
-	}
-
-	function cari_pelamar($keyword)
-	{
-		$this->db->like('id_pelamar', $keyword);
-		$this->db->or_like('nm_pelamar', $keyword);
-
-		$result = $this->db->get('pelamar')->result();
-		return $result;
-	}
-
-// <!--PROSES KRITERIA dan Nilai Target-->
-
-	public function ambil_data_ntarget()
-	{
-		$result = $this->db->query("select * from kriteria where tanda = '1'");
+		$result = $this->db->query("select subkriteria.*, kriteria.id_kriteria, kriteria.nm_kriteria 
+		from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria
+		order by kriteria.id_kriteria;
+		");
 		return $result->result();
-	}
-
-	function simpan_ntarget()
-	{
-		if(isset($_POST['btn_simpan']))
-		{
-
-			$data = array();
-				
-			$item = [
-					'id_kriteria' 		=> $this->input->post('id_kriteria'),
-					'nilai_target' 		=> $this->input->post('nilai_target'),
-					'status_kriteria' 	=> $this->input->post('status_kriteria'),
-			];
-				array_push($data, $item);
-			}
-			
-			$this->db->insert_batch('nilai_target', $data);
-
-		
 	}
 
 	//Data Kriteria yang tandanya sudah 1
@@ -177,72 +638,14 @@ class M_Pendataan extends MY_Model {
 		return $result;
 	}
 
-	function get_id_kriteria()
-	{
-		$this->db->select('RIGHT(kriteria.id_kriteria,2) as kode', false);
-		$this->db->order_by('kode','DESC');
-		$this->db->limit(1);
 
-		$query = $this->db->get('kriteria');
-
-		//Mengecek sudah ada data atau belum
-		if($query->num_rows() <> 0)
-		{
-			$data = $query->row();
-			$kode = intval($data->kode)+1; //kalo udah +1
-		} else {
-				$kode = 1; //kalo belum buat kode
-			}
-		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
-		$kodejadi = 'C'.$kodemax;
-
-		return $kodejadi;
-	}
-
-	function cari_kriteria($keyword)
-	{
-		$this->db->like('id_kriteria', $keyword);
-		$this->db->or_like('nm_kriteria', $keyword);
-
-		$result = $this->db->get('kriteria')->result();
-		return $result;
-	}
-		
-	function simpan_kriteria()
-	{
-		if(isset($_POST['btn_simpan']))
-		{
-			$kriteria = array(
-				'id_kriteria' 		=> $this->input->post('id_kriteria'),
-				'nm_kriteria' 		=> $this->input->post('nm_kriteria'),
-				'bobot_kriteria' 	=> $this->input->post('bobot_kriteria'),
-				'tanda'				=> 0
-			);
-
-			$this->db->set($kriteria);
-			$this->db->insert('kriteria');
-			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
-
-		}
-	}
-
+	// <--DATA KRITERIA-->
 	function ambil_data_byidkriteria($id_kriteria)
 	{
 		$this->db->where('id_kriteria', $id_kriteria);
 		return $this->db->get('kriteria')->result();
 	}
 
-	function ubah_kriteria($where, $data, $table)
-	{
-		$this->db->where($where);
-		$this->db->update($table, $data);
-	}
-
-	function hapus_kriteria($id_kriteria)
-	{
-		$this->db->where('id_kriteria', $id_kriteria);
-		$this->db->delete('kriteria');
-	}
 	
 	function ambil_data_kriteria()
 	{
@@ -267,23 +670,7 @@ class M_Pendataan extends MY_Model {
 		$kriteria = $this->db->get();
 		return $kriteria;
 	}
-	
-	//Mengambil Jumlah Kriteria
-	function getJmlKriteria()
-	{
-		$result = array();
-		$this->db->SELECT('count(id_kriteria) as total')
-				 ->FROM('kriteria');
-		$kriteria = $this->db->get();
-		if($kriteria->num_rows() > 0)
-		{
-			$result = $kriteria->row_array();
-		}
-		return $result;
-	}
 
-	//Mencari ID Kriteria
-	//Berdasarkan urutan ke berapa
 	function getIdKriteria()
 	{
 		$this->db->select('id_kriteria')
@@ -294,8 +681,6 @@ class M_Pendataan extends MY_Model {
 
 	}
 
-	//Mencari Nama Kriteria
-	//Berdasarkan urutan ke berapa
 	function getNmKriteria()
 	{
 		$this->db->select('nm_kriteria')
@@ -307,58 +692,50 @@ class M_Pendataan extends MY_Model {
 		return $kriteria;
 	}
 
-	// mencari nilai bobot perbandingan kriteria
-	function getNilaiPerbandinganKriteria() 
+	// <--DATA DIVISI-->
+	function ambil_data_byiddivisi($id_divisi)
 	{
-		$this->db->select('nilai_pembanding')
-				 ->from('perbandingan_kriteria');
-		$nilai = $this->db->get();
-		return $nilai;
-
+		$this->db->where('id_divisi', $id_divisi);
+		return $this->db->get('divisi')->result();
 	}
-// <!--PROSES Penilaian-->
 
-	//Get By Id Pelamar
-	function cari_data_pelamar($keyword)
+	
+	function ambil_data_divisi()
 	{
-		$this->db->SELECT('id_pelamar, nm_pelamar')
-				->FROM('pelamar')
-				->like('id_pelamar', $keyword)
-				->or_like('nm_pelamar', $keyword);
-		$pelamar = $this->db->get();
-
-				return $pelamar;
+        $result = array();
+        $this->db->SELECT('*')
+                 ->FROM('divisi')
+                 ->ORDER_BY('id_divisi','DESC');
+        $divisi = $this->db->get();
+    
+        if($divisi->num_rows() > 0){
+			$result = $divisi->result();		
+        }
+        return $result;
 	}
+	
+	// <--DATA PENILAIAN-->
 
 	function data_npelamar()
 	{
 		$npelamar = $this->db->query("SELECT DISTINCT pelamar.id_pelamar, nm_pelamar, nohp_pelamar, almt_pelamar
-		FROM pelamar inner join nilai_alternatif ON pelamar.id_pelamar = nilai_alternatif.id_pelamar");
+										FROM pelamar inner join nilai_alternatif ON pelamar.id_pelamar = nilai_alternatif.id_pelamar");
 		return $npelamar;
 	}
 
-	function hapus_npelamar($id_pelamar)
-	{
-		$this->db->where('id_pelamar', $id_pelamar);
-		$this->db->delete('nilai_alternatif');
-	}
 
 	function data_nilai_pelamar($id_pelamar)
 	{
-		$pelamar = $this->db->query("select pelamar.id_pelamar, pelamar.nm_pelamar, pelamar.nohp_pelamar, pelamar.almt_pelamar, 
-		nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria 
-		from pelamar, nilai_alternatif, kriteria where pelamar.id_pelamar = nilai_alternatif.id_pelamar and kriteria.id_kriteria = nilai_alternatif.id_kriteria
-		and pelamar.id_pelamar='$id_pelamar'");
+		$pelamar = $this->db->query("SELECT pelamar.id_pelamar, pelamar.nm_pelamar, pelamar.nohp_pelamar, pelamar.almt_pelamar, 
+		nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria, subkriteria.id_subkriteria, subkriteria.nm_subkriteria 
+		FROM pelamar, nilai_alternatif, kriteria, subkriteria 
+		WHERE pelamar.id_pelamar = nilai_alternatif.id_pelamar 
+		AND kriteria.id_kriteria = subkriteria.id_kriteria
+		AND subkriteria.id_subkriteria = nilai_alternatif.id_subkriteria
+		AND pelamar.id_pelamar='$id_pelamar'");
 		return $pelamar;
 	}
 
-	function cari_npelamar($keyword)
-	{
-		$this->db->like('id_pelamar', $keyword);
-
-		$result = $this->db->get('pelamar')->result();
-		return $result;
-	}
 
 	//Data Pelamar yang tandanya sudah 1
 	function data_pelamar()
@@ -376,29 +753,7 @@ class M_Pendataan extends MY_Model {
 		}
 		return $result;
 	}
-		
-
-	function simpan_penilaian()
-	{
-		if(isset($_POST['btn_simpan']))
-		{
-			$n = 5;
-
-			$data = array();
-			for($i=0; $i < $n; $i++){
-				
-				$item = [
-					'id_pelamar' => $this->input->post('id_pelamar'),
-					'id_kriteria' => $this->input->post('id_kriteria'.$i),
-					'nilai_tes' => $this->input->post('nilai_tes'.$i)
-				];
-				array_push($data, $item);
-			}
-			
-			$this->db->insert_batch('nilai_alternatif', $data);
-
-		}
-	}
+	
 
 	function ambil_data_penilaian()
 	{
@@ -406,82 +761,37 @@ class M_Pendataan extends MY_Model {
 									from pelamar, nilai_alternatif 
 									where pelamar.id_pelamar = nilai_alternatif.id_pelamar
 									and kriteria.id_kriteria = nilai_alternatif.id_kriteria
-									");
+									");	
         return $result->result_array();
 	}
 
 	function ambil_id_penilaian()
 	{
-		$result = $this->db->query("select pelamar.*, kriteria.id_kriteria, kriteria.nm_kriteria, nilai_alternatif.* 
-									from pelamar, nilai_alternatif, kriteria 
+		$result = $this->db->query("select pelamar.*, subkriteria.id_kriteria, kriteria.nm_kriteria, nilai_alternatif.* 
+									from pelamar, nilai_alternatif, kriteria, subkriteria 
 									where pelamar.id_pelamar = nilai_alternatif.id_pelamar 
-									and kriteria.id_kriteria = nilai_alternatif.id_kriteria;
+									and subkriteria.id_subkriteria = nilai_alternatif.id_subkriteria
+									and kriteria.id_kriteria = subkriteria.id_kriteria;
 		");
 
         return $result->result();
 	}
 
-	function hapus_penilaian($id_pelamar, $id_kriteria)
-	{
-		$this->db->where('id_pelamar', $id_pelamar);
-		$this->db->delete('periode');
-	}
 
-	function ubah_penilaian($where, $data, $table)
+	function get_target_kriteria()
 	{
-		$this->db->where($where);
-		$this->db->update($table, $data);
-	}
-
-	function cari_penilaian($keyword)
-	{
-		$this->db->like('id_periode', $keyword);
-		$this->db->or_like('bulan', $keyword);
-
-		$result = $this->db->get('periode')->result();
+		$result = $this->db->query("select divisi.id_divisi, nm_divisi, nm_kriteria, kriteria.nilai_target, kriteria.status_kriteria, kriteria.id_kriteria from nilai_target, kriteria, divisi where kriteria.id_kriteria = nilai_target.id_kriteria
+		and divisi.id_divisi = nilai_target.id_divisi
+		order by nilai_target.id_kriteria;
+		");
 		return $result;
 	}
 
-	// <!--PROSES PERIODE-->
-		
-	function get_id_periode()
+	function get_subkriteria()
 	{
-		$this->db->select('RIGHT(periode.id_periode,2) as kode', false);
-		$this->db->order_by('kode','DESC');
-		$this->db->limit(1);
-
-		$query = $this->db->get('periode');
-
-		//Mengecek sudah ada data atau belum
-		if($query->num_rows() <> 0)
-		{
-			$data = $query->row();
-			$kode = intval($data->kode)+1; //kalo udah +1
-		} else {
-				$kode = 1; //kalo belum buat kode
-			}
-		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
-		$kodejadi = 'P'.$kodemax;
-
-		return $kodejadi;
-	}
-
-	function simpan_periode()
-	{
-		if(isset($_POST['btn_simpan']))
-		{
-			$periode = array(
-				'id_periode' 		=> $this->input->post('id_periode'),
-				'bulan' 			=> $this->input->post('bulan'),
-				'tgl_pembukaan' 	=> $this->input->post('tgl_pembukaan'),
-				'tahun'		 		=> $this->input->post('tahun')
-			);
-
-			$this->db->set($periode);
-			$this->db->insert('periode');
-			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
-
-		}
+		$result = $this->db->query("select subkriteria.id_subkriteria, subkriteria.nm_subkriteria, subkriteria.nilai_target, subkriteria.status_subkriteria, kriteria.id_kriteria, kriteria.nm_kriteria from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria;
+		");
+		return $result;
 	}
 
 	function ambil_data_periode()
@@ -518,71 +828,6 @@ class M_Pendataan extends MY_Model {
         return $result;
 	}
 
-	function hapus_periode($id_periode)
-	{
-		$this->db->where('id_periode', $id_periode);
-		$this->db->delete('periode');
-	}
-
-	function ubah_periode($where, $data, $table)
-	{
-		$this->db->where($where);
-		$this->db->update($table, $data);
-	}
-
-	function cari_periode($keyword)
-	{
-		$this->db->like('id_periode', $keyword);
-		$this->db->or_like('bulan', $keyword);
-
-		$result = $this->db->get('periode')->result();
-		return $result;
-	}
-
-
-
-// <!--PROSES User-->
-		
-	function get_id_users()
-	{
-		$this->db->select('RIGHT(users.id_user,2) as kode', false);
-		$this->db->order_by('kode','DESC');
-		$this->db->limit(1);
-
-		$query = $this->db->get('users');
-
-		//Mengecek sudah ada data atau belum
-		if($query->num_rows() <> 0)
-		{
-			$data = $query->row();
-			$kode = intval($data->kode)+1; //kalo udah +1
-		} else {
-				$kode = 1; //kalo belum buat kode
-			}
-		$kodemax = str_pad($kode,2,"0",STR_PAD_LEFT);
-		$kodejadi = 'U'.$kodemax;
-
-		return $kodejadi;
-	}
-
-	function simpan_users()
-	{
-		if(isset($_POST['btn_simpan']))
-		{
-			$users = array(
-				'id_user' => $this->input->post('id_user'),
-				'nm_user' => $this->input->post('nm_user'),
-				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password'),
-				'level' => $this->input->post('level'),
-			);
-
-			$this->db->set($users);
-			$this->db->insert('users');
-			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
-
-		}
-	}
 
 	function ambil_data_users()
 	{
@@ -612,29 +857,10 @@ class M_Pendataan extends MY_Model {
 		return $result;
 	}
 
-	function hapus_users($id_user)
-	{
-		$this->db->where('id_user', $id_user);
-		$this->db->delete('users');
-	}
 
 
-	function ubah_users($where, $data, $table)
-	{
-		$this->db->where($where);
-		$this->db->update($table, $data);
-	}
 
-	function cari_users($keyword)
-	{
-		$this->db->like('id_user', $keyword);
-		$this->db->or_like('nm_user', $keyword);
-
-		$result = $this->db->get('users')->result();
-		return $result;
-	}
-
-	// <!--PROSES BUAT LAPORAN-->
+	// <!--FUNCTION GET DATA UNTUK LAPORAN-->
 
 	function get_periode($id_periode)
 	{
@@ -643,11 +869,29 @@ class M_Pendataan extends MY_Model {
 		return $result->result();
 	}
 
-	function rekomendasi_pelamar($id_periode)
+	function rekomendasi_pelamar($bulan, $tahun)
 	{
-		$result = $this->db->query("select pelamar.*, periode.* from pelamar, periode
-									where periode.id_periode = '$id_periode' order by pelamar.id_pelamar");
-		return $result->result();
+		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, a.nohp_pelamar, b.nilai_akhir 
+									from pelamar a, hasil_akhir b, periode c 
+									where a.id_pelamar = b.id_pelamar
+									and a.id_periode = c.id_periode
+									and bulan='$bulan' and tahun='$tahun'
+									order by nilai_akhir desc");
+		return $result;
 	}
+
+	function keputusan_pelamar($bulan, $tahun)
+	{
+		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, a.nohp_pelamar, b.nilai_akhir 
+									from pelamar a, hasil_akhir b, periode c 
+									where a.id_pelamar = b.id_pelamar
+									and a.id_periode = c.id_periode
+									and b.status_akhir = '1' 
+									and bulan='$bulan' 
+									and tahun='$tahun'
+									order by nilai_akhir desc");
+		return $result;
+	}
+	
 
 }

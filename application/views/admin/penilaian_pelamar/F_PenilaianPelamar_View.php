@@ -56,7 +56,7 @@
 }
 
 .form-pendataan{
-  padding-left: 250px;
+  padding-left: 150px;
   padding-top: 25px;
 }
 
@@ -76,12 +76,12 @@
     <div class="form-pendataan" style="padding-bottom: 25px;">
       <?php $n = $JmlKriteria['total']; ?>
     <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/ubah_penilaian" method="POST">
-              <table style="width: 70%;">
+              <table style="width: 100%;">
                 <?php $no=0; ?>
                   <?php foreach ($npelamar as $row) : ?>
                     <?php if ($no == 0) : ?>
               <tr>
-                <td style="width: 25%"><label for="id_pelamar">Kode pelamar</label></td>
+                <td style="width: 35%"><label for="id_pelamar">Kode pelamar</label></td>
                 <td style="width: 5%">:</td>
                 <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?= $row -> id_pelamar?>"></td>
               </tr>
@@ -101,8 +101,8 @@
              
              <?php foreach ($npelamar as $row) : ?>
                 <tr>
-                <td><label for="nm_kriteria"><?= $row -> nm_kriteria?></label></td>
-                <input type="hidden" name="id_kriteria" id="id_kriteria" class="form-control">
+                <td><label for="nm_subkriteria"><?= $row -> nm_subkriteria?></label></td>
+                <input type="hidden" name="id_subkriteria" id="id_subkriteria" class="form-control">
                 <td>:</td>
                 <td>
                   <input readonly type="text-form" name="nilai_tes" id="nilai_tes" class="form-control" value="<?= $row -> nilai_tes?>"></td>

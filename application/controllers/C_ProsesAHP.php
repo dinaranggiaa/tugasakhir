@@ -48,11 +48,25 @@ class C_ProsesAHP extends MY_Controller {
 	function hasil_perbandingan()
 	{
 		$perbandingan_kriteria = $this->db->count_all('perbandingan_kriteria');
-		if($perbandingan_kriteria != 0){
-			redirect('C_ProsesAHP/get_hasil_perbandingan');
-		} else {
+		$kriteria = $this->db->count_all('kriteria');
+		
+		// if($perbandingan_kriteria != 0){
+		// 	redirect('C_ProsesAHP/get_hasil_perbandingan');
+		// } else {
+		// 	echo "Data Tidak Ada";
+		// 	redirect('C_ProsesAHP/input_nilai_perbandingan');
+		// }
+
+		if($kriteria == 0){
 			echo "Data Tidak Ada";
 			redirect('C_ProsesAHP/input_nilai_perbandingan');
+		} else {
+			if($perbandingan_kriteria != 0) {
+				redirect('C_ProsesAHP/get_hasil_perbandingan');
+			} else {
+				echo "Data Tidak Ada";
+				redirect('C_ProsesAHP/input_nilai_perbandingan');
+			}
 		}
 		
 	}
@@ -62,12 +76,12 @@ class C_ProsesAHP extends MY_Controller {
 		$data['JmlKriteria'] 				= $this->M_Proses->get_jmlkriteria();
 		$data['NilaiPerbandinganKriteria'] 	= $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
 		$data['getNamaKriteria'] 			= $this->M_Proses->getNmKriteria()->result_array();
+		$data['getIdKriteria'] 			= $this->M_Proses->getIdKriteria()->result_array();
 
 		//Proses Perhitungan AHP
 		$nilaiA = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
 		
 		//Mengubah nilaiA menjadi matriks A
-		// $jml_kriteria = 5;
 		$jml_kriteria	= $this->db->count_all('kriteria');
 		$uruta 			= 0;
 		$matriksA 		= array();
@@ -77,7 +91,6 @@ class C_ProsesAHP extends MY_Controller {
 				$uruta++;
 			}
 		}
-
 
 		//Mengubah nilaiA menjadi matriks B
 		$urutb = 0;
@@ -91,29 +104,26 @@ class C_ProsesAHP extends MY_Controller {
 		}
 		
 		//Hasil Perkalia Matriks A dan B
-		$jml_kriteria = $this->db->count_all('kriteria');
-
-		$hasilkali= array(); //hasil perkalian matriks A dan B
+		$jml_kriteria 	= $this->db->count_all('kriteria');
+		$hasilkali		= array(); //hasil perkalian matriks 2 dimensi
+		$hasilmatriks 	= array(); //Hasil Perkalian matriks 1 dimensi
+		$urut		 	= 0;
 		for($x=0; $x<$jml_kriteria; $x++){
 			$tempjml = 0;
 			for($y=0; $y<$jml_kriteria; $y++){
 				$temp = 0;
 				for($z=0; $z<$jml_kriteria; $z++){
-					$temp += $matriksA[$x][$z]['nilai_pembanding'] * $matriksB[$z][$y]['nilai_pembanding'];
+					$temp += round($matriksA[$x][$z]['nilai_pembanding'] * $matriksB[$z][$y]['nilai_pembanding'],4);
 				}
-				$hasilkali[$x][$y] = $temp; //Hasil perkalian matriks
-				// echo "hasil kali :";
-				$tempjml += $hasilkali[$x][$y];
-				
-				// echo "hasil kalikali :<br>";
-				//  $hasiljumlahkali[$y] = $tempjml;
-				
+				$hasilkali[$x][$y] = round($temp,4); //Hasil perkalian matriks
+				$hasilmatriks[$urut] = round($hasilkali[$x][$y],4); 
+				$urut++;
+				$tempjml += $hasilkali[$x][$y];				
 			}
 			//Hasil jumlah kali per kolom
 			$hasiljumlahkali[$x] = $tempjml;	
-			// print_r($hasiljumlahkali[$x] = $tempjml);
 		}
-
+	
 		
 		//Total perkalian
 		$totaljmlkali = 0;
@@ -130,25 +140,10 @@ class C_ProsesAHP extends MY_Controller {
 			$hasiljmlkalibagi[$x] = round($hasiljumlahkali[$x]/$totaljmlkali,4); //Hasil egienvector
 			$jmleigen += $hasiljmlkalibagi[$x];
 			$egienvector[$x] = [$hasiljmlkalibagi[$x]];
-		}	
-		
-		$id_kriteria = $this->M_Proses->getIdKriteria()->result_array();
-		// print_r($id_kriteria);
-		// print_r($egienvector);
-		
-		// for($x=0; $x<$jml_kriteria; $x++){
-		// 	$bobot = [
-		// 		'bobot_kriteria' => $egienvector
-		// 	];
 			
-		// 	$kriteria = [
-		// 		'id_kriteria' => $id_kriteria
-		// 	];
-		// 	print_r($kriteria);
-		// }
-		// $this->db->update('kriteria', $bobot, $kriteria);
-		
-		
+		}	
+//print_r($egienvector);
+
 		//Perhitungan pengujian konsistensi
 		//perkalian matriks dengan egien vector
 		for($x=0; $x<$jml_kriteria; $x++){
@@ -231,7 +226,8 @@ class C_ProsesAHP extends MY_Controller {
 	
 
 		//Proses AHP
-		$data['matriks'] 			= $hasilkali; //hasil perkalian matriks
+		$data['hasilkali'] 			= $hasilkali; //hasil perkalian matriks 2 dimensi
+		$data['matriks']	 		= $hasilmatriks; //hasil perkalian matriks 1 dimensi
 		$data['sum_row_kriteria'] 	= $hasiljumlahkali; //hasil penjumlahan tiap baris matriks
 		$data['total_row'] 			= $totaljmlkali; //total penjumlahan sum_row_kriteria
 		$data['eigenvector'] 		= $hasiljmlkalibagi; //eigenvector
@@ -244,6 +240,24 @@ class C_ProsesAHP extends MY_Controller {
 		$data['CR'] 				= $CR; //hasil data CR
 		$data['pesan']				= $pesan;
 		$this->load->view("admin/h_PerhitunganAHP", $data);
+	}
+
+	function simpan_eigenvector()
+	{
+		$jml_kriteria = $this->db->count_all('kriteria');
+		//print_r($jml_kriteria);
+		
+		$data = array();
+		for($x=0; $x< $jml_kriteria; $x++){
+
+			$id_kriteria = $this->input->post('id_kriteria'.$x);
+			$bobot_kriteria = $this->input->post('bobot_kriteria'.$x);
+			
+			$this->db->set('bobot_kriteria',$bobot_kriteria);
+			$this->db->where('id_kriteria', $id_kriteria);
+			$this->db->update('kriteria');
+		}
+		redirect('C_Kriteria/index');
 	}
 
 	//ini udah tidak terpakai 
@@ -454,7 +468,7 @@ class C_ProsesAHP extends MY_Controller {
 		}
 
 		echo "Hasil Perkalian Matriks : <br>";
-		$data['hasilmatriks'] = $hasilkali->result_array();
+		$data['hasilmatriks'] = $hasilkali;
 		print_r($hasilkali); ?><br><br><?php
 
 

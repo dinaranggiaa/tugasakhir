@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Laporan Rekomendasi Pelamar</title>
+	<title>Form Penilaian</title>
 </head>
 <body>
 	<table style="margin:auto; border: 0px solid black; width:100% ">
@@ -19,7 +19,7 @@
 	
 	<hr style="height: 3px; background-color: black;">
 	
-		<p style="text-align: center; font-size: 25px; margin: 10px;">Form Hasil Penilaian <br></p>
+		<p style="text-align: center; font-size: 25px; margin: 10px;">Form Penilaian<br></p>
 	
 	<style type="text/css">
 		.inti {
@@ -151,7 +151,7 @@
                 <td style="text-align: left">
                     <span>.............................................</span><br> 
 					<span>Kepala Cabang</span><br> 
-					<span>PT Dealer Honda Jaya Utama</span>
+					<span>PT Jaya Utama Motor</span>
 					<br> 
 					<br> 
 					<br> 

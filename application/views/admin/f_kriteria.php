@@ -36,14 +36,20 @@
   
   <br>
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
-  
-  <div class="inputsearch">
-    <?php echo form_open('C_Kriteria/cari_keyword')?>
-    <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
-    <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
-    <button class="btn-link" type='submit' href="<?php echo site_url('C_Kriteria/index')?>"><i class='fas fa-undo'></i></button>
+
+  <div class="inputsearch" style="float: right; margin-top:12px;">
+    <?php echo form_open('C_Kriteria/index')?>
+      <button class="btn-link" type='submit' href="<?php echo site_url('C_Karyawan/index')?>"><i class='fas fa-undo'></i></button>
     <?php echo form_close()?>
   </div>
+
+  <div class="inputsearch">
+    <?php echo form_open('C_Kriteria/cari_keyword')?>
+      <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
+      <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
+    <?php echo form_close()?>
+  </div>
+
   <br>
   <br>
   
@@ -61,7 +67,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                      <?php $no=1?>
+                      <?php  $no = $this->uri->segment(3) + 1; ?>
                       <?php foreach ($kriteria as $Kriteria):?>
                       <tr>
                         <td><?= $no?></td>
@@ -78,6 +84,7 @@
                       <?php endforeach?>
                     </tbody>
                 </table>
+                <?php echo $pagination;?>
             </div>
         </div>
     </div>
@@ -200,11 +207,11 @@
                       <td>:</td>
                       <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" value="<?= $Kriteria -> nm_kriteria?>" placeholder="<?= $Kriteria -> nm_kriteria?>" class="form-control"></td>
                     </tr>
-                    <!-- <tr>
+                    <tr>
                       <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
                       <td>:</td>
-                      <td><input type="text-form" name="bobot_kriteria" id="bobot_kriteria" value="<?= $Kriteria -> bobot_kriteria?>" placeholder="<?= $Kriteria -> bobot_kriteria?>" class="form-control"></td>
-                    </tr> -->
+                      <td><input readonly type="text-form" name="bobot_kriteria" id="bobot_kriteria" value="<?= $Kriteria -> bobot_kriteria?>" placeholder="<?= $Kriteria -> bobot_kriteria?>" class="form-control"></td>
+                    </tr>
                   </table>
               </div>
               <div class="modal-footer">

@@ -30,8 +30,22 @@ class C_Kriteria extends MY_Controller {
     
     function index()
 	{	
+		$config['base_url'] = site_url('C_Kriteria/index'); // site_url
+		$config['total_rows'] = $this->db->count_all('kriteria');
+		$config['per_page'] = 5; // record yang ditampilkan per halaman
+		$config["uri segment"] = 3; // uri parameter
+		$choice = $config["total_rows"] / $config["per_page"];
+		$config["num_links"] = floor($choice);
+
+		$this->pagination->initialize($config);
+		$data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$config['first_link'] = 'First';
+		$config['last_link'] = 'Last';
+		$config['next_link'] = 'Next';
+		$config['full_tag_open'] = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
 		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
-		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria();
+		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria($config['per_page'], $data['page']);
+		$data['pagination'] = $this->pagination->create_links();
 		$this->load->view('admin/F_Kriteria',$data);		
     }
     
@@ -52,19 +66,19 @@ class C_Kriteria extends MY_Controller {
 	{
 		$id_kriteria 		= $this->input->post('id_kriteria');
 		$nm_kriteria 		= $this->input->post('nm_kriteria');
-		$bobot_kriteria 	= $this->input->post('bobot_kriteria');
 		
-		$data 				= array('nm_kriteria'	 => $nm_kriteria,
-									'bobot_kriteria' => $bobot_kriteria);
+		$data 				= array('nm_kriteria'	 => $nm_kriteria);
 
 		$where 				= array('id_kriteria' => $id_kriteria);
 
-		$data['kriteria'] 	= $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
+		$data['kriteria'] 	= $this->M_Pendataan->ubah_data($where, $data, 'kriteria');
 		redirect('C_Kriteria/index');
 	}
 
+
 	function cari_keyword()
 	{
+		$data['pagination'] = $this->pagination->create_links();
 		$data['keyword'] 	= $this->input->post("keyword");
 		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
 		$data['kriteria']	= $this->M_Pendataan->cari_kriteria($data['keyword']);

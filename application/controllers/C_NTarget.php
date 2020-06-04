@@ -30,10 +30,26 @@ class C_NTarget extends MY_Controller {
     
     function index()
 	{	
-		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
+		$config['base_url'] = site_url('C_NTarget/index'); // site_url
+		$config['total_rows'] = $this->db->count_all('subkriteria');
+		$config['per_page'] = 10; // record yang ditampilkan per halaman
+		$config["uri segment"] = 3; // uri parameter
+		$choice = $config["total_rows"] / $config["per_page"];
+		$config["num_links"] = floor($choice);
+
+		$data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$config['first_link'] = 'First';
+		$config['last_link'] = 'Last';
+		$config['next_link'] = 'Next';
+		$config['full_tag_open'] = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+
+		$this->pagination->initialize($config);
+		$data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data['pagination'] = $this->pagination->create_links();
+
+		$data['kode'] 		= $this->M_Pendataan->get_id_subkriteria();
 		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria();
-		//where tanda=1
-		$data['tkriteria'] 	= $this->M_Pendataan->data_kriteria();
+		$data['ntarget']	= $this->M_Pendataan->ambil_data_subkriteria($config['per_page'], $data['page']);
 		$this->load->view('admin/F_NTarget',$data);		
     }
     
@@ -41,51 +57,41 @@ class C_NTarget extends MY_Controller {
 	function input_data()
 	{
 		$data['simpan'] 	= $this->M_Pendataan->simpan_ntarget();
-		$id_kriteria 		= $this->input->post('id_kriteria');
-		$nilai_target		= $this->input->post('nilai_target');
-		$status_kriteria	= $this->input->post('status_kriteria');
-		$tanda 				= 1;
-		
-		$data 				= array('tanda' 			=> $tanda,
-									'nilai_target'		=> $nilai_target,
-									'status_kriteria'	=> $status_kriteria);
-
-		$where 				= array('id_kriteria' 		=> $id_kriteria);
-
-		$data['kriteria'] 	= $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
-		redirect('C_NTarget/index');
-	}
-	
-	function hapus_kriteria($id_kriteria)
-	{
-		$data['kriteria'] = $this->M_Pendataan->hapus_kriteria($id_kriteria);
 		redirect('C_NTarget/index');
 	}
 
-	function ubah_kriteria()
+	function hapus_subkriteria($id_subkriteria)
 	{
-		$id_kriteria 		= $this->input->post('id_kriteria');
+		$data['subkriteria'] = $this->M_Pendataan->hapus_subkriteria($id_subkriteria);
+		redirect('C_NTarget/index');
+	}
+
+	function ubah_subkriteria()
+	{
+		$id_subkriteria	 	= $this->input->post('id_subkriteria');
+		$nm_subkriteria 	= $this->input->post('nm_subkriteria');
 		$nilai_target 		= $this->input->post('nilai_target');
-		$status_kriteria 	= $this->input->post('status_kriteria');
+		$status_subkriteria = $this->input->post('status_subkriteria');
 		
-		$data = array(
-			'nilai_target' 		=> $nilai_target,
-			'status_kriteria' 	=> $status_kriteria
+		$data = array('nm_subkriteria' 	=> $nm_subkriteria,
+					'nilai_target' 		=> $nilai_target,
+					'status_subkriteria'=> $status_subkriteria
 		);
 
-		$where = array('id_kriteria' => $id_kriteria);
+		$where = array('id_subkriteria' => $id_subkriteria);
 
-		$data['kriteria']	= $this->M_Pendataan->ubah_kriteria($where, $data, 'kriteria');
+		$data['subkriteria']	= $this->M_Pendataan->ubah_data($where, $data, 'subkriteria');
 		redirect('C_NTarget/index');
 	}
 
 	function cari_keyword()
 	{
+		$data['pagination'] = $this->pagination->create_links();
+
 		$data['keyword'] 	= $this->input->post("keyword");
 		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
-		$data['kriteria']	= $this->M_Pendataan->cari_kriteria($data['keyword']);
-		$this->load->view('admin/F_Kriteria', $data);
+		$data['ntarget']		= $this->M_Pendataan->cari_subkriteria($data['keyword'])->result();
+		$this->load->view('admin/F_NTarget', $data);
 	}
-
 	
 }

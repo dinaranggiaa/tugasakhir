@@ -220,17 +220,25 @@ input[type=text] {
   width: 50px;
 }
 
-.home-judul{
-  height: 40px;
+.home-periode{
+  margin: auto;
+  width: min-content;
+  margin-top: 30px;
+  padding-right: 10px;
+  padding-left: 10px;
   font-size: 20px;
-  color: #ffffff;
-  background-color: #104e1a;
-  padding: 5px 0 0 12px;
+  color: #d2dadc;
+  background-color: #c5d9d8;
 }
 
-.home-isi{
-  padding: 5px 5px 15px 5px;
+.home-judul{
+  height: 40px;
+  padding: 5px;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #286090;
 }
+
 
 .informasi{
   border-width: 1px;
@@ -274,6 +282,12 @@ input[type=text] {
   border-radius: 10px;
   font-family: 'Roboto'; 
 }
+
+.hasil-matriks{
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
 
 .border{
   padding-top: 1px;

@@ -62,7 +62,7 @@ class C_Periode extends MY_Controller {
 
 		$where 				= array('id_periode' 	=> $id_periode);
 
-		$data['periode'] 	= $this->M_Pendataan->ubah_periode($where, $data, 'periode');
+		$data['periode'] 	= $this->M_Pendataan->ubah_data($where, $data, 'periode');
 		redirect('C_Periode/index');
 	}
 

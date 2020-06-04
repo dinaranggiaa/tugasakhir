@@ -106,14 +106,6 @@ class Cek_hiv extends MY_Controller {
 			$this->load->view('cekhiv/edit_cekhiv', $data);
 		}
 
-
-	//Mengupdate Transaksi hasil
-		function UpdateHiv()
-		{
-			$data['hasil'] = $this->Pendataan_model->UpdateHiv($where, $data, $tabel);
-			redirect('Cek_hiv/listhiv');
-		}
-
 	//Mencari data hiv pasien berdasarkan nama
 		function carinama()
 		{

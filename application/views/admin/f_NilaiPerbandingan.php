@@ -25,7 +25,7 @@ table th {
 <div class="center-bar">
 	<h3>
 		<!-- <i class='far fa-file-alt'></i>&nbsp; -->
-		Tabel Nilai Perbandingan 
+		Tabel Perbandingan Kriteria
 	</h3> 
 
   	<div class="border"></div>
@@ -33,7 +33,7 @@ table th {
 	
 	<div class="inputsearch">
     <?php echo form_open('C_ProsesAHP/hasil_perbandingan')?>
-    <button class="btn btn-primary fas fa-eye" type='submit' href="<?php echo site_url('C_Kriteria/index')?>">&nbsp; Hasil Perbandingan</button>
+    <button class="btn btn-info" type='submit' href="<?php echo site_url('C_Kriteria/index')?>"><span class="fas fa-eye">&nbsp; Hasil Perbandingan</span></button>
     <?php echo form_close()?>
   </div>
 

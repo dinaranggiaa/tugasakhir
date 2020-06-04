@@ -1,6 +1,7 @@
 
 <?php
 
+use Mpdf\Tag\Td;
 use PhpParser\Node\Stmt\Echo_;
 
 $this->view('partials/sidebar_admin')?>
@@ -8,26 +9,31 @@ $this->view('partials/sidebar_admin')?>
 <style>
 
 table, td, th {
-	text-align: center;
+  text-align: center;
   border: 1px solid #ccc;
   width: 20px;
+  
 }
 
 table {
   border-collapse: collapse;
-  width: 50%;
   padding-left: 10px;
   text-align: center;
+  width: 100%;
 }
 
 th {
-  background: #dbd7d7;
-  padding: 10px 0px 10px 0px;
+  background: #f4f1f1;
+  padding: 10px 5px 10px 5px;
+  font-size: smaller;
 }
 
 td{
 	text-align: left;
-	padding-left: 10px;
+	padding: 10px 5px 10px 5px;
+	font-size: smaller;
+	text-align: center;
+	
 }
 
 
@@ -44,205 +50,182 @@ input[type=text], select {
 </style>
 
 <div class="center-bar">
-	<h3>
-		<i class='far fa-file-alt'></i>&nbsp;Hasil Nilai Perbandingan
-	</h3> 
-
+	<h3><i class='far fa-file-alt'></i>&nbsp;Hasil Penilaian Pelamar</h3> 
   	<div class="border"></div>
 	<br>
 
-  <h4>Matriks Perbandingan Per Kriteria</h4>
-  <table style="width: 80%">
-	<?php
-		$jml_kriteria = $JmlKriteria['total'];
-		$n = $JmlKriteria['total'];
-		$urutan=0;	
-	?>
-		<tbody>
-			<th>Kriteria</th>
-			<?php
-				for ($x=0; $x <= ($n-1); $x++) {
-					echo "<th>".$getNamaKriteria[$x]['nm_kriteria']."</th>";
-				}
+	<div class="hasil-matriks">
+		<?php	
+				$jml_subkriteria= $jmlsubkriteria['total'];
+				$jmlpelamar		= $jmlpelamar['total'];
+				$n 				= $jmlsubkriteria['total'];
+				$jml_kriteria 	= 3;
+
 			?>
-			<?php
-				for ($y=0; $y <= ($n-1); $y++) {
-					echo "<tr>";
-					echo "<td>".$getNamaKriteria[$y]['nm_kriteria']."</td>";
-					
-							for($z=0; $z<=$n-1; $z++) {
-								$Nilai[$y][$z] = $NilaiPerbandinganKriteria[$urutan]['nilai_pembanding'];
-								$urutan++;
-								echo "<td>".$Nilai[$y][$z]."</td>";								
-							}
-						
-					echo "</tr>";
-				}
-?>
-		</tbody>
-	</table>
-    
-    <br><br>
 
-    <h4>Hasil Perkalian Matriks</h4>
-  <table style="width: 80%">
-  <?php
-	  $jml_kriteria = $JmlKriteria['total'];
-	   //Memanggil hasil perkalian matriks
-	 
-	 
-    ?>
-			<tbody>
-			<th>Kriteria</th>
-			<?php
-				for ($x=0; $x <= ($n-1); $x++) {?>
-					<th><?= $getNamaKriteria[$x]['nm_kriteria']?></th>
-				<?php }
+		<h4>Nilai Pelamar</h4>
+		<table class='table-striped'>
+			<?php	
+
+				$purut=0;	//Pelamar
+				$gurut=0;	//Gap	
+				
 			?>
-			<?php
-				for ($y=0; $y <= ($n-1); $y++) { ?>
-					<tr>
-						<td><?= $getNamaKriteria[$y]['nm_kriteria']?></td>
-					</tr>
-
-				<?php } ?>
-
-		</tbody>
-	</table>
-	<br><br>
-	<table>
-		<tr>
-			<th>Kriteria</th>
-				<?php foreach ($getNamaKriteria as $value){ ?>
-			<th><?= $value['nm_kriteria'] ?></th>
-				<?php } ?>
-		</tr>
-		<tr>
-			<td>
-				<?php foreach ($getNamaKriteria as $value){ ?>
-				<th><?= $value['nm_kriteria'] ?></th>
-				<?php } ?>
-				
-				<?php foreach ($matriks as $key => $value) {
-				if($key == $jml_kriteria);{ ?>
-			</td>
-			<tr>
-				
-			</tr>	
-			<?php }?>
 			
-			<?php foreach ($value as $keys => $val) {?>
-			<td><?= ($val); ?></td>
-		<?php }
-		}?>
-		</tr>
-	</table>
-
-	<h4>Jumlah Baris</h4>
-	<table>
-		<thead>
-			<tr>
-				<th><label>Kriteria</label></th>
-				<th><label>Jumlah Baris</label></th>
-			</tr>
-		</thead>
-			<tbody>
-    			<?php
-					//inisialisasi
-					$urut = 0;
-
-					for ($x=0; $x < $jml_kriteria; $x++) {?>	
-						<tr>
-							<td><?= $getNamaKriteria[$x]['nm_kriteria']?></td>
-							<td style="text-align:right"><?= $sum_row_kriteria[$x]?></td>
+			<thead>
+				<tr>
+					<th style="width:100px;" rowspan="2"></th>
+					<?php for ($x=0; $x < $jml_kriteria; $x++) {
+							for($y=0; $y< $jml_subkriteria; $y++){ ?>
+							<?php 
+							$row_count=0;
+							$temp = 1;
+							if($idsubkriteria[$y]['id_kriteria'] == $idkriteria[$x]['id_kriteria']){?>
+									<?php
+											$temp++
+									?>
+									<th><?=$kriteria[$x]['nm_kriteria']?></th>
+							<?php	} ?>
+						<?php } ?>	
+					<?php 
+				}?>
+				</tr>
+				<tr>
+					<?php for ($x=0; $x <= ($jml_subkriteria-1); $x++) {?>
+							<th><?=$nmsubkriteria[$x]['nm_subkriteria']?></th>
 					<?php } ?>
-						</tr>
-						<td style="font-weight: bold; background:cornflowerblue;">Total Baris</td>
-						<td style="font-weight: bold; background:cornflowerblue; text-align:right"><?= $total_row?></td>
+				</tr>
+			</thead>
+			<tbody>
 				
-			</tbody>
-	</table>
-
-	<h4>Eigen Vector Kriteria</h4>
-	<table>
-		<thead>
-			<tr>
-				<th><label>Nama Kriteria</label></th>
-				<th><label>Eigen Vector</label></th>
-			</tr>
-		</thead>
-			<tbody>
-    			<?php
-					//inisialisasi
-					$urut = 0;
-
-					for ($x=0; $x < $jml_kriteria; $x++) 
-					{?>	
+				<?php
+					for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
 						<tr>
-						<td><?= $getNamaKriteria[$x]['nm_kriteria']?></td>
-						<td style="text-align: right"><?= $eigenvector[$x]?></td>					
-					<?php } ?>
-					</tr>
-					<td style="font-weight: bold; background:cornflowerblue;">Total Eigen Vector</td>
-					<td style="text-align: right; font-weight: bold; background:cornflowerblue;"><?= round($jmleigen)?></td>
-			</tbody>
-	</table>
-
-	<h4>Consistency Vector</h4>
-	<table>
-		<thead>
-			<tr>
-				<th><label>Bobot</label></th>
-				<th><label>:</label></th>
-				<th><label>Eigen Vector</label></th>
-				<th><label>=</label></th>
-				<th><label>Consistency Vector</label></th>
-			</tr>
-		</thead>
-			<tbody>
-    			<?php
-					//inisialisasi
-					$urut = 0;
-
-					for ($x=0; $x < $jml_kriteria; $x++) 
-					{?>	
-						<tr>
-							<td style="text-align: center"><?= $bobot[$x]?></td>
-							<td style="text-align: center">:</td>
-							<td style="text-align: center"><?= $eigenvector[$x]?></td>
-							<td style="text-align: center">=</td>
-							<td style="text-align: right;"><?= $CV[$x]?></td>
-					<?php } ?>
+							<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+								<?php for($z=0; $z<=$jml_subkriteria-1; $z++) {
+										$Nilai[$y][$z] = $nilaipelamar[$purut]['nilai_tes'];
+										$purut++; ?>
+							<td><?=$Nilai[$y][$z]?></td>	
+							<?php } ?>
 						</tr>
-						<td colspan='4' style="font-weight: bold; background:cornflowerblue;">Total Consistency Vector</td>
-						<td style="text-align: right; font-weight: bold; background:cornflowerblue;"><?= $sum_cv?></td>
-				
-			</tbody>
-	</table>
-	
-	<h4>Pengujian Consistency</h4>
-	<table>
-		<?php
-			$CV = $sum_cv;
-			$CI = $CI;
-			$CR = $CR; 
-		?>
-		<tr>
-			<td><label>Consistency Vector</label></td>
-			<td style="text-align: center; font-weight:bold;"><?= round($CV,4)?></label></td>
-		</tr>
-		<tr>
-			<td><label>Consistency Index</label></td>
-			<td style="text-align: center; font-weight:bold;"><?= round($CI,4)?></td>
-		</tr>
-		<tr>
-			<td><label>Consistency Ratio</label></td>
-			<td style="text-align: center; font-weight:bold;"><?= round($CR,4)?></td>
-		</tr>
-		<tr>
-			<td style="text-align: left; background:cornflowerblue;"><label>Hasil Konsistensi</label></td>
-			<td style="text-align: center; font-weight:bold; background:cornflowerblue;"><?= $pesan?></td>
-		</tr>
-	</table>
+				<?php } ?>
+			</thead>
+		</table>
+		
+		<br><br>
+		<h4>Gap Penilaian Pelamar</h4>
+		<table class='table-striped'>
+			<?php	
 
+				$purut=0;	//Pelamar
+				$gurut=0;	//Gap	
+			?>
+			
+			<thead>
+				<tr>
+					<th style="width:100px;" rowspan="2"></th>
+					<?php for ($x=0; $x < $jml_kriteria; $x++) {
+							for($y=0; $y< $jml_subkriteria; $y++){ ?>
+							<?php 
+							$row_count=0;
+							$temp = 1;
+							if($idsubkriteria[$y]['id_kriteria'] == $idkriteria[$x]['id_kriteria']){?>
+									<?php
+											$temp++
+									?>
+									<th><?=$kriteria[$x]['nm_kriteria']?></th>
+							<?php	} ?>
+						<?php } ?>	
+					<?php 
+				}?>
+				</tr>
+				<tr>
+					<?php for ($x=0; $x <= ($jml_subkriteria-1); $x++) {?>
+							<th><?=$nmsubkriteria[$x]['nm_subkriteria']?></th>
+					<?php } ?>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
+						<tr>
+							<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+								<?php for($z=0; $z<=$jml_subkriteria-1; $z++) {
+										$Nilai[$y][$z] = $nilaipelamar[$purut]['nilai_tes'];
+										$purut++; ?>
+							<td><?=$Nilai[$y][$z]?></td>	
+							<?php } ?>
+						</tr>
+				<?php } ?>
+						<tr>
+							<td style="font-weight: bold; background:#e3dede">Nilai Profile</td>
+								<?php for($z=0; $z<=$jml_subkriteria-1; $z++) { ?>						
+							<td style="font-weight: bold; background:#e3dede"><?=$ntarget[$z]['nilai_target']?></td>			
+							<?php } ?>
+						</tr>
+				<?php
+					for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
+						<tr>
+							<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+									<?php for($z=0; $z<=$jml_subkriteria-1; $z++) { 
+											$Nilai[$y][$z] = $gappelamar[$gurut];
+											$gurut++;?>
+							<td><?= $Nilai[$y][$z]?></td>
+							<?php } ?>
+						</tr>
+				<?php }?>
+			</thead>
+		</table>
+		
+		<br><br>
+		
+		<h4>Bobot Pelamar</h4>
+		<table class='table-striped'>
+			<?php	
+				$turut=0;	//Gap	
+			?>
+			
+			<tbody>
+				<th style="width:100px;"></th>
+				<?php for ($x=0; $x <= ($jml_subkriteria-1); $x++) {?>
+						<th><?=$nmsubkriteria[$x]['nm_subkriteria']?></th>
+				<?php } ?>
+				<?php
+					for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
+						<tr>
+							<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+								<?php for($z=0; $z<=$n-1; $z++) {
+										$Nilai[$y][$z] = $bobotpelamar[$turut];
+										$turut++; ?>
+							<td><?=$Nilai[$y][$z]?></td>	
+							<?php } ?>
+						</tr>
+				<?php } ?>
+			</tbody>
+		</table>
+		
+		<br><br>
+
+		<h4>Nilai Total Pelamar</h4>
+		<!-- <table style="width: 80%">
+		<tbody>
+					<?php
+						//inisialisasi
+						for ($x=0; $x<$jmlpelamar; $x++){ ?>
+						<tr>
+							<td><?= $nmpelamar[$x]['nm_pelamar']?></td> 
+							<td><?= $hasilpm[$x]?></td>
+							
+						</tr>
+						<?php } ?>
+
+						
+				</tbody>
+		</table> -->
+		
+		<br><br>
+
+		<h4>Nilai Total Pelamar</h4>
+
+	</div>
 </div>

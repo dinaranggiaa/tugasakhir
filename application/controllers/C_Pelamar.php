@@ -33,11 +33,32 @@ class C_Pelamar extends MY_Controller {
 	//Menampilkan Form Pendataan pelamar
 		function index()
 		{
-			$data['kode'] = $this->M_Pendataan->get_id_pelamar();
-			$data['periode'] = $this->M_Pendataan->ambil_data_periode();
-			$data['pelamar'] = $this->M_Pendataan->ambil_data_pelamar();
+			$config['base_url'] = site_url('C_Pelamar/index'); // site_url
+			$config['total_rows'] = $this->db->count_all('pelamar');
+			$config['per_page'] = 10; // record yang ditampilkan per halaman
+			$config["uri segment"] = 3; // uri parameter
+			$choice = $config["total_rows"] / $config["per_page"];
+			$config["num_links"] = floor($choice);
+
+			//Bootstrap -> Style pagination
+			$config['first_link'] = 'First';
+			$config['last_link'] = 'Last';
+			$config['next_link'] = 'Next';
+			$config['full_tag_open'] = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+			
+
+			$this->pagination->initialize($config);
+			$data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+			$data['kode'] 		= $this->M_Pendataan->get_id_pelamar();
+			$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
+			$data['divisi']		= $this->M_Pendataan->ambil_data_divisi();
+
+			$data['pelamar'] 	= $this->M_Pendataan->ambil_data_pelamar($config['per_page'], $data['page']);
+			$data['pagination'] = $this->pagination->create_links();
 			$this->load->view('admin/F_Pelamar', $data);
 		}
+		
 
 		function tambah_pelamar()
 		{
@@ -60,48 +81,32 @@ class C_Pelamar extends MY_Controller {
 		function ubah_pelamar()
 		{
 			$id_pelamar 		= $this->input->post('id_pelamar');
-			$id_periode 		= $this->input->post('id_periode');
 			$tgl_daftar 		= $this->input->post('tgl_daftar');
 			$nm_pelamar 		= $this->input->post('nm_pelamar');
-			$jk_pelamar 		= $this->input->post('jk_pelamar');
-			$tempat_lahir 		= $this->input->post('tempat_lahir');
-			$tanggal_lahir 		= $this->input->post('tanggal_lahir');
 			$almt_pelamar 		= $this->input->post('almt_pelamar');
-			$no_ktp 			= $this->input->post('no_ktp');
-			$status 			= $this->input->post('status');
 			$nohp_pelamar 		= $this->input->post('nohp_pelamar');
-			$pendidikan_akhir 	= $this->input->post('pendidikan_akhir');
 	 
 			$data = array(
 				'tgl_daftar' 		=> $tgl_daftar,
 				'nm_pelamar' 		=> $nm_pelamar,
-				'jk_pelamar' 		=> $jk_pelamar,
-				'tempat_lahir' 		=> $tempat_lahir,
-				'tanggal_lahir' 	=> $tanggal_lahir,
 				'almt_pelamar' 		=> $almt_pelamar,
-				'no_ktp' 			=> $no_ktp,
-				'status' 			=> $status,
-				'nohp_pelamar' 		=> $nohp_pelamar,
-				'pendidikan_akhir' 	=> $pendidikan_akhir,
+				'nohp_pelamar' 		=> $nohp_pelamar				
 			);
 	
 			$where 				= array('id_pelamar' => $id_pelamar);
 
-			$data['pelamar']	= $this->M_Pendataan->ubah_periode($where, $data, 'pelamar');
+			$data['pelamar']	= $this->M_Pendataan->ubah_data($where, $data, 'pelamar');
 			redirect('C_Pelamar/index');
 		}
 
-	
-
-		function cari_keyword()
-	{
-		$data['keyword'] 	= $this->input->post("keyword");
-		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
-		$data['kode'] 		= $this->M_Pendataan->get_id_pelamar();
-		$data['pelamar'] 	= $this->M_Pendataan->ambil_data_pelamar();
-		$data['cari']	= $this->M_Pendataan->cari_pelamar($data['keyword']);
-		$this->load->view('admin/F_Pelamar', $data);
-	}
+			function cari_keyword()
+		{
+			$data['pagination'] = $this->pagination->create_links();
+			$data['keyword'] 	= $this->input->post("keyword");
+			$data['kode'] 		= $this->M_Pendataan->get_id_pelamar();
+			$data['pelamar']	= $this->M_Pendataan->cari_pelamar($data['keyword']);
+			$this->load->view('admin/F_Pelamar', $data);
+		}
 
 		
 

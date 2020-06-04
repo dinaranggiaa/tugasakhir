@@ -37,15 +37,17 @@
   
   <br>
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
-  <!-- <?php echo form_open('C_Pelamar/tambah_pelamar')?>
-    <button class="btn btn-default" type='submit' href="<?php echo site_url('C_Pelamar/tambah_pelamar')?>"><i class='fas fa-plus'></i> &nbsp;Add Data</button>
-  <?php echo form_close()?> -->
+
+    <div class="inputsearch" style="float: right; margin-top:12px;">
+    <?php echo form_open('C_Pelamar/index')?>
+      <button class="btn-link" type='submit' href="<?php echo site_url('C_Karyawan/index')?>"><i class='fas fa-undo'></i></button>
+    <?php echo form_close()?>
+  </div>
 
   <div class="inputsearch">
     <?php echo form_open('C_Pelamar/cari_keyword')?>
-    <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
-    <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
-    <button class="btn-link" type='submit' href="<?php echo site_url('C_Pelamar/index')?>"><i class='fas fa-undo'></i></button>
+      <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
+      <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
     <?php echo form_close()?>
   </div>
   
@@ -67,7 +69,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php  $no=1; ?>
+        <?php  $no = $this->uri->segment(3) + 1; ?>
           <?php foreach ($pelamar as $Pelamar):?> 
           <tr>
             <td><?= $no?></td>
@@ -85,6 +87,7 @@
           <?php endforeach?>
         </tbody>
                 </table>
+                <?php echo $pagination;?>
                 
             </div>
         </div>
@@ -117,7 +120,7 @@
             <?php
                 echo "
                 <select name='id_periode' id='id_periode' required>
-                <option value='' disabled selected>Pilih Periode</option>";
+                <option value='' disabled selected> -- pilih periode -- </option>";
                   foreach ($periode as $Periode) {  
                   echo "<option value='".$Periode->id_periode."'>".$Periode->bulan."</option>";
                   }

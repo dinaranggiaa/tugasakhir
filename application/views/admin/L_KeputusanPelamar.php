@@ -18,12 +18,6 @@
 	</table>
 	
 	<hr style="height: 3px; background-color: black;">
-	<?php foreach ($periode as $row): { ?>
-		<p style="text-align: center; font-size: 25px; margin: 10px;">Laporan Rekomendasi Pelamar <br> Periode <?= $row -> bulan ?></p>
-	<?php }?>
-	<?php endforeach?>
-	
-	<!-- <p style="text-align: center; margin-top: 0px;">Periode <?= $tglawal ?> s/d <?= $tglakhir?></p> -->
 
 	<style type="text/css">
 		.inti {
@@ -40,7 +34,7 @@
 		}
 	</style>
 	
-	<h3 style="text-align: center;">Laporan Rangking Pelamar<br>Periode Bulan <?= $bulan?> Tahun <?= $tahun?></h3>
+	<h3 style="text-align: center;">Hasil Keputusan Seleksi Calon Karyawan<br>Periode Bulan <?= $bulan?> Tahun <?= $tahun?></h3>
 
 	<table style="width: 100%; font-size:x-small" class="inti">
 		<tr>
@@ -49,7 +43,6 @@
 			<th style="width: 30%;">Nama</th>
 			<th style="width: 20%;">No HP</th>
 			<th style="width: 15%;">Nilai Akhir</th>
-			<th style="width: 20%;">Rangking</th>
 		</tr>
 		<?php $no = 1; ?>
 		<?php foreach ($pelamar as $row) { ?>
@@ -70,11 +63,9 @@
 			<td>
 				<?= $row -> nohp_pelamar; ?>
 			</td>
+
 			<td>
 				<?= $row -> nilai_akhir; ?>
-			</td>
-			<td>
-				<?= $no; ?>
 			</td>
 			<?php $no++; ?>
 		</tr>
@@ -120,12 +111,12 @@
 		    }
   		</style>
 
-		<!-- <table class="demo-table" style="margin: auto;">
+		<table class="demo-table" style="margin: auto;">
 			<tr>
 				<td style="text-align: center;">
 				
 					<span>Kepala Cabang</span><br> 
-					<span>PT Dealer Honda Jaya Utama</span>
+					<span>PT Jaya Utama Motor</span>
 					<br> 
 					<br> 
 					<br> 
@@ -135,7 +126,7 @@
 					<span>(Lutfi Amin)</span> 
 				</td>
 			</tr>
-		</table> -->
+		</table>
 	</body>
 </html>
 

@@ -33,71 +33,93 @@ class C_Karyawan extends MY_Controller {
 
 	function index()
 	{
-		$this->load->view( 'admin/karyawan/F_Karyawan_Entri');
+		$data['karyawan']	= $this->M_Pendataan->ambil_data_karyawan();
+		$this->load->view('admin/F_Karyawan', $data);
 	}
 
 	function entri_karyawan()
 	{
-		$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
-		//where tanda=1
-		$data['pelamar'] 		= $this->M_Pendataan->data_pelamar();
-		$data['karyawan'] 		= $this->M_Pendataan->ambil_id_karyawan();
-		$data['JmlKriteria'] 	= $this->M_Pendataan->getJmlKriteria();
-		
-		$this->load->view('admin/penilaian_pelamar/F_Karyawan_Entri', $data);
+		$data['kode'] 		= $this->M_Pendataan->get_id_karyawan();	
+		$this->load->view('admin/karyawan/F_Karyawan_Entri', $data);
 	}
 
 	function input_data()
 	{
 		$data['simpan'] 	= $this->M_Pendataan->simpan_karyawan();
-		$id_pelamar 		= $this->input->post('id_pelamar');
-		$tanda 				= 1;
-		$data 				= array('tanda' => $tanda);
-		$where 				= array('id_pelamar' => $id_pelamar);
-		$data['karyawan'] 	= $this->M_Pendataan->ubah_pelamar($where, $data, 'pelamar');
 		redirect('C_Karyawan/index');
 	}
 
-	function simpan_karyawan()
-	{
-		$data['karyawan'] = $this->M_Pendataan->simpan_karyawan();
-		redirect('C_karyawanPelamar/index');
-	}
 
-	function hapus_karyawan($id_pelamar, $id_kriteria)
+	function hapus_karyawan($id_karyawan)
 	{
-		$data['karyawan'] = $this->M_Pendataan->simpan_karyawan($id_pelamar, $id_kriteria);
+		$data['karyawan'] = $this->M_Pendataan->hapus_karyawan($id_karyawan);
 		redirect('C_Karyawan/index');
 	}
 
 	function ubah_karyawan()
-	{
-		$id_pelamar 		= $this->input->post('id_pelamar');
-		$id_kriteria 		= $this->input->post('id_kriteria');
-		$nilai_tes 			= $this->input->post('nilai_tes');
+	{	
+		$id_karyawan 			= $this->input->post('id_karyawan');
+		$nm_karyawan 			= $this->input->post('nm_karyawan');
+		$tempat_lahir 			= $this->input->post('tempat_lahir');
+		$tanggal_lahir 			= $this->input->post('tanggal_lahir');
+		$almt_karyawan			= $this->input->post('almt_karyawan');
+		$no_ktp 				= $this->input->post('no_ktp');
+		$status_marital			= $this->input->post('status_marital');
+		$nohp_karyawan			= $this->input->post('nohp_karyawan');
+		$pendidikan_terakhir 	= $this->input->post('pendidikan_terakhir');
+		$tglmasukkerja 			= $this->input->post('tglmasukkerja');
+		$nm_ortu				= $this->input->post('nm_ortu');
+		$almt_ortu				= $this->input->post('almt_ortu');
+		$status_kerja			= $this->input->post('status_kerja');
 		
-		$data 				= array('nilai_tes' 	=> $nilai_tes);
-		$where 				= array('id_pelamar' 	=> $id_pelamar,
-									'id_kriteria' 	=> $id_kriteria);
+		$data 				= array('nm_karyawan' 			=> $nm_karyawan,
+									'tempat_lahir' 			=> $tempat_lahir,
+									'tanggal_lahir' 		=> $tanggal_lahir,
+									'no_ktp' 				=> $no_ktp,
+									'almt_karyawan' 		=> $almt_karyawan,
+									'status_marital' 		=> $status_marital,
+									'nohp_karyawan' 		=> $nohp_karyawan,
+									'pendidikan_terakhir' 	=> $pendidikan_terakhir,
+									'tglmasukkerja' 		=> $tglmasukkerja,
+									'almt_ortu' 			=> $almt_ortu,
+									'nm_ortu' 				=> $nm_ortu,
+									'status_kerja' 			=> $status_kerja,
 
-		$data['karyawan'] 	= $this->M_Pendataan->simpan_karyawan($where, $data, 'nilai_alternatif');
+									);
+		$where 				= array('id_karyawan' 	=> $id_karyawan);
+		$data['karyawan'] 	= $this->M_Pendataan->ubah_karyawan($where, $data, 'karyawan');
+
+		$nm_hub 			= $this->input->post('nm_hub');
+		$stat_hub 			= $this->input->post('stat_hub');
+		$almt_hub 			= $this->input->post('almt_hub');
+		$nohp_hub			= $this->input->post('nohp_hub');
+		
+		
+		$data 				= array('nm_hub' 		=> $nm_hub,
+									'stat_hub' 		=> $stat_hub,
+									'almt_hub' 		=> $almt_hub,
+									'nohp_hub' 		=> $nohp_hub
+									);
+		$where 				= array('id_karyawan' 	=> $id_karyawan);
+		$data['karyawan'] 	= $this->M_Pendataan->ubah_data($where, $data, 'kontak_darurat');
+
 		redirect('C_Karyawan/index');
 	}
 
 	function cari_keyword()
 	{
 		$data['keyword'] 	= $this->input->post("keyword");
-		$data['kode'] 		= $this->M_Pendataan->get_id_karyawanPelamar();
-		$data['karyawan']	= $this->M_Pendataan->cari_karyawanPelamar($data['keyword']);
+		$data['kode'] 		= $this->M_Pendataan->get_id_karyawan();
+		$data['karyawan']	= $this->M_Pendataan->cari_data_karyawan($data['keyword']);
 		$this->load->view('admin/F_Karyawan', $data);
 	}
 
+	//Form entri karyawan
 	function cari_data()
 	{
+		$data['kode'] 			= $this->M_Pendataan->get_id_karyawan();	
 		$data['keyword'] 		= $this->input->post("keyword");
-		$data['JmlKriteria']	= $this->M_Pendataan->getJmlKriteria();
-		$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
-		$data['pelamar']		= $this->M_Pendataan->cari_data_pelamar($data['keyword'])->row_array();
+		$data['pelamar']		= $this->M_Pendataan->get_data_pelamar($data['keyword'])->row_array();
 		$this->load->view('admin/karyawan/F_Karyawan_Entri2', $data);
 	}
 

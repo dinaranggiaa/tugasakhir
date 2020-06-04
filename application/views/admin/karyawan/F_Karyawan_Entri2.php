@@ -13,7 +13,9 @@
 
   .demo-table tbody td {
     color: #353535;
+    
   }
+
 
   input.form-control{
     width: 350px;
@@ -34,98 +36,157 @@
     font-size: 15px;
   }
 
-  .demo-table {
-  border-collapse: collapse;
-  font-size: 17px;
-  width: 75%;
-  margin-left: 130px;
-}
+  p{
+    margin-top: 15px; 
+    margin-bottom:15px; 
+    margin-left: 45px; 
+    font-weight:bold; 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: black;
+    font-size: 15px;
+  }
+  
 
-.demo-table td:first-child {
-  width: 250px;
-  text-align: left;
-}
 
-.demo-table td:nth-child(2) {
-  width: 30px;
-  text-align: center;
-}
-.demo-table td {
-  /* border: 1px solid #2ed573; */
-  padding: 7px 17px;
+.form-control{
+  width: 350px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
 }
 
 .form-pendataan{
-  padding-left: 250px;
+  padding-left: 200px;
   padding-top: 25px;
 }
 
 </style>
 
   <div class="center-bar">
-    <h3><i class='far fa-folder-open'></i>&nbsp;Penilaian Pelamar</h3> 
+    <h3><i class='far fa-folder-open'></i>&nbsp;Entri Data Karyawan</h3> 
     <div class="border"></div>
 
     <div class="center-pencarian" style="padding-top:30px;">
-        <?php echo form_open('C_PenilaianPelamar/cari_data')?>
+        <?php echo form_open('C_Karyawan/cari_data')?>
           <input class="form-control" type="text-form" name="keyword" id="" placeholder="Masukkan Kode Pelamar / Nama Pelamar">
           <button class="button button1" type='submit'><i class='fas fa-search'></i></button>
         <?php echo form_close()?>
     </div>
     
     <div class="form-pendataan" style="padding-bottom: 25px;">
-      <?php $n = $JmlKriteria['total']; ?>
-    <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/input_data" method="POST">
-              <table style="width: 70%;">
+      
+    <form action="<?php echo base_url()?>C_Karyawan/input_data" method="post">
+              <table style="width: 90%">
               <tr>
-                <td style="width: 25%"><label for="id_pelamar">Kode pelamar</label></td>
-                <td style="width: 5%">:</td>
-                <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?= $pelamar['id_pelamar']?>"></td>
-              </tr>
-              <tr>
-                <td><label for="nm_pelamar">Nama Pelamar</label></td>
+                <td><label for="id_karyawan">Kode Karyawan</label></td>
                 <td>:</td>
-                <td><input readonly type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control" value="<?= $pelamar['nm_pelamar']?>"></td>
+                <td><input readonly type="text-form" class ="form-control" name="id_karyawan" id="id_karyawan" value="<?= $kode?>"></td>
               </tr>
-                <?php for($i=0; $i<$n; $i++){?>
-                      <td><label for="nm_kriteria" name="nm_kriteria<?= $i?>"><?= $kriteria[$i]['nm_kriteria']?></label>
-                          <input type="hidden" name="id_kriteria<?= $i?>" value="<?= $kriteria[$i]['id_kriteria']?>" class="form-control">
-                    </td>
-                      <td>:</td>
-                      <td>
-                        <?php if($i > 2){
-                          if($kriteria[$i]['nm_kriteria'] == 'Penglaman Kerja'){ ?>
-                            <select name="nilai_tes<?= $i?>" required>
-                              <option>---</option>
-                              <option value="1">1 - (Ada)</option>
-                              <option value="2">2 - (Tidak Ada)</option>
-                            </select>
-                          <?php } else { ?>
-                            <select name="nilai_tes<?= $i?>" required>
-                              <option>---</option>
-                              <option value="1">1 - (Ada/SMA)</option>
-                              <option value="2">2 - (Tidak Ada/D3/S1)</option>
-                            </select>
-                          <?php } ?>
-                            
-                          <?php } else { ?>
-                            <select name="nilai_tes<?= $i?>" required>
-                            <option>---</option>
-                              <option value="5">5 - Sangat Baik</option>
-                              <option value="4">4 - Baik</option>
-                              <option value="3">3 - Cukup</option>
-                              <option value="2">2 - Kurang</option>
-                              <option value="1">1 - Sangat Kurang</option>
-                            </select>
-                           <?php  } ?>
-                        <!-- <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required> -->
-                        <!-- <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required> -->
-                      </td>
-                    </tr>
-                    <?php } ?>
-              </table>
+              <tr>
+                <td style="width: 25%"><label for="id_pelamar">Kode Pelamar</label></td>
+                <td style="width: 5%">:</td>
+                <td><input readonly type="text-form" name="id_pelamar" id="id_pelamar" class="form-control" value="<?= $pelamar['id_pelamar']?>"></td>
+              </tr>
+              <tr>
+                <td><input type="hidden" class ="form-control" name="id_periode" id="id_periode" value="<?= $pelamar['id_periode']?>"></td>
+              </tr>
+              <tr>
+                <td><label for="nm_karyawan">Nama Lengkap</label></td>
+                <td>:</td>
+                <td><input type="text-form" name="nm_karyawan" id="nm_karyawan" class="form-control" value="<?= $pelamar['nm_pelamar']?>"></td>
+              </tr>
+              <tr>
+                <td><label for="tempat_lahir">Tempat Lahir</label></td>
+                <td>:</td>
+                <td><input type="text-form" name="tempat_lahir" id="tempat_lahir" class="form-control"></td>
+              </tr>
+              <tr>
+                <td><label for="tanggal_lahir">Tanggal Lahir</label></td>
+                <td>:</td>
+                <td><input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control"></td>
+              </tr>
+              <tr>
+                <td><label for="almt_karyawan">Alamat</label></td>
+                <td>:</td>
+                <td><textarea name='almt_karyawan' id='almt_karyawan' cols='25' rows='3' class="form-control" value="<?= $pelamar['almt_pelamar']?>"><?= $pelamar['almt_pelamar']?></textarea></td>
+            </tr>
+            <tr>
+              <td><label for="no_ktp">No KTP</label></td>
+              <td>:</td>
+              <td><input type="text-form" name="no_ktp" id="no_ktp" class="form-control"></td>
+            </tr>
+            <tr>
+              <td><label for="status_marital">Status</label></td>
+              <td>:</td>
+              <td><input type="radio" name="status_marital" value="Menikah">  Menikah
+                  &nbsp; &nbsp;
+                  <input type="radio" name="status_marital" value="Lajang">  Lajang</td>
+            </tr>
+            <tr>
+              <td><label for="nohp_karyawan">No Handphone</label></td>
+              <td>:</td>
+              <td><input type="text-form" name="nohp_karyawan" id="nohp_karyawan" class="form-control" value="<?= $pelamar['nohp_pelamar']?>"></td>
+            </tr>
+            <tr>
+              <td><label for="pendidikan_terakhir">Pendidikan Terakhir</label></td>
+              <td>:</td>
+              <td>
+                <select name="pendidikan_terakhir" id="pendidikan_terakhir" class="form-control">
+                <option value="">--Pendidikan Akhir--</option>
+                <option value="SMA">SMA</option>
+                <option value="D3">D3</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+                </select>
+              </td>
+            </tr>
+            
+            <tr>
+              <td><label for="tglmasukkerja">Tanggal Masuk Kerja</label></td>
+              <td>:</td>
+              <td><input type="date" name="tglmasukkerja" id="tglmasukkerja" class="form-control"></td>
+            </tr>
+            <tr>
+            <tr>
+              <td><label for="nm_ortu">Nama Orang Tua</label></td>
+              <td>:</td>
+              <td><input type="text-form" name="nm_ortu" id="nm_ortu" class="form-control"></td>
+            </tr>
+            <tr>
+              <td><label for="almt_ortu">Alamat Orang Tua</label></td>
+              <td>:</td>
+              <td><textarea type="text-form" name="almt_ortu" id="almt_ortu" class="form-control"></textarea></td>
+            </tr>
+            </table>
+            
+            <table style="width: 90%">
+            <p>
+              Nama orang yang harus dihubungi bila terjadi keadaan darurat : 
+            </p>
+            <tr>
+                <td style="width: 25%"><label for="nm_hub">Nama Lengkap</label></td>
+                <td style="width: 5%">:</td>
+                <td><input type="text-form" name="nm_hub" id="nm_hub" class="form-control"></td>
+              </tr>
+              <tr>
+                <td><label for="stat_hub">Status Hubungan</label></td>
+                <td>:</td>
+                <td><input type="text-form" name="stat_hub" id="stat_hub" class="form-control"></td>
+              </tr>
+              <tr>
+                <td><label for="almt_hub">Alamat</label></td>
+                <td>:</td>
+                <td><textarea name='almt_hub' id='almt_hub' cols='25' rows='3' class="form-control"></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="nohp_hub">No Handphone</label></td>
+                <td>:</td>
+                <td><input type="text-form" name="nohp_hub" id="nohp_hub" class="form-control"></td>
+              </tr>
+        </table>
+              
           </div>
-            <div class="modal-footer" style="margin-right: 280px;">
+          <div class="modal-footer" style="margin-right: 280px;">
               <button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
               <button type='reset' class="btn btn-warning fas fa-undo" name='btnbatal' value='BATAL' onclick="javascript:Batal();"> Cancel</button>
             </div>
