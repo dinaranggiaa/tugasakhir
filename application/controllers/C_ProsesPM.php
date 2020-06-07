@@ -61,10 +61,23 @@ class C_ProsesPM extends MY_Controller {
 		$data['year']		= $tahun;
 		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
 		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
-		$data['pelamar']	= $this->M_Pendataan->rekomendasi_pelamar($bulan, $tahun)->result_array();
+		$data['pelamar']	= $this->M_Pendataan->rekomendasi_pelamar($bulan, $tahun)->result();
+		$data['jmlpelamar']	= $this->M_Pendataan->getjmlhasilakhir($bulan, $tahun);
 
 		$this->load->view("admin/F_Keputusan", $data);
 		
+	}
+
+	function ubah_status()
+	{
+		$id_pelamar 		= $this->input->post('id_pelamar');
+		$status_akhir 		= $this->input->post('status_akhir');		
+		
+		$data 				= array('status_akhir' 	=> $status_akhir);
+		$where 				= array('id_pelamar' 	=> $id_pelamar);
+
+		$data['status'] 	= $this->M_Pendataan->ubah_data($where, $data, 'hasil_akhir');
+		redirect('C_ProsesPM/entri_keputusan');
 	}
 
 	function simpan_terpilih()
@@ -97,8 +110,9 @@ class C_ProsesPM extends MY_Controller {
 		$tahun 					= $this->input->post('tahun');
 		$data['c_alternatif']	= $this->M_Proses->get_alternatif($bulan, $tahun);
 
+
 		// <!--Pengambilan nilai pada database-->
-		//get data Kriteria
+		//Get data Kriteria
 		$getkriteria	= $this->M_Proses->get_kriteria()->result_array();
 		$kriteria 		= array();
 
@@ -107,11 +121,9 @@ class C_ProsesPM extends MY_Controller {
 													$row['id_kriteria'],
 													$row['nm_kriteria'],
 													$row['bobot_kriteria']);
-		}
-		print_r($kriteria); echo "<br><br>";
-		$data['kriteria'] = $kriteria;
+		}		
 
-		//get data SubKriteria
+		//Get data SubKriteria
 		$getsubkriteria	= $this->M_Proses->get_subkriteria()->result_array();
 		$subkriteria 		= array();
 
@@ -123,81 +135,39 @@ class C_ProsesPM extends MY_Controller {
 													$row['nilai_target'],
 													$row['status_subkriteria']);
 		}
-		print_r($subkriteria); echo "<br><br>";
 
-		//get data alternatif
+		//Get data alternatif
 		$getalternatif	= $this->M_Proses->get_alternatif($bulan, $tahun);
 		$alternatif		= array();
 		foreach ($getalternatif as $row){
 			$alternatif[$row['id_pelamar']] = array($row['nm_pelamar']);
 		}
-		print_r($alternatif); echo "<br><br>";
+		
 
-		// $ntpelamar	= $this->M_Proses->getnilaialternatif($bulan, $tahun);	
-		// $nourut = 0;
-		// foreach ($ntpelamar as $row){
-		// 	// if(!isset($sample[$row['id_pelamar']])){
-		// 	// 	$sample[$row['id_pelamar']] = array();
-		// 	// }
-		// 	$nilai[$row['id_pelamar']][$row['id_kriteria']] = $row['nilai_tes'];
-			
-		// 	$nilaites[$nourut] = $nilai[$row['id_pelamar']][$row['id_kriteria']];
-		// 	//print_r($nilaites[$nourut]);
-		// 	$nourut++;
-		// }
-
-
-		//get data alternatif join dengan kriteria
+		//Get data alternatif join dengan kriteria
 		$getsample		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
 		$sample			= array();
 		$hsample		= array();
 		$surut			= 0;
 		foreach ($getsample as $key => $row){
-			// if(!isset($sample[$row['id_pelamar']])){
-			// 	$sample[$row['id_pelamar']] = array();
-			// }
 			$sample[$row['id_pelamar']][$row['id_subkriteria']] = $row['nilai_tes'];
-			// print_r($row['id_pelamar']);  echo "  "; print_r($row['id_kriteria']);  echo " = ";
-			// print_r($sample[$row['id_pelamar']][$row['id_kriteria']]); echo "<br>";
 			$hsample[$surut] = $sample[$row['id_pelamar']][$row['id_subkriteria']];
 			$surut++;
 		}
-		echo "Nilai Sample <br>";
-		print_r($sample); echo "<br><br>";
 
 		// <!--Proses Perhitungan-->
 		//Menghitung nilai gap
 		$gap 	= array();
-		$hgap	= array();
-		$gurut = 0;
 		foreach ($sample as $id_pelamar => $data){
 			$gap[$id_pelamar] = array();
 			foreach($subkriteria as $id_subkriteria => $val){
-				// echo "<br><br>";
-				// print_r($data[$id_subkriteria]); echo"  ";
-				// print_r($val[3]);  echo" = ";
 				$gap[$id_pelamar][$id_subkriteria] 	= $data[$id_subkriteria]- $val[3];
-				$hgap[$gurut]						= $gap[$id_pelamar][$id_subkriteria];
-				$gurut++;
-				
-				$gap_nilai 							= $gap[$id_pelamar][$id_subkriteria];
-				$this->db->set('gap',$gap_nilai);
-				$this->db->where('id_pelamar', $id_pelamar)
-						 ->where('id_subkriteria', $id_subkriteria);
-				$this->db->update('nilai_alternatif');
-			
-				//print_r($gap[$id_pelamar][$id_subkriteria]);
-
 			}
 		}
-		echo "Gap <br>";
-		// print_r($hgap); echo "<br>";
-		print_r($gap);
+
 
 		//Menghitung nilai terbobot
 		$terbobot 	= array();
-		$hterbobot	= array();
-		$turut		= 0;
 		foreach ($gap as $id_pelamar => $data) {
 			$terbobot[$id_pelamar] = array();
 			foreach ($data as $id_subkriteria => $value) {
@@ -223,43 +193,60 @@ class C_ProsesPM extends MY_Controller {
 				} elseif ($ngap == -4){
 					$bobot_gap = 1;
 				}
-
 				$terbobot[$id_pelamar][$id_subkriteria] 	= $bobot_gap;
-				$hterbobot[$turut] 							= $terbobot[$id_pelamar][$id_subkriteria];
-				$turut++;
-				$bobot_nilai 								= $terbobot[$id_pelamar][$id_subkriteria];
-				$this->db->set('bobot_nilai',$bobot_nilai);
-				$this->db->where('id_pelamar', $id_pelamar)
-						 ->where('id_subkriteria', $id_subkriteria);
-				$this->db->update('nilai_alternatif');
-
-				
-				// echo "<br>"; print_r([$id_pelamar]); echo "  "; print_r([$id_subkriteria]); echo "  ";
-				// print_r($terbobot[$id_pelamar][$id_subkriteria]); echo "<br>";
-				
 			}
 		}
-		echo "<br>terbobot<br>";
-		 print_r($terbobot); echo "<br>";
-		 //print_r($hterbobot);
-		 echo "<br>";echo "<br>";
 
-		$hasil 	= array();
-		$hitungcf 	= array();
 		$temp = array();
 		$id_kriteria = array();
 		$cf			= array();
 		$sf			= array();
-		$hurut		= 0;
-		$hasilcf 	= array();
-		$hasilsf 	= array();
 		foreach($terbobot as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$temp[$id_subkriteria] = $subkriteria[$id_subkriteria][0];
 				$id_kriteria[$id_subkriteria] = $temp[$id_subkriteria];
-
 			}
 		}
+
+		$hasilpm = array();
+		foreach($terbobot as $id_pelamar =>$data){
+			foreach($data as $id_subkriteria => $value){
+				$id_kriteria = $subkriteria[$id_subkriteria][0];
+
+				if($subkriteria[$id_subkriteria][4] == 'CF'){
+					$cf[$id_kriteria][$id_subkriteria] = $value;
+					
+				} else {
+					$sf[$id_kriteria][$id_subkriteria] = $value;		
+				}
+			}
+		}	
+		
+		$totalcf = array();
+		$totalsf = array();
+
+		foreach($kriteria as $id_kriteria => $value){
+
+			$totalcf[$id_kriteria] = count($cf[$id_kriteria]);
+
+			if($totalcf[$id_kriteria] != ''){
+				$totalcf[$id_kriteria] = $totalcf[$id_kriteria];
+			} else {
+				$totalcf[$id_kriteria] = 0;
+			}
+
+			$totalsf[$id_kriteria] = count($sf[$id_kriteria]);
+
+			if($totalsf[$id_kriteria] != ''){
+				$totalsf[$id_kriteria] = $totalsf[$id_kriteria];
+			} else {
+				$totalsf[$id_kriteria] = 0;
+			}
+
+		}
+		
+		$hurutpm = 0;
+		$hhasilpm = array();
 		foreach($terbobot as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$id_kriteria = $subkriteria[$id_subkriteria][0];
@@ -273,59 +260,66 @@ class C_ProsesPM extends MY_Controller {
 				}
 			}
 
-		}
+			foreach($kriteria as $id_kriteria => $value){
+				
+				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) / $totalcf[$id_kriteria] * 0.6 + array_sum($sf[$id_kriteria])/ $totalsf[$id_kriteria] * 0.4;
 
-		
-		print_r($cf); echo"<br>"; 	print_r($sf);
-		for($x=0; $x<=3; $x++){
+				$hhasilpm[$hurutpm] 							= $hasilpm[$id_pelamar][$id_kriteria];
+				$hurutpm++;
+
+			}
+	
+		}	
+
+		// print_r($hhasilpm);
+		// print_r($hasilpm);
+
+		$rurut = 0;
+		$rangking = array();
+		$hrangking = array();
+		foreach($hasilpm as $id_pelamar => $datapm){
 			
+			if(!isset($rangking[$id_pelamar])){
+				$rangking[$id_pelamar] = 0;
+			}
+		
+			foreach ($datapm as $id_kriteria => $nilai_total){
+				
+				$rangking[$id_pelamar] += $nilai_total * $kriteria[$id_kriteria][2];
+				
+				$hrangking[$rurut] =$rangking[$id_pelamar];
+				$rurut++;
+			}
 		}
 		// echo"<br>";
-		// print_r($sf);
-
-
-		// foreach($terbobot as $id_pelamar => $data){
-		// 	foreach($data as $id_subkriteria => $value){
-				
-		// 		$idkriteria[$id_pelamar][$id_subkriteria] = $subkriteria[$id_subkriteria];
-				
-		// 		if($idkriteria[$id_pelamar][$id_subkriteria][4] == 'CF'){
-		// 			$cf[$id_pelamar][$id_subkriteria] = $value;
-		// 			print_r($cf[$id_pelamar][$id_subkriteria]); echo"<br>";
-		// 			// print_r($id_pelamar); echo "  "; print_r($id_subkriteria); echo "  ";
-		// 			// print_r($cf[$id_pelamar][$id_subkriteria]);  echo "<br>";
-					
-		// 		} else {
-		// 			$sf[$id_pelamar][$id_subkriteria] = $value;
-		// 		}
-		// 	}
-
-		// 	foreach($subkriteria as $id_subkriteria => $value){
-		// 		$hasilpm[$id_pelamar] = array_sum($cf[$id_pelamar])/count($cf[$id_pelamar])*0.6 +  array_sum($sf[$id_pelamar])/count($sf[$id_pelamar])*0.4;
-		// 		//echo"<br><br>";print_r($hasilpelamar[$hurut]);
-		// 	}
-		// 	$hasilpelamar[$hurut] = $hasilpm[$id_pelamar];
-		// 	$hurut++;
-		// }
-		//echo "<br>"; print_r($hasilpm);
-		 
+		// print_r($hrangking);
+	
+		
+		
+		
 		$data['jmlsubkriteria'] = $this->M_Proses->getjmlsubkriteria();
+		$data['jmlkriteria'] = $this->M_Proses->get_jmlkriteria();
 		$data['nmsubkriteria'] 	= $this->M_Proses->getnmsubkriteria()->result_array();
 		$data['idsubkriteria'] 	= $this->M_Proses->getidkriteria_sub()->result_array();
-		$data['ntarget']		= $this->M_Proses->getntarget()->result_array();
-		$data['nmpelamar']	 	= $this->M_Proses->getnmpelamar($bulan, $tahun);
-		$data['jmlpelamar'] 	= $this->M_Proses->get_jmlpelamar($bulan, $tahun);
-		$data['nilaipelamar'] 	= $this->M_Proses->getnilaialternatif($bulan, $tahun);	
-		$data['nilaipelamar'] 	= $this->M_Proses->getnilaialternatif($bulan, $tahun);
-		$data['kriteria']		= $this->M_Proses->NmKriteria();
 		$data['idkriteria']		= $this->M_Proses->getIdKriteria()->result_array();
+		$data['ntarget']		= $this->M_Proses->getntarget()->result_array();
+		$data['nmpelamar']	 	= $this->M_Proses->getnamapelamar($bulan, $tahun);
+		$data['gappelamar']	 	= $this->M_Proses->getgappelamar($bulan, $tahun);
+		$data['bobotpelamar'] 	= $this->M_Proses->getbobotpelamar($bulan, $tahun);
+		$data['jmlpelamar'] 	= $this->M_Proses->get_jmlnpelamar($bulan, $tahun);
+		$data['nilaipelamar'] = $this->M_Proses->getnilaipelamar($bulan, $tahun)->result_array();	
+		//$data['nilaipelamar'] = $this->M_Proses->getnilaialternatif($bulan, $tahun);
+		$data['kriteria']		= $this->M_Proses->NmKriteria();
+		//$data['kriteria'] 		= $kriteria;
 		$data['subkriteria']	= $subkriteria;
 		$data['pelamar'] 		= $alternatif;
 		$data['getsample']		= $getsample;
 		//$data['npelamar'] 		= $ntespelamar;
-		$data['gappelamar'] 	= $hgap;
-		$data['bobotpelamar'] 	= $hterbobot;
-		//$data['hasilpm'] 		= $hasilpelamar;
+		//$data['gappelamar'] 	= $hgap;
+		//$data['bobotpelamar'] 	= $hterbobot;
+		$data['hasilpm'] 		= $hhasilpm;
+		$data['rangking']		= $this->M_Pendataan->rekomendasi_pelamar($bulan, $tahun)->result_array();
+		
 		$this->load->view("admin/h_PerhitunganPM", $data);
 
 	}

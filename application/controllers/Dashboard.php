@@ -22,14 +22,17 @@ class Dashboard extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('M_Pendataan');
+		$this->load->model('M_Proses');
 		$this->load->helper('url');
 		$this->load->helper('form');
 	}
 
 	public function dashboard_admin()
 	{
-		$this->load->view("admin/dashboard");
+		$data['JmlKriteria'] 		= $this->M_Proses->get_jmlkriteria() ;
+		$data['JmlSubriteria'] 		= $this->M_Proses->get_jmlsubkriteria() ;
+		$data['JmlKaryawan'] 		= $this->M_Proses->get_jmlkaryawan() ;
+		$this->load->view("admin/dashboard", $data);
 	}
 
 	public function dashboard_manager()

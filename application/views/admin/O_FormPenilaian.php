@@ -63,30 +63,23 @@
         <td style="padding-bottom: 10px;">................................................................................................</td>
     </tr>
     </table>
-        
+			<?php	
+				$jml_subkriteria= $jmlsubkriteria['total'];
+				$no				= 1;
+				$jml_kriteria 	= $jmlkriteria['total'];
+				
+
+			?>
 	<table style="width: 100%; " class="inti">
 		<tr>
 			<th style="width:10%; text-align:center">No</th>
 			<th>Kriteria Penilaian</th>
 			<th>Nilai</th>
 		</tr>
-		<?php $no = 1; ?>
-		<?php foreach ($kriteria as $row) { ?>
-
-		<tr>
-			<td  style="width:10%; text-align:center">
-				<?= $no; ?>
-			</td>
-
-			<td>
-                <?= $row -> nm_kriteria?>
-            </td>
-            <td></td>
-
-			<?php $no++; ?>
-        </tr>
-        
-	<?php } ?>
+		<tbody>
+				
+			
+		</tbody>
     </table>
     
     <table style="font-size: smaller; padding-top:20px; width:40%">  

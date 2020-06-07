@@ -75,6 +75,7 @@ class C_ProsesAHP extends MY_Controller {
 	{
 		$data['JmlKriteria'] 				= $this->M_Proses->get_jmlkriteria();
 		$data['NilaiPerbandinganKriteria'] 	= $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
+		
 		$data['getNamaKriteria'] 			= $this->M_Proses->getNmKriteria()->result_array();
 		$data['getIdKriteria'] 			= $this->M_Proses->getIdKriteria()->result_array();
 
@@ -418,6 +419,7 @@ class C_ProsesAHP extends MY_Controller {
 	{
 
 		$nilaiA = $this->M_Proses->getNilaiPerbandinganKriteria()->result_array();
+		
 		
 		//Mengubah nilaiA menjadi matriks A
 		// $jml_kriteria = 5;

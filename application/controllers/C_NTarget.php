@@ -48,8 +48,8 @@ class C_NTarget extends MY_Controller {
 		$data['pagination'] = $this->pagination->create_links();
 
 		$data['kode'] 		= $this->M_Pendataan->get_id_subkriteria();
-		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria();
-		$data['ntarget']	= $this->M_Pendataan->ambil_data_subkriteria($config['per_page'], $data['page']);
+		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria()->result();
+		$data['ntarget']	= $this->M_Pendataan->ambil_data_subkriteria($config['per_page'], $data['page'])->result();
 		$this->load->view('admin/F_NTarget',$data);		
     }
     

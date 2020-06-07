@@ -44,7 +44,7 @@ class C_Kriteria extends MY_Controller {
 		$config['next_link'] = 'Next';
 		$config['full_tag_open'] = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
 		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
-		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria($config['per_page'], $data['page']);
+		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria($config['per_page'], $data['page'])->result();
 		$data['pagination'] = $this->pagination->create_links();
 		$this->load->view('admin/F_Kriteria',$data);		
     }

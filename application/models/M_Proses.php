@@ -138,14 +138,53 @@ class M_Proses extends MY_Model {
 				 ->from('perbandingan_kriteria');
 		$nilai = $this->db->get();
 		return $nilai;
-
 	}
+
+	function getnilaipelamar($bulan, $tahun) 
+	{
+		$nilai = $this->db->query(" SELECT nilai_tes
+		FROM pelamar inner join nilai_alternatif 
+    	ON pelamar.id_pelamar = nilai_alternatif.id_pelamar INNER JOIN periode on
+        periode.id_periode = pelamar.id_periode and bulan='$bulan' and tahun='$tahun'");
+		
+		return $nilai;
+	}
+
+	//LAGI BUAT NAMPILIN NILAI ARRAY PROSES AHP
 
 	function get_jmlkriteria() {
 
 		$result = array();
 		$this->db->SELECT('count(id_kriteria) as total')
 				 ->FROM('kriteria');
+		$kriteria = $this->db->get();
+		if($kriteria->num_rows() > 0)
+		{
+			$result = $kriteria->row_array();
+		}
+		return $result;
+	}
+
+	
+	function get_jmlsubkriteria() {
+
+		$result = array();
+		$this->db->SELECT('count(id_subkriteria) as total')
+				 ->FROM('subkriteria');
+		$kriteria = $this->db->get();
+		if($kriteria->num_rows() > 0)
+		{
+			$result = $kriteria->row_array();
+		}
+		return $result;
+	}
+
+	function get_jmlkaryawan() {
+
+		$result = array();
+		$this->db->SELECT("count(id_karyawan) as total")
+				 ->FROM("karyawan")
+				 ->WHERE("status_kerja = 'Aktif'");
 		$kriteria = $this->db->get();
 		if($kriteria->num_rows() > 0)
 		{
@@ -195,6 +234,16 @@ class M_Proses extends MY_Model {
 		return $result->result_array();
 	}
 
+	function get_nilaiakhir($bulan,$tahun)
+	{
+		$result = $this->db->query("SELECT c.id_pelamar
+		FROM pelamar a, periode b, hasil_akhir c
+		WHERE a.id_periode = b.id_periode
+		AND a.id_pelamar = c.id_pelamar
+		AND b.bulan = '$bulan' AND b.tahun='$tahun'");
+		return $result->result_array();
+	}
+
 	function getjmlsubkriteria()
 	{
 		$result = array();
@@ -205,6 +254,16 @@ class M_Proses extends MY_Model {
 		{
 			$result = $kriteria->row_array();
 		}
+		return $result;
+	}
+
+	function hitungkriteria()
+	{
+		$result = array();
+		$this->db->SELECT('count(id_kriteria) as total')
+				 ->FROM('kriteria');
+		$kriteria = $this->db->get();
+
 		return $result;
 	}
 
@@ -244,6 +303,47 @@ class M_Proses extends MY_Model {
 	{
 		$result = $this->db->query("select a.nm_pelamar from pelamar a, periode b
 		where a.id_periode = b.id_periode and bulan= '$bulan' and tahun='$tahun'");
+		return $result->result_array();
+	}
+
+	//Nama pelamar yang sudah masuk ke tabel nilai alternatif
+	function getnpelamar($bulan, $tahun)
+	{
+		$result = $this->db->query(" SELECT DISTINCT nilai_alternatif.id_pelamar, nm_pelamar
+									FROM pelamar inner join nilai_alternatif 
+									ON pelamar.id_pelamar = nilai_alternatif.id_pelamar 
+									INNER JOIN periode on periode.id_periode = pelamar.id_periode 
+									and bulan= '$bulan' and tahun='$tahun'");
+		return $result->result_array();
+	}
+
+	function getnamapelamar($bulan, $tahun)
+	{
+		$result = $this->db->query(" SELECT DISTINCT nm_pelamar
+									FROM pelamar inner join nilai_alternatif 
+									ON pelamar.id_pelamar = nilai_alternatif.id_pelamar 
+									INNER JOIN periode on periode.id_periode = pelamar.id_periode 
+									and bulan= '$bulan' and tahun='$tahun'");
+		return $result->result_array();
+	}
+
+	function getgappelamar($bulan, $tahun)
+	{
+		$result = $this->db->query(" SELECT gap
+									FROM pelamar inner join nilai_alternatif 
+									ON pelamar.id_pelamar = nilai_alternatif.id_pelamar 
+									INNER JOIN periode on periode.id_periode = pelamar.id_periode 
+									and bulan= '$bulan' and tahun='$tahun'");
+		return $result->result_array();
+	}
+
+	function getbobotpelamar($bulan, $tahun)
+	{
+		$result = $this->db->query(" SELECT bobot_nilai
+									FROM pelamar inner join nilai_alternatif 
+									ON pelamar.id_pelamar = nilai_alternatif.id_pelamar 
+									INNER JOIN periode on periode.id_periode = pelamar.id_periode 
+									and bulan= '$bulan' and tahun='$tahun'");
 		return $result->result_array();
 	}
 
@@ -298,6 +398,17 @@ class M_Proses extends MY_Model {
 		return $result->row_array();;
 	}
 
+	function get_jmlnpelamar($bulan,$tahun)
+	{
+		$result = $this->db->query("SELECT count(DISTINCT nilai_alternatif.id_pelamar) as total
+									FROM pelamar inner join nilai_alternatif 
+    								ON pelamar.id_pelamar = nilai_alternatif.id_pelamar 
+									INNER JOIN periode 
+									ON periode.id_periode = pelamar.id_periode 
+									AND bulan='$bulan' AND tahun='$tahun'");
+		return $result->row_array();;
+	}
+
 	function getnilaialternatif($bulan, $tahun) 
 	{
 		$result = $this->db->query("select nilai_tes from nilai_alternatif join pelamar using (id_pelamar) join periode d using (id_periode) where bulan='$bulan' and tahun='$tahun';");
@@ -311,6 +422,15 @@ class M_Proses extends MY_Model {
 		using (id_subkriteria) join pelamar c using (id_pelamar)
 		join periode d using (id_periode)
 		where bulan='$bulan' and tahun='$tahun'");
+		return $result;
+	}
+
+	function data_npelamar($id_pelamar)
+	{
+		$result = $this->db->query("select * from nilai_alternatif a join subkriteria b
+		using (id_subkriteria) join pelamar c using (id_pelamar)
+		join periode d using (id_periode)
+		where id_pelamar='$id_pelamar'");
 		return $result;
 	}
 

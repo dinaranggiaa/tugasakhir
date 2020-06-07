@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Dinar | Template</title>
@@ -104,4 +104,4 @@
       });
     }
   </script>
-
+ -->

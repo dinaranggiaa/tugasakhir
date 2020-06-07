@@ -24,8 +24,8 @@ table th {
 
 <div class="center-bar">
 	<h3>
-		<!-- <i class='far fa-file-alt'></i>&nbsp; -->
-		Tabel Perbandingan Kriteria
+		<i class='far fa-file-alt'></i>&nbsp;
+		Proses Metode <i>Analytical Hierarchy Process</i>
 	</h3> 
 
   	<div class="border"></div>
@@ -38,7 +38,7 @@ table th {
   </div>
 
 	<?php
-      $n = $JmlKriteria['total'];
+	  $n = $JmlKriteria['total'];
 	?>
 	
     <form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_data_perbandingan" method="POST">

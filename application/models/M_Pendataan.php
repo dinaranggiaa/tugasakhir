@@ -225,6 +225,9 @@ class M_Pendataan extends MY_Model {
 	{
 		$this->db->where('id_pelamar', $id_pelamar);
 		$this->db->delete('nilai_alternatif');
+
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('hasil_akhir');
 	}
 
 	function hapus_kriteria($id_kriteria)
@@ -573,6 +576,16 @@ class M_Pendataan extends MY_Model {
 		}
 		return $result;
 	}
+
+	function getjmlhasilakhir($bulan, $tahun)
+	{
+		$result = $this->db->query("SELECT COUNT(a.id_pelamar) AS total 
+									FROM hasil_akhir a, pelamar b, periode c
+									WHERE b.id_periode = c.id_periode
+									AND a.id_pelamar = b.id_pelamar
+									AND bulan='$bulan' AND tahun='$tahun'");
+		return $result->row_array();
+	}
 	
 	// <!--FUNCTION AMBIL DATA-->
 
@@ -618,7 +631,7 @@ class M_Pendataan extends MY_Model {
 		from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria
 		order by kriteria.id_kriteria;
 		");
-		return $result->result();
+		return $result;
 	}
 
 	//Data Kriteria yang tandanya sudah 1
@@ -653,11 +666,7 @@ class M_Pendataan extends MY_Model {
         $this->db->SELECT('*')
                  ->FROM('kriteria')
                  ->ORDER_BY('id_kriteria','DESC');
-        $kriteria = $this->db->get();
-    
-        if($kriteria->num_rows() > 0){
-			$result = $kriteria->result();		
-        }
+        $result = $this->db->get();
         return $result;
 	}
 	
@@ -871,7 +880,7 @@ class M_Pendataan extends MY_Model {
 
 	function rekomendasi_pelamar($bulan, $tahun)
 	{
-		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, a.nohp_pelamar, b.nilai_akhir 
+		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, a.nohp_pelamar, b.nilai_akhir
 									from pelamar a, hasil_akhir b, periode c 
 									where a.id_pelamar = b.id_pelamar
 									and a.id_periode = c.id_periode

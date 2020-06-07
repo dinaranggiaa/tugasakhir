@@ -98,12 +98,13 @@
 
   <div class="center">
     <div class="header">
+      <span style="font-family: 'Raleway','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size:15px; padding-left:10px; padding-top:7px; font-weight:bold; color:#243f4d; position:absolute">SISTEM PENUNJANG KEPUTUSAN | SELEKSI CALON KARYAWAN</span>
       <div class="menu">
 				<ul>
-          <li style="font-family: Raleway;"><?= $this->session->userdata('level'); ?>&nbsp;&nbsp;<i class='fas fa-angle-down'></i>
+          <li style="font-family: Roboto;"><?= $this->session->userdata('level'); ?>&nbsp;&nbsp;<i class='fas fa-angle-down'></i>
               <ul class="submenu">
-                <li class="listmenu" style="font-family: Raleway;" ><?= $this->session->userdata('nama'); ?></li><br>
-                <li class="listmenu" style="font-family: Raleway; font-weight:normal; margin-right:10px;"><?php echo "<a href='".base_url()."Login/logout'>Logout</a>"; ?></li>
+                <li class="listmenu" style="font-family: Roboto;" ><?= $this->session->userdata('nama'); ?></li><br>
+                <li class="listmenu" style="font-family: Roboto; font-weight:normal; margin-right:10px;"><?php echo "<a href='".base_url()."Login/logout'>Logout</a>"; ?></li>
               </ul>
           </li>
 				</ul>
