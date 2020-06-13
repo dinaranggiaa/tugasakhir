@@ -102,8 +102,8 @@
              
              <?php foreach ($npelamar as $row) : ?>
                 <tr>
-                <td><label for="nm_kriteria"><?= $row -> nm_kriteria?></label></td>
-                <input type="hidden" name="id_kriteria" id="id_kriteria" class="form-control">
+                <td><label for="nm_subkriteria"><?= $row -> nm_subkriteria?></label></td>
+                <input type="hidden" name="id_subkriteria" id="id_subkriteria" class="form-control">
                 <td>:</td>
                 <td>
                   <input type="text-form" name="nilai_tes" id="nilai_tes" class="form-control" value="<?= $row -> nilai_tes?>"></td>

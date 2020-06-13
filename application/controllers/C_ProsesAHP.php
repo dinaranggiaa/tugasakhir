@@ -152,10 +152,12 @@ class C_ProsesAHP extends MY_Controller {
 			for($y=0; $y<$jml_kriteria; $y++){
 				// echo "hasilkalibagi<br>";
 				// print_r($hasiljmlkalibagi[$y]);
-				$matriksxeigen += $matriksA[$x][$y]['nilai_pembanding'] * $hasiljmlkalibagi[$y];
+				$matriksxeigen += round($matriksA[$x][$y]['nilai_pembanding'] * $hasiljmlkalibagi[$y],4);
 			}
-			$hasilmatriksxeigen[$x] = round($matriksxeigen, 4);	
+			$hasilmatriksxeigen[$x] = round($matriksxeigen,4);	
 		}
+		//print_r($hasilmatriksxeigen);
+		
 		
 
 		//Consistency Vector
@@ -163,22 +165,27 @@ class C_ProsesAHP extends MY_Controller {
 		for($x=0; $x<$jml_kriteria; $x++){
 			$CV[$x] = round($hasilmatriksxeigen[$x]/$hasiljmlkalibagi[$x], 4);
 		}
+		
+
 
 
 		//Jumlah Consistency Vector
 		$jmlcv = 0;
 		$lamdamax = 0;
 		for($x=0; $x<count($CV); $x++){
-			$jmlcv += $CV[$x];
+			$jmlcv += round($CV[$x],4);
 		}
+		// print_r($jmlcv); echo"<br>";
 
 
-		$lamdamax = $jmlcv / $jml_kriteria; //Mencari lamda eigen max
+		$lamdamax = round($jmlcv / $jml_kriteria, 4); //Mencari lamda eigen max
+		//print_r($lamdamax);
 		$data['CV'] = $lamdamax;
 		
 		
 		//Menghitung CI
-		$CI = ($lamdamax - $jml_kriteria) / ($jml_kriteria - 1);
+		$CI = round(($lamdamax - $jml_kriteria) / ($jml_kriteria - 1), 4);
+		// print_r($CI);
 
 
 		//Menghitung CR
@@ -215,7 +222,7 @@ class C_ProsesAHP extends MY_Controller {
 			$RI = 1.59;
 		}
 		$CR = 0;
-		$CR = $CI/$RI;
+		$CR = round($CI/$RI,4);
 		
 		if($CR <= 0.1){
 			$pesan = "SUDAH KONSISTEN";
@@ -266,7 +273,7 @@ class C_ProsesAHP extends MY_Controller {
 	{
 
 		$jml_kriteria = $this->db->count_all('kriteria');
-		print_r($jml_kriteria);
+		// print_r($jml_kriteria);
 		
 		$urut=0;		
 		$data = array();
@@ -383,7 +390,7 @@ class C_ProsesAHP extends MY_Controller {
 
 		//Proses Penyimpanan
 		$jml_kriteria = $this->db->count_all('kriteria');
-		print_r($jml_kriteria);
+		// print_r($jml_kriteria);
 		$data = array();
 		$urutan = 1;
 		for ($x=1; $x <= $jml_kriteria; $x++) {
@@ -432,7 +439,7 @@ class C_ProsesAHP extends MY_Controller {
 				$uruta++;
 			}
 		}
-		print_r($matriksA);
+		// print_r($matriksA);
 
 		//Mengubah nilaiA menjadi matriks B
 		$urutb = 0;
@@ -471,12 +478,12 @@ class C_ProsesAHP extends MY_Controller {
 
 		echo "Hasil Perkalian Matriks : <br>";
 		$data['hasilmatriks'] = $hasilkali;
-		print_r($hasilkali); ?><br><br><?php
+		// print_r($hasilkali); ?><br><br><?php
 
 
 		echo "Hasil Penjumlahan Tiap Kolom Matriks : <br>";
 		$data['sum_row_kriteria'] = $hasiljumlahkali;
-		print_r($hasiljumlahkali); ?><br><br><?php
+		// print_r($hasiljumlahkali); ?><br><br><?php
 
 		
 		//Total perkalian

@@ -729,9 +729,11 @@ class M_Pendataan extends MY_Model {
 	{
 		$npelamar = $this->db->query("SELECT DISTINCT pelamar.id_pelamar, nm_pelamar, nohp_pelamar, almt_pelamar
 										FROM pelamar inner join nilai_alternatif ON pelamar.id_pelamar = nilai_alternatif.id_pelamar");
+		
 		return $npelamar;
 	}
-
+	
+	
 
 	function data_nilai_pelamar($id_pelamar)
 	{
@@ -880,7 +882,7 @@ class M_Pendataan extends MY_Model {
 
 	function rekomendasi_pelamar($bulan, $tahun)
 	{
-		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, a.nohp_pelamar, b.nilai_akhir
+		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, a.nohp_pelamar, b.nilai_akhir, b.status_akhir
 									from pelamar a, hasil_akhir b, periode c 
 									where a.id_pelamar = b.id_pelamar
 									and a.id_periode = c.id_periode

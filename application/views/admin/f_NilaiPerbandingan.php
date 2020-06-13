@@ -34,12 +34,14 @@ table th {
 	<div class="inputsearch">
     <?php echo form_open('C_ProsesAHP/hasil_perbandingan')?>
     <button class="btn btn-info" type='submit' href="<?php echo site_url('C_Kriteria/index')?>"><span class="fas fa-eye">&nbsp; Hasil Perbandingan</span></button>
-    <?php echo form_close()?>
+	<?php echo form_close()?>
+	
   </div>
 
 	<?php
 	  $n = $JmlKriteria['total'];
 	?>
+	
 	
     <form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_data_perbandingan" method="POST">
 	<div class="panel-body">

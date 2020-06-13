@@ -103,13 +103,15 @@ select.form-control{
                           <select name="nilai_tes<?= $i?>" required class="form-control">
                             <option>---</option>
                             <option value="1">1 - (Tidak Ada)</option>
-                            <option value="2">2 - (Ada)</option>
+                            <option value="2">2 - (< 1 Tahun)</option>
+                            <option value="3">3 - (> 1 Tahun)</option>
                           </select>
                           <?php } else {?>
                             <select name="nilai_tes<?= $i?>" required class="form-control">
                             <option>---</option>
                             <option value="1">1 - (SMA)</option>
-                            <option value="2">2 - (D3/S1)</option>
+                            <option value="2">2 - (D3)</option>
+                            <option value="3">3 - (S1)</option>
                           </select>
                           <?php } ?>
                         <?php } else { ?>

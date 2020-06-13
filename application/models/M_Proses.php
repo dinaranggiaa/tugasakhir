@@ -224,8 +224,8 @@ class M_Proses extends MY_Model {
 	// <!--  PROSES PROFILE MATCHING -->
 	function get_alternatif($bulan,$tahun)
 	{
-		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, d.id_subkriteria, d.nm_subkriteria,
-		c.nilai_tes, b.bulan, b.tahun
+		$result = $this->db->query("SELECT c.*, a.nm_pelamar, d.id_subkriteria, d.nm_subkriteria,
+		b.bulan, b.tahun
 		from pelamar a, periode b, nilai_alternatif c, subkriteria d 
 		where a.id_periode = b.id_periode
 		and a.id_pelamar = c.id_pelamar
