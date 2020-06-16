@@ -87,7 +87,7 @@ class C_Karyawan extends MY_Controller {
 
 									);
 		$where 				= array('id_karyawan' 	=> $id_karyawan);
-		$data['karyawan'] 	= $this->M_Pendataan->ubah_karyawan($where, $data, 'karyawan');
+		$data['karyawan'] 	= $this->M_Pendataan->ubah_data($where, $data, 'karyawan');
 
 		$nm_hub 			= $this->input->post('nm_hub');
 		$stat_hub 			= $this->input->post('stat_hub');

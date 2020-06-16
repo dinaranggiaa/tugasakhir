@@ -46,24 +46,17 @@ class C_Laporan extends MY_Controller {
 
 	function cetak_form_penilaian()
 	{	
-		$data['kriteria'] 		= $this->M_Pendataan->ambil_data_kriteria()->result_array();
-		$data['subkriteria'] 	= $this->M_Pendataan->ambil_data_subkriteria()->result_array();
-		$data['idsubkriteria'] 	= $this->M_Proses->getidkriteria_sub()->result_array();
-		$data['idkriteria']		= $this->M_Proses->getIdKriteria()->result_array();
-		$data['jmlsubkriteria'] = $this->M_Proses->getjmlsubkriteria();
-		$data['jmlkriteria']	= $this->M_Proses->get_jmlkriteria();
-		// print_r($data['subkriteria']); echo "<br>";
-		// print_r($data['kriteria']);
-
 		
+		//$data['subkriteria']	= $this->M_Pendataan->getNamaKriteria()->result();
+		//print_r($data['subkriteria']);
 
-		$this->mypdf->generate('admin/O_FormPenilaian',$data,true);
+		$this->mypdf->generate('admin/O_FormPenilaian',true);
 		
 	}
 
 	function cetak_form_datadiri()
 	{	
-		$this->mypdf->generate('admin/O_FormDataDiri',true);	
+		$this->mypdf->generate('admin/O_FormDataDiri', true);	
 	}
 	
 	public function Cetak_RekomendasiPelamar()

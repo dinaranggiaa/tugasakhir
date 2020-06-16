@@ -2,63 +2,31 @@
 <?php $this->view('partials/sidebar_admin')?>
 
 <style>
-  .inputsearch {
-    float: right;
-    margin-right: 15px;
+
+  table, td, th {
+    text-align: center;
+    border: 1px solid #ccc;
+    margin-top: 90px;;
+    
   }
 
-  .inputsearch input.form-control{
-    width: 250px;
+  .table {
+    border-collapse: collapse;
+    /* padding-left: 10px; */
+    text-align: center;
+    width: 45%;
+    margin: auto;
   }
 
-  .demo-table tbody td {
-    color: #353535;
-  }
-
-  input.form-control{
-    width: 350px;
-  }
-
-  .modal-body td{
-    padding: 5px;
-  }
-  label {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: #555;
+  td{
     font-size: 15px;
+    text-align: left;  
   }
 
-  input{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: #555;
-    font-size: 15px;
+  .form-pendataan{
+    margin-top: 30px;
+    padding: 0%;
   }
-
-  .demo-table {
-  border-collapse: collapse;
-  font-size: 17px;
-  width: 75%;
-  margin-left: 130px;
-}
-
-.demo-table td:first-child {
-  width: 250px;
-  text-align: left;
-}
-
-.demo-table td:nth-child(2) {
-  width: 30px;
-  text-align: center;
-}
-.demo-table td {
-  /* border: 1px solid #2ed573; */
-  padding: 7px 17px;
-}
-
-.form-pendataan{
-  padding-left: 150px;
-  padding-top: 25px;
-}
 
 </style>
 
@@ -73,45 +41,46 @@
         <?php echo form_close()?>
     </div> -->
     
-    <div class="form-pendataan" style="padding-bottom: 25px;">
+    <div class="form-pendataan">
+      <h3 style="text-align: center;">Hasil Penilaian Pelamar</h3>
       <?php $n = $JmlKriteria['total']; ?>
     <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/ubah_penilaian" method="POST">
-              <table style="width: 100%;">
+              <table class= "table table-striped table-bordered">
                 <?php $no=0; ?>
                   <?php foreach ($npelamar as $row) : ?>
                     <?php if ($no == 0) : ?>
-              <tr>
-                <td style="width: 35%"><label for="id_pelamar">Kode pelamar</label></td>
-                <td style="width: 5%">:</td>
-                <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?= $row -> id_pelamar?>"></td>
-              </tr>
-              <tr>
-                <td><label for="nm_pelamar">Nama Pelamar</label></td>
-                <td>:</td>
-                <td><input readonly type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control" value="<?= $row -> nm_pelamar?>"></td>
-              </tr>
-              <tr>
-                <td><label for="nohp_pelamar">No Handphone</label></td>
-                <td>:</td>
-                <td><input readonly type="text-form" name="nohp_pelamar" id="nohp_pelamar" class="form-control" value="<?= $row -> nohp_pelamar?>"></td>
-              </tr>
-                  <?php endif ?>
-              <?php $no++;
-                endforeach ?>
-             
-             <?php foreach ($npelamar as $row) : ?>
-                <tr>
-                <td><label for="nm_subkriteria"><?= $row -> nm_subkriteria?></label></td>
-                <input type="hidden" name="id_subkriteria" id="id_subkriteria" class="form-control">
-                <td>:</td>
-                <td>
-                  <input readonly type="text-form" name="nilai_tes" id="nilai_tes" class="form-control" value="<?= $row -> nilai_tes?>"></td>
-              </tr>
-            <?php endforeach?>
+                        <tr>
+                          <td><label for="id_pelamar" style="width: 50%;">Kode pelamar</label></td>
+                          <!-- <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?= $row -> id_pelamar?>"></td> -->
+                          <td><?= $row -> id_pelamar?></td>
+                        </tr>
+                        <tr>
+                          <td><label for="nm_pelamar">Nama Pelamar</label></td>
+                          <td><?= $row -> nm_pelamar?></td>
+                          <!-- <td><input readonly type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control" value="<?= $row -> nm_pelamar?>"></td> -->
+                        </tr>
+                        <tr>
+                          <td><label for="nohp_pelamar">No Handphone</label></td>
+                          <td><?= $row -> nohp_pelamar?></td>
+                          
+                          <!-- <td><input readonly type="text-form" name="nohp_pelamar" id="nohp_pelamar" class="form-control" value="<?= $row -> nohp_pelamar?>"></td> -->
+                        </tr>
+                            <?php endif ?>
+                        <?php $no++;
+                          endforeach ?>
+                      
+                      <?php foreach ($npelamar as $row) : ?>
+                          <tr>
+                          <td><label for="nm_subkriteria"><?= $row -> nm_subkriteria?></label></td>
+                          <input type="hidden" name="id_subkriteria" id="id_subkriteria" class="form-control">
+                          <td><?= $row -> nilai_tes?></td>
+                          <!-- <td>
+                            <input readonly type="text-form" name="nilai_tes" id="nilai_tes" class="form-control" value="<?= $row -> nilai_tes?>"></td> -->
+                        </tr>
+                      <?php endforeach?>
 
 
               </table>
-
           </div>
           
           </form>

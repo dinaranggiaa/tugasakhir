@@ -27,10 +27,36 @@
     font-size: 16px;
     text-align: center;
     color: #243f4d;
-  } 
+  }
+
+  ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #ac9d9d;
+}
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
+
 </style>
 
+
 <div class="center-bar">
+
   <h3><i class='far fa-folder-open'></i>&nbsp;Data Kriteria</h3> 
   <div class="border"></div>
   

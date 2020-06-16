@@ -47,11 +47,6 @@
         <td style="padding-bottom: 10px;">................................................................................................</td>
     </tr>   
     <tr>
-        <td style="padding-bottom: 10px;"><label>Jenis Kelamin</label></td>
-        <td style="padding-bottom: 10px;">:</td>
-        <td style="padding-bottom: 10px;"> O Laki-Laki / O Wanita *</td>
-    </tr>
-    <tr>
         <td style="padding-bottom: 10px;"><label>Pendidikan Terakhir</label></td>
         <td style="padding-bottom: 10px;">:</td>
         <td style="padding-bottom: 10px;">O SMA / O D3 / O S1 *
@@ -63,24 +58,24 @@
         <td style="padding-bottom: 10px;">................................................................................................</td>
     </tr>
     </table>
-			<?php	
-				$jml_subkriteria= $jmlsubkriteria['total'];
-				$no				= 1;
-				$jml_kriteria 	= $jmlkriteria['total'];
-				
 
-			?>
-	<table style="width: 100%; " class="inti">
+	<!-- <table style="width: 100%; " class="inti">
+	<?php $no = 0;
+			foreach($subkriteria as $row) : ?>
 		<tr>
 			<th style="width:10%; text-align:center">No</th>
 			<th>Kriteria Penilaian</th>
 			<th>Nilai</th>
 		</tr>
+			<td><?= $row -> nm_subkriteria?></td>
+			
+			<td></td>
 		<tbody>
 				
 			
 		</tbody>
-    </table>
+	<?php endforeach?>
+    </table> -->
     
     <table style="font-size: smaller; padding-top:20px; width:40%">  
         <tr style="padding-bottom: 10px;">

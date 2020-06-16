@@ -275,13 +275,14 @@ input[type=text] {
 }
 
 .center-bar{
-  margin: 90px 10px 30px 250px;
+  margin: 110px 10px 30px 250px;
   padding: 5px 8px 30px 8px;
   min-height: 500px;
   background-color: #ffffff;
   border-radius: 10px;
   font-family: 'Roboto'; 
 }
+
 
 .hasil-matriks{
 	padding-left: 50px;
@@ -490,5 +491,3 @@ li .listmenu a:hover {
   text-decoration: none;
   padding: 10px 20px;
 }
-
-

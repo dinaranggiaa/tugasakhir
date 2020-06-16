@@ -60,10 +60,16 @@
   padding-top: 25px;
 }
 
+select.form-control{
+  width: 350px;
+  margin-top: 15px;
+}
+
+
 </style>
 
   <div class="center-bar">
-    <h3><i class='far fa-folder-open'></i>&nbsp;Penilaian Pelamar</h3> 
+    <h3><i class='far fa-folder-open'></i>&nbsp;Edit Penilaian Pelamar</h3> 
     <div class="border"></div>
 
     <!-- <div class="center-pencarian" style="padding-top:30px;">
@@ -100,15 +106,44 @@
               <?php $no++;
                 endforeach ?>
              
-             <?php foreach ($npelamar as $row) : ?>
-                <tr>
-                <td><label for="nm_subkriteria"><?= $row -> nm_subkriteria?></label></td>
-                <input type="hidden" name="id_subkriteria" id="id_subkriteria" class="form-control">
-                <td>:</td>
-                <td>
-                  <input type="text-form" name="nilai_tes" id="nilai_tes" class="form-control" value="<?= $row -> nilai_tes?>"></td>
-              </tr>
-            <?php endforeach?>
+            <?php for($i=0; $i<$n; $i++){?>
+                      <td><label for="nm_subkriteria" name="nm_subkriteria<?= $i?>"><?= $kriteria[$i]['nm_subkriteria']?></label>
+                          <input type="hidden" name="id_subkriteria<?= $i?>" value="<?= $kriteria[$i]['id_subkriteria']?>" class="form-control">
+                     </td>
+                      <td>:</td>
+                      <td>
+
+                      <?php if($kriteria[$i]['nm_kriteria'] == 'Kompetensi'){ ?>
+                          <?php if($kriteria[$i]['nm_subkriteria'] == 'Pengalaman Kerja'){?>
+                          <select name="nilai_tes<?= $i?>" required class="form-control">
+                            <option>---</option>
+                            <option value="1" <?php if($nilai_tes[$i]['nilai_tes'] == "1"){echo "selected";}?>>1 - (Tidak Ada)</option>
+                            <option value="2" <?php if($nilai_tes[$i]['nilai_tes'] == "2"){echo "selected";}?>>2 - (< 1 Tahun)</option>
+                            <option value="3" <?php if($nilai_tes[$i]['nilai_tes'] == "3"){echo "selected";}?>>3 - (> 1 Tahun)</option>
+                          </select>
+                          <?php } else {?>
+                            <select name="nilai_tes<?= $i?>" required class="form-control">
+                            <option>---</option>
+                            <option value="1" <?php if($nilai_tes[$i]['nilai_tes'] == "1"){echo "selected";}?>>1 - (SMA)</option>
+                            <option value="2" <?php if($nilai_tes[$i]['nilai_tes'] == "2"){echo "selected";}?>>2 - (D3)</option>
+                            <option value="3" <?php if($nilai_tes[$i]['nilai_tes'] == "3"){echo "selected";}?>>3 - (S1)</option>
+                          </select>
+                          <?php } ?>
+                        <?php } else { ?>
+                          <select name="nilai_tes<?= $i?>" required class="form-control">
+                            <option>---</option>
+                            <option value="5" <?php if($nilai_tes[$i]['nilai_tes'] == "5"){echo "selected";}?>>5 - Sangat Baik</option>
+                              <option value="4" <?php if($nilai_tes[$i]['nilai_tes'] == "4"){echo "selected";}?>>4 - Baik</option>
+                              <option value="3" <?php if($nilai_tes[$i]['nilai_tes'] == "3"){echo "selected";}?>>3 - Cukup</option>
+                              <option value="2" <?php if($nilai_tes[$i]['nilai_tes'] == "2"){echo "selected";}?>>2 - Kurang</option>
+                              <option value="1" <?php if($nilai_tes[$i]['nilai_tes'] == "1"){echo "selected";}?>>1 - Sangat Kurang</option>
+                          </select>
+                        <?php } ?>
+                        <!-- <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required> -->
+                        <!-- <input type="text-form" class ="form-control" name="nilai_tes<?php echo $i?>" required> -->
+                      </td>
+                    </tr>
+                    <?php } ?>
 
 
               </table>

@@ -176,8 +176,7 @@ class C_ProsesPM extends MY_Controller {
 		foreach ($getalternatif as $row){
 			$alternatif[$row['id_pelamar']] = array($row['nm_pelamar']);
 		}
-		
-
+	
 		//Get data alternatif join dengan kriteria
 		$getsample		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
 		$sample			= array();
@@ -189,69 +188,26 @@ class C_ProsesPM extends MY_Controller {
 			$surut++;
 		}
 
-		
-		print_r($sample); echo"<br><br>";
-
-		
+		//Get gap nilai pelamar		
 		$getgap		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
 		$gap		= array();
 		foreach($getgap as $key => $row){
 			$gap[$row['id_pelamar']][$row['id_subkriteria']] = $row['gap'];
 		}
-		
-		
 
-		// <!--Proses Perhitungan-->
-		//Menghitung nilai gap
-		// $gap 	= array();
-		// foreach ($sample as $id_pelamar => $data){
-		// 	$gap[$id_pelamar] = array();
-		// 	foreach($subkriteria as $id_subkriteria => $val){
-		// 		$gap[$id_pelamar][$id_subkriteria] 	= $data[$id_subkriteria]- $val[3];
-		// 	}
-		// }
-
-		print_r($gap); echo"<br><br>";
-
-
-
-		//Menghitung nilai terbobot
-		$terbobot 	= array();
-		foreach ($gap as $id_pelamar => $data) {
-			$terbobot[$id_pelamar] = array();
-			foreach ($data as $id_subkriteria => $value) {
-				$ngap = $value;
-				$bobot_gap = 0;
-
-				if($ngap == 0){
-					$bobot_gap = 5;
-				} elseif ($ngap == 1){
-					$bobot_gap = 4.5;
-				} elseif ($ngap == -1){
-					$bobot_gap = 4;
-				} elseif ($ngap == 2){
-					$bobot_gap = 3.5;
-				} elseif ($ngap == -2){
-					$bobot_gap = 3;
-				} elseif ($ngap == 3){
-					$bobot_gap = 2.5;
-				} elseif ($ngap == -3){
-					$bobot_gap = 2;
-				} elseif ($ngap == 4){
-					$bobot_gap = 1.5;
-				} elseif ($ngap == -4){
-					$bobot_gap = 1;
-				}
-				$terbobot[$id_pelamar][$id_subkriteria] 	= $bobot_gap;
-				//print_r($id_pelamar); echo" "; print_r($id_subkriteria); echo" "; print_r($terbobot[$id_pelamar][$id_subkriteria]); echo"<br>";
-			}
+		//Get bobot nilai pelamar
+		$getbobot		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
+		$bobot			= array();
+		foreach($getbobot as $key => $row){
+			$bobot[$row['id_pelamar']][$row['id_subkriteria']] = $row['bobot_nilai'];
 		}
+
 
 		$temp = array();
 		$id_kriteria = array();
 		$cf			= array();
 		$sf			= array();
-		foreach($terbobot as $id_pelamar =>$data){
+		foreach($bobot as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$temp[$id_subkriteria] = $subkriteria[$id_subkriteria][0];
 				$id_kriteria[$id_subkriteria] = $temp[$id_subkriteria];
@@ -260,7 +216,7 @@ class C_ProsesPM extends MY_Controller {
 		
 
 		$hasilpm = array();
-		foreach($terbobot as $id_pelamar =>$data){
+		foreach($bobot as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$id_kriteria = $subkriteria[$id_subkriteria][0];
 
@@ -273,40 +229,25 @@ class C_ProsesPM extends MY_Controller {
 			}
 		}
 
-
-
-		$cf = array();
-		$sf = array();
-
-		
 		$hurutpm = 0;
 		$hhasilpm = array();
-		foreach($terbobot as $id_pelamar =>$data){
+		foreach($bobot as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$id_kriteria = $subkriteria[$id_subkriteria][0];
 
 				if($subkriteria[$id_subkriteria][4] == 'CF'){
-					$cf[$id_kriteria][$id_subkriteria] = $value;
-					// print_r($id_pelamar); echo "  "; print_r($id_kriteria); echo "  ";print_r($id_subkriteria); echo "  " ;print_r($cf[$id_kriteria][$id_subkriteria]); echo"<br>";
-					
+					$cf[$id_kriteria][$id_subkriteria] = $value;					
 				} else {
 					$sf[$id_kriteria][$id_subkriteria] = $value;
 					
 				}
 			}
 
-			
-
 			foreach($kriteria as $id_kriteria => $value){
-				
-				
 				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) /count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;
-
-				$hhasilpm[$hurutpm] 							= $hasilpm[$id_pelamar][$id_kriteria];
+				$hhasilpm[$hurutpm] 				= $hasilpm[$id_pelamar][$id_kriteria];
 				$hurutpm++;
-
 			}
-	
 		}	
 
 		$rurut = 0;
@@ -327,28 +268,25 @@ class C_ProsesPM extends MY_Controller {
 			}
 		}	
 		
-		$data['jmlsubkriteria'] = $this->M_Proses->getjmlsubkriteria();
-		$data['jmlkriteria'] = $this->M_Proses->get_jmlkriteria();
-		$data['nmsubkriteria'] 	= $this->M_Proses->getnmsubkriteria()->result_array();
-		$data['idsubkriteria'] 	= $this->M_Proses->getidkriteria_sub()->result_array();
-		$data['idkriteria']		= $this->M_Proses->getIdKriteria()->result_array();
-		$data['ntarget']		= $this->M_Proses->getntarget()->result_array();
+
 		$data['nmpelamar']	 	= $this->M_Proses->getnamapelamar($bulan, $tahun);
 		$data['gappelamar']	 	= $this->M_Proses->getgappelamar($bulan, $tahun);
 		$data['bobotpelamar'] 	= $this->M_Proses->getbobotpelamar($bulan, $tahun);
 		$data['jmlpelamar'] 	= $this->M_Proses->get_jmlnpelamar($bulan, $tahun);
-		$data['nilaipelamar'] = $this->M_Proses->getnilaipelamar($bulan, $tahun)->result_array();	
-		//$data['nilaipelamar'] = $this->M_Proses->getnilaialternatif($bulan, $tahun);
+
+		$data['jmlsubkriteria'] = $this->M_Proses->getjmlsubkriteria();
+		$data['jmlkriteria'] 	= $this->M_Proses->get_jmlkriteria();
+		$data['nmsubkriteria'] 	= $this->M_Proses->getnmsubkriteria()->result_array();
+		$data['idsubkriteria'] 	= $this->M_Proses->getidkriteria_sub()->result_array();
+		$data['idkriteria']		= $this->M_Proses->getIdKriteria()->result_array();
+		$data['ntarget']		= $this->M_Proses->getntarget()->result_array();
+		$data['nilaipelamar'] 	= $this->M_Proses->getnilaipelamar($bulan, $tahun)->result_array();	
 		$data['kriteria']		= $this->M_Proses->NmKriteria();
-		//$data['kriteria'] 		= $kriteria;
-		$data['subkriteria']	= $subkriteria;
-		$data['pelamar'] 		= $alternatif;
-		$data['getsample']		= $getsample;
-		//$data['npelamar'] 		= $ntespelamar;
-		//$data['gappelamar'] 	= $hgap;
-		//$data['bobotpelamar'] 	= $hterbobot;
-		$data['hasilpm'] 		= $hhasilpm;
+		
 		$data['rangking']		= $this->M_Pendataan->rekomendasi_pelamar($bulan, $tahun)->result_array();
+
+		
+		$data['hasilpm'] 		= $hhasilpm;
 		
 		$this->load->view("admin/h_PerhitunganPM", $data);
 

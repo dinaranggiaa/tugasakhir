@@ -389,7 +389,7 @@ class M_Pendataan extends MY_Model {
 				'tempat_lahir' 			=> $this->input->post('tempat_lahir'),
 				'tanggal_lahir' 		=> $this->input->post('tanggal_lahir'),
 				'almt_karyawan'			=> $this->input->post('almt_karyawan'),
-				'no_ktp' 				=> $this->input->post('no_ktp'),
+				'no_ktp'				=> $this->input->post('no_ktp'),
 				'status_marital'		=> $this->input->post('status_marital'),
 				'nohp_karyawan'			=> $this->input->post('nohp_karyawan'),
 				'pendidikan_terakhir' 	=> $this->input->post('pendidikan_terakhir'),
@@ -800,7 +800,7 @@ class M_Pendataan extends MY_Model {
 
 	function get_subkriteria()
 	{
-		$result = $this->db->query("select subkriteria.id_subkriteria, subkriteria.nm_subkriteria, subkriteria.nilai_target, subkriteria.status_subkriteria, kriteria.id_kriteria, kriteria.nm_kriteria from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria;
+		$result = $this->db->query("SELECT subkriteria.id_subkriteria, subkriteria.nm_subkriteria, subkriteria.nilai_target, subkriteria.status_subkriteria, kriteria.id_kriteria, kriteria.nm_kriteria from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria;
 		");
 		return $result;
 	}

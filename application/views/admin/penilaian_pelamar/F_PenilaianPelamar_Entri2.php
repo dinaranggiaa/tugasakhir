@@ -68,7 +68,7 @@ select.form-control{
 </style>
 
   <div class="center-bar">
-    <h3><i class='far fa-folder-open'></i>&nbsp;Penilaian Pelamar</h3> 
+    <h3><i class='far fa-folder-open'></i>&nbsp;Entri Penilaian Pelamar</h3> 
     <div class="border"></div>
 
     <div class="center-pencarian" style="padding-top:30px;">
@@ -98,7 +98,7 @@ select.form-control{
                     </td>
                       <td>:</td>
                       <td>
-                      <?php if($kriteria[$i]['nm_kriteria'] == 'Administrasi'){ ?>
+                      <?php if($kriteria[$i]['nm_kriteria'] == 'Kompetensi'){ ?>
                           <?php if($kriteria[$i]['nm_subkriteria'] == 'Pengalaman Kerja'){?>
                           <select name="nilai_tes<?= $i?>" required class="form-control">
                             <option>---</option>
