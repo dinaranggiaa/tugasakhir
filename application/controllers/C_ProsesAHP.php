@@ -49,23 +49,21 @@ class C_ProsesAHP extends MY_Controller {
 	{
 		$perbandingan_kriteria = $this->db->count_all('perbandingan_kriteria');
 		$kriteria = $this->db->count_all('kriteria');
-		
-		// if($perbandingan_kriteria != 0){
-		// 	redirect('C_ProsesAHP/get_hasil_perbandingan');
-		// } else {
-		// 	echo "Data Tidak Ada";
-		// 	redirect('C_ProsesAHP/input_nilai_perbandingan');
-		// }
 
 		if($kriteria == 0){
-			echo "Data Tidak Ada";
+			// echo "Data Tidak Ada";
+			$this->session->set_flashdata('warning-kriteria', 'Masukan Data Kriteria');
 			redirect('C_ProsesAHP/input_nilai_perbandingan');
 		} else {
-			if($perbandingan_kriteria != 0) {
-				redirect('C_ProsesAHP/get_hasil_perbandingan');
-			} else {
-				echo "Data Tidak Ada";
+			if($perbandingan_kriteria == 0) {
+				// echo "Data Tidak Ada";
+				$this->session->set_flashdata('warning-inputperbandingan', 'Masukan Nilai Perbandingan Kriteria');
 				redirect('C_ProsesAHP/input_nilai_perbandingan');
+				
+				
+			} else {
+				redirect('C_ProsesAHP/get_hasil_perbandingan');
+
 			}
 		}
 		
@@ -265,6 +263,7 @@ class C_ProsesAHP extends MY_Controller {
 			$this->db->where('id_kriteria', $id_kriteria);
 			$this->db->update('kriteria');
 		}
+		$this->session->set_flashdata('success', 'Bobot Kriteria Berhasil Disimpan');
 		redirect('C_Kriteria/index');
 	}
 

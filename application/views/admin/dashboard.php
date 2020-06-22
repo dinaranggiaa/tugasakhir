@@ -80,6 +80,13 @@ span{
   margin-left: 270px;
   padding-right: 10px;
   position: absolute;
+}
+
+.info-center{
+  margin: auto;
+  margin-top: 110px;
+  text-align: center;
+  margin-left: 150px;
 
 }
 
@@ -174,9 +181,6 @@ span{
     <div class="sub-judul-kriteria">Jumlah Kriteria</div>
     <div class="sub-isi-kriteria"><?= $JmlKriteria['total'] ?></div>
 
-    <br>
-    <div class="sub-judul-kriteria">Jumlah Karyawan</div>
-    <div class="sub-isi-kriteria"><?= $JmlKaryawan['total'] ?></div>
   
   </div>
 
@@ -186,10 +190,15 @@ span{
     <div class="sub-isi-kriteria"><?= $JmlSubriteria['total'] ?></div>
 
     <br>
-    <div class="sub-judul-kriteria">Nilai Profil</div>
-    <div class="sub-isi-kriteria"><?= $JmlKriteria['total'] ?></div>
 
-    </div>
+  </div>
+
+  <br>
+
+  <div class='info-center'>
+    <div class="sub-judul-kriteria">Jumlah Karyawan</div>
+    <div class="sub-isi-kriteria"><?= $JmlKaryawan['total'] ?></div>
+  </div>
 
 </div>
 

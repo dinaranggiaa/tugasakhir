@@ -87,11 +87,15 @@ input[type=text], select {
 
 </style>
 
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+			<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+			<li><?php echo "<a href='".base_url()."C_ProsesPM/index'>Periode Analisis Penilaian Pelamar</a>"; ?></li>
+        <li>Analisis Penilaian Pelamar</li>
+      </ul>
+</div>
+
 <div class="center-bar">
-	<!-- <h3><i class='far fa-file-alt'></i>&nbsp;Hasil Penilaian Pelamar</h3> 
-  	<div class="border"></div>
-	<br> -->
-	
 	<div class="tab">
 			<button class="tablinks" onclick="openCity(event, 'Penilaian')">Penilaian Pelamar</button>
 			<button class="tablinks" onclick="openCity(event, 'Total')">Perhitungan <i>Profile Matching</i></button>
@@ -237,6 +241,7 @@ input[type=text], select {
 						<?php for ($x=0; $x <= ($jml_subkriteria-1); $x++) {?>
 								<th><?=$nmsubkriteria[$x]['nm_subkriteria']?></th>
 						<?php } ?>
+						
 						<?php
 							for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
 								<tr>

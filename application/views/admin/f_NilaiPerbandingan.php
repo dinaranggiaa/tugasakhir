@@ -22,6 +22,13 @@ table th {
   }
 </style>
 
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+		<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Perhitungan AHP</li>
+      </ul>
+</div>
+
 <div class="center-bar">
 	<h3>
 		<i class='far fa-file-alt'></i>&nbsp;
@@ -30,6 +37,8 @@ table th {
 
   	<div class="border"></div>
 	<br>
+
+	<?php $this->load->view('alert')?>
 	
 	<div class="inputsearch">
     <?php echo form_open('C_ProsesAHP/hasil_perbandingan')?>

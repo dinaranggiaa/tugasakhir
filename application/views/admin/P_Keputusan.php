@@ -49,8 +49,16 @@
 }
   
 </style>
+
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+	    	<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Periode Hasil Keputusan</li>
+      </ul>
+</div>
+
 <div class="center-bar">
-  <h3><i class='far fa-folder-open'></i>&nbsp;Rekomendasi Pelamar</h3> 
+  <h3><i class='far fa-folder-open'></i>&nbsp;Hasil Keputusan</h3> 
   <div class="border"></div>
   <div class="home-periode">
     <div class="home-judul"><span>Periode Pendaftaran</span></div>

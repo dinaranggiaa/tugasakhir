@@ -310,17 +310,4 @@ class Checkup extends MY_Controller {
 
 		}
 
-		function bisaae()
-		{
-
-			$mpdf = new \Mpdf\Mpdf();
-
-			$data['bukti'] = $this->Pendataan_model->TampilCheckup($id_checkup);
-
-			$html = $this->load->view('checkup/bukti_checkup', $bukti, true);
-			$
-			$mpdf->WriteHTML($html);
-			$mpdf->Output();
-		}
-
 }

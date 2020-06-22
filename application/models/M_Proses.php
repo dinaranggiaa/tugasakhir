@@ -434,5 +434,7 @@ class M_Proses extends MY_Model {
 		return $result;
 	}
 
+	
+
 
 }

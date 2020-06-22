@@ -611,8 +611,7 @@ class M_Pendataan extends MY_Model {
 	//Dipake untuk menampilkan hasil pencarian
 	function ambil_data_pelamar()
 	{
-    	$result = array();
-        $this->db->SELECT('pelamar.*,periode.*')
+    	$result = $this->db->SELECT('pelamar.*,periode.*')
 				 ->FROM('pelamar')
 				 ->join('periode','periode.id_periode=pelamar.id_periode')
                  ->ORDER_BY('id_pelamar','DESC');
@@ -623,6 +622,15 @@ class M_Pendataan extends MY_Model {
         }
         return $result;
 	}
+
+	function get_pelamar($id_pelamar)
+	{
+		$result = $this->db->query("select * from pelamar
+		where id_pelamar='$id_pelamar'");
+		return $result;
+	}
+ 
+	
 		
 	// <--DATA SUBKRITERIA-->
 	public function ambil_data_subkriteria()
@@ -800,7 +808,7 @@ class M_Pendataan extends MY_Model {
 
 	function get_subkriteria()
 	{
-		$result = $this->db->query("SELECT subkriteria.id_subkriteria, subkriteria.nm_subkriteria, subkriteria.nilai_target, subkriteria.status_subkriteria, kriteria.id_kriteria, kriteria.nm_kriteria from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria;
+		$result = $this->db->query("select subkriteria.id_subkriteria, subkriteria.nm_subkriteria, subkriteria.nilai_target, subkriteria.status_subkriteria, kriteria.id_kriteria, kriteria.nm_kriteria from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria;
 		");
 		return $result;
 	}

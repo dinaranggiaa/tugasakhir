@@ -40,12 +40,14 @@ class C_Periode extends MY_Controller {
 	function simpan_periode()
 	{
 		$data['periode'] 	= $this->M_Pendataan->simpan_periode();
+		$this->session->set_flashdata('success', 'Data Periode Berhasil Disimpan');
 		redirect('C_Periode/index');
 	}
 
 	function hapus_periode($id_periode)
 	{
 		$data['periode'] 	= $this->M_Pendataan->hapus_periode($id_periode);
+		$this->session->set_flashdata('success', 'Data Periode Berhasil Dihapus');
 		redirect('C_Periode/index');
 	}
 
@@ -63,6 +65,7 @@ class C_Periode extends MY_Controller {
 		$where 				= array('id_periode' 	=> $id_periode);
 
 		$data['periode'] 	= $this->M_Pendataan->ubah_data($where, $data, 'periode');
+		$this->session->set_flashdata('success', 'Data Periode Berhasil Diubah');
 		redirect('C_Periode/index');
 	}
 

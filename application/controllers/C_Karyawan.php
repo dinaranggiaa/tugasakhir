@@ -46,6 +46,7 @@ class C_Karyawan extends MY_Controller {
 	function input_data()
 	{
 		$data['simpan'] 	= $this->M_Pendataan->simpan_karyawan();
+		$this->session->set_flashdata('success', 'Data Karyawan Berhasil Disimpan');
 		redirect('C_Karyawan/index');
 	}
 
@@ -53,6 +54,7 @@ class C_Karyawan extends MY_Controller {
 	function hapus_karyawan($id_karyawan)
 	{
 		$data['karyawan'] = $this->M_Pendataan->hapus_karyawan($id_karyawan);
+		$this->session->set_flashdata('success', 'Data Kriteria Berhasil Dihapus');
 		redirect('C_Karyawan/index');
 	}
 
@@ -102,6 +104,7 @@ class C_Karyawan extends MY_Controller {
 									);
 		$where 				= array('id_karyawan' 	=> $id_karyawan);
 		$data['karyawan'] 	= $this->M_Pendataan->ubah_data($where, $data, 'kontak_darurat');
+		$this->session->set_flashdata('success', 'Data Karyawan Berhasil Diubah');
 
 		redirect('C_Karyawan/index');
 	}

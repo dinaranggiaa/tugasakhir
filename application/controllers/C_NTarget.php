@@ -57,12 +57,14 @@ class C_NTarget extends MY_Controller {
 	function input_data()
 	{
 		$data['simpan'] 	= $this->M_Pendataan->simpan_ntarget();
+		$this->session->set_flashdata('success', 'Data Subkriteria Berhasil Disimpan');
 		redirect('C_NTarget/index');
 	}
 
 	function hapus_subkriteria($id_subkriteria)
 	{
 		$data['subkriteria'] = $this->M_Pendataan->hapus_subkriteria($id_subkriteria);
+		$this->session->set_flashdata('success', 'Data Subkriteria Berhasil Dihapus');
 		redirect('C_NTarget/index');
 	}
 
@@ -81,6 +83,7 @@ class C_NTarget extends MY_Controller {
 		$where = array('id_subkriteria' => $id_subkriteria);
 
 		$data['subkriteria']	= $this->M_Pendataan->ubah_data($where, $data, 'subkriteria');
+		$this->session->set_flashdata('success', 'Data Periode Berhasil Diubah');
 		redirect('C_NTarget/index');
 	}
 

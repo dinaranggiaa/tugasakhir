@@ -35,22 +35,25 @@
 
 </style>
 
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+	    	<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Data Penilaian Pelamar</li>
+      </ul>
+</div>
+
 <div class="center-bar">
   <div class = "header-bar"> 
     <div class="judul" style="width:300px; position:absolute"><h3><i class='far fa-folder-open'></i>&nbsp;Data Penilaian</h3></div>
     <div class="judul" style="float:right; margin-top: 15px;"><a class="btn btn-success" href="<?php echo site_url('C_Laporan/cetak_form_penilaian') ?>"><span class="fas fa-file-download">&nbsp; Form Penilaian</span></a></div>
   </div> 
-  <br>
-  <br>
-  <br>
+  <br><br><br>
+
   <div class="border"></div>
   
   <br>
-  <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button> -->
   
-    <?php echo form_open('C_PenilaianPelamar/entri_penilaian')?>
-    <button class="btn btn-default" type='submit' href="<?php echo site_url('C_PenilaianPelamar/entri_penilaian')?>"><i class='fas fa-plus'></i> &nbsp;Add Data</button>
-    <?php echo form_close()?>
+  <?php $this->load->view('alert')?>
 
   <div class="inputsearch" style="float: right; margin-top:12px;">
     <?php echo form_open('C_PenilaianPelamar/index')?>

@@ -43,6 +43,13 @@
 
 </style>
 
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+        <li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Data Karyawan</li>
+      </ul>
+</div>
+
 <div class="center-bar">
   <!-- <h3><i class='far fa-folder-open'></i>&nbsp;Data Karyawan</h3>  -->
   <div class = "header-bar"> 
@@ -55,7 +62,8 @@
   <div class="border"></div>
   
   <br>
-  <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button> -->
+
+  <?php $this->load->view('alert')?>
   
     <?php echo form_open('C_Karyawan/entri_karyawan')?>
     <button class="btn btn-default" type='submit' href="<?php echo site_url('C_Karyawan/entri_karyawan')?>"><i class='fas fa-plus'></i> &nbsp;Add Data</button>

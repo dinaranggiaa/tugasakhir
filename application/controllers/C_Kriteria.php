@@ -53,12 +53,14 @@ class C_Kriteria extends MY_Controller {
 	function simpan_kriteria()
 	{
 		$data['kriteria'] = $this->M_Pendataan->simpan_kriteria();
+		$this->session->set_flashdata('success', 'Data Kriteria Berhasil Disimpan');
 		redirect('C_Kriteria/index');
 	}
 	
 	function hapus_kriteria($id_kriteria)
 	{
 		$data['kriteria'] = $this->M_Pendataan->hapus_kriteria($id_kriteria);
+		$this->session->set_flashdata('success', 'Data Kriteria Berhasil Dihapus');
 		redirect('C_Kriteria/index');
 	}
 
@@ -72,6 +74,7 @@ class C_Kriteria extends MY_Controller {
 		$where 				= array('id_kriteria' => $id_kriteria);
 
 		$data['kriteria'] 	= $this->M_Pendataan->ubah_data($where, $data, 'kriteria');
+		$this->session->set_flashdata('success', 'Data Kriteria Berhasil Diubah');
 		redirect('C_Kriteria/index');
 	}
 

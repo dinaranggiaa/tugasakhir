@@ -50,6 +50,14 @@
 }
   
 </style>
+
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+	    	<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Periode Analisis Penilaian Pelamar</li>
+      </ul>
+</div>
+
 <div class="center-bar">
   <h3><i class='far fa-folder-open'></i>&nbsp;Analisis Penilaian Pelamar</h3> 
   <div class="border"></div>

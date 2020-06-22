@@ -28,12 +28,22 @@
     text-align: center;
     color: #243f4d;
   } 
+
   
 </style>
+
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+        <li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Data Pelamar</li>
+      </ul>
+</div>
 
 <div class="center-bar">
   <h3><i class='far fa-folder-open'></i>&nbsp;Data Pelamar</h3> 
   <div class="border"></div>
+
+  <?php $this->load->view('alert')?>
   
   <br>
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
@@ -65,7 +75,8 @@
             <th>Periode</th>
             <th>Nama Lengkap</th>
             <th>No HP</th>
-            <th>Action</th>
+            <th style="width: 30%;">Alamat</th>
+            <th style="width: 15%;">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -77,10 +88,16 @@
             <td><?= $Pelamar -> bulan?></td>
             <td><?= $Pelamar -> nm_pelamar?></td>
             <td><?= $Pelamar -> nohp_pelamar?></td>
-            <td style="width: 15%;">
-              <a class="btn btn-info btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-eye"></span></a>
-              <a class="btn btn-primary btn_edit" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-edit"></span></a>
-              <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Pelamar/hapus_pelamar/'.$Pelamar -> id_pelamar)?>"><span class="fas fa-trash-alt"></span></a>
+            <td><?= $Pelamar -> almt_pelamar?></td>
+            <td>
+           
+              <a class="btn btn-default" href="<?php echo site_url('C_PenilaianPelamar/add_nilai_pelamar/'.$Pelamar->id_pelamar) ?>"><span class="fas fa-plus"></span></a>
+
+             
+              <a class="btn btn-default" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-edit"></span></a>
+             
+              <a class="btn btn-default" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Pelamar/hapus_pelamar/'.$Pelamar -> id_pelamar)?>"><span class="fas fa-trash-alt"></span></a>
+
             </td>
           </tr>
           <?php $no++?>

@@ -32,11 +32,21 @@
   
 </style>
 
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+        <li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Data Subkriteria</li>
+      </ul>
+</div>
+
 <div class="center-bar">
   <h3><i class='far fa-folder-open'></i>&nbsp;Entri Sub Kriteria</h3> 
   <div class="border"></div>
   
   <br>
+
+  <?php $this->load->view('alert')?>
+  
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
 
   <div class="inputsearch" style="float: right; margin-top:12px;">

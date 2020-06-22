@@ -63,18 +63,21 @@ class C_Pelamar extends MY_Controller {
 		function tambah_pelamar()
 		{
 			$data['kode'] 	= $this->M_Pendataan->get_id_pelamar();
+			$this->session->set_flashdata('success', 'Data Pelamar Berhasil Disimpan');
 			$this->load->view('admin/F_Pelamar_Entri', $data);
 		}
 
 		function simpan_pelamar()
 		{
 			$data['pelamar'] = $this->M_Pendataan->simpan_pelamar();
+			$this->session->set_flashdata('success', 'Data Pelamar Berhasil Disimpan');
 			redirect('C_Pelamar/index');
 		}
 
 		function hapus_pelamar($id_pelamar)
 		{
 			$data['pelamar'] = $this->M_Pendataan->hapus_pelamar($id_pelamar);
+			$this->session->set_flashdata('success', 'Data Pelamar Berhasil Dihapus');
 			redirect('C_Pelamar/index');
 		}
 
@@ -96,6 +99,7 @@ class C_Pelamar extends MY_Controller {
 			$where 				= array('id_pelamar' => $id_pelamar);
 
 			$data['pelamar']	= $this->M_Pendataan->ubah_data($where, $data, 'pelamar');
+			$this->session->set_flashdata('success', 'Data Pelamar Berhasil Dihapus');
 			redirect('C_Pelamar/index');
 		}
 
