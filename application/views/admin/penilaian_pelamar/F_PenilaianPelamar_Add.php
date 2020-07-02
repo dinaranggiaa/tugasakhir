@@ -81,6 +81,9 @@ select.form-control{
     <div class="form-pendataan" style="padding-bottom: 25px;">
       <?php $n = $JmlKriteria['total']; ?>
     <form action="<?php echo base_url()?>index.php/C_PenilaianPelamar/simpan_penilaian" method="POST">
+    <fieldset>
+    <legend>Personalia:</legend>
+   
               <table style="width: 70%;">
                 <?php $no=0; ?>
                   <?php foreach ($npelamar as $row) : ?>
@@ -143,9 +146,8 @@ select.form-control{
                       </td>
                     </tr>
                     <?php } ?>
-
-
               </table>
+              </fieldset>
 
           </div>
             <div class="modal-footer" style="margin-right: 280px;">

@@ -34,8 +34,8 @@
 <body>
   <div class="container-fluid">
     <div class="left-bar">
-      <div class="top-text">PT JAYA UTAMA MOTOR</div>
-      <br><div class="left-bar-admin"><img src="<?php echo base_url();?>assets/img/honda.png"/></div><br>
+      <div class="top-text" style="margin-left: 15px;">PT JAYA UTAMA MOTOR</div>
+      <div class="left-bar-admin"><img style="width:50%"; src="<?php echo base_url();?>assets/img/sidebar.png"/></div>
       <hr>
       <div class="menu-sidebar">
         <ul>
@@ -71,7 +71,7 @@
                 <button class="dropbtn"><i class='fas fa-calculator'> &nbsp; </i>Proses Perhitungan&nbsp;<i class='fas fa-caret-down'></i></button>
               </div>
               <div class="dropdown-child">
-                <ul><?php echo "<a href='".base_url()."C_ProsesAHP/input_nilai_perbandingan'><i class=' 	fas fa-sync'> &nbsp; </i>Perhitungan AHP</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_ProsesAHP/input_nilai_perbandingan'><i class=' 	fas fa-sync'> &nbsp; </i>Perbandingan Kriteria</a>"; ?></ul>
                 <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='far        fa-list-alt'> &nbsp; </i>Penilaian Pelamar</a>"; ?></ul>
                 <ul><?php echo "<a href='".base_url()."C_ProsesPM/index'><i class='fas fa-sync'> &nbsp; </i>Perhitungan PM</a>"; ?></ul>
                 <ul><?php echo "<a href='".base_url()."C_ProsesPM/periode_keputusan'><i class='fas fa-newspaper'> &nbsp; </i>Hasil Keputusan</a>"; ?></ul>

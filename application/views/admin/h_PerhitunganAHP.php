@@ -90,7 +90,7 @@ input[type=text], select {
 <div class="navigation" style="border: black;">
     <ul class="breadcrumb">
 		<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
-		<li><?php echo "<a href='".base_url()."C_ProsesAHP/input_nilai_perbandingan'>Perhitungan AHP</a>"; ?></li>
+		<li><?php echo "<a href='".base_url()."C_ProsesAHP/input_nilai_perbandingan'>Entri Perbandingan Kriteria</a>"; ?></li>
         <li>Hasil Perhitungan AHP</li>
       </ul>
 </div>

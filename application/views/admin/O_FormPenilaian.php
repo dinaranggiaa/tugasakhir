@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Form Penilaian</title>
+	<title>Form Penilaian Pelamar</title>
 </head>
 <body>
 	<table style="margin:auto; border: 0px solid black; width:100% ">
@@ -19,7 +19,7 @@
 	
 	<hr style="height: 3px; background-color: black;">
 	
-		<p style="text-align: center; font-size: 25px; margin: 10px;">Form Penilaian<br></p>
+		<p style="text-align: center; font-size: 25px; margin: 5px;">Form Penilaian Pelamar</p>
 	
 	<style type="text/css">
 		.inti {
@@ -32,59 +32,86 @@
 			text-align: center;
 		}
 		.inti th, .inti td {
-			padding: 3px 15px;
+			padding: 0px 15px;
 		}
 	</style>
     <br>
 
-    <table style="font-size: medium; padding-bottom:20px;">  
-    <tr style="padding-bottom: 10px;">
-        <td style="font-weight: bold; padding-bottom: 13px;">Biodata Pelamar<br></td>
+    <table style="font-size: medium; padding-bottom:5px;">  
+    <tr style="padding-bottom: 3px;">
+        <td style="font-weight: bold; padding-bottom: 13px;">Biodata Pelamar</td>
     </tr>              
     <tr>
-        <td style="padding-bottom: 10px;"><label>Nama Lengkap</label></td>
-        <td style="padding-bottom: 10px;">:</td>
-        <td style="padding-bottom: 10px;">................................................................................................</td>
+        <td style="padding-bottom: 5px;"><label>Nama Lengkap</label></td>
+        <td style="padding-bottom: 5px;">:</td>
+        <td style="padding-bottom: 5px;">................................................................................................</td>
     </tr>   
     <tr>
-        <td style="padding-bottom: 10px;"><label>Pendidikan Terakhir</label></td>
-        <td style="padding-bottom: 10px;">:</td>
-        <td style="padding-bottom: 10px;">O SMA / O D3 / O S1 *
+        <td style="padding-bottom: 5px;"><label>Pendidikan Terakhir</label></td>
+        <td style="padding-bottom: 5px;">:</td>
+        <td style="padding-bottom: 5px;">O SMA / O D3 / O S1 *
         </td>
     </tr>   
     <tr>
-        <td style="padding-bottom: 10px;"><label>Pengalaman Kerja</label></td>
-        <td style="padding-bottom: 10px;">:</td>
-        <td style="padding-bottom: 10px;">................................................................................................</td>
+        <td style="padding-bottom: 5px;"><label>Pengalaman Kerja</label></td>
+        <td style="padding-bottom: 5px;">:</td>
+        <td style="padding-bottom: 5px;">................................................................................................</td>
     </tr>
-    </table>
+	</table>
 
-	<!-- <table style="width: 100%; " class="inti">
-	<?php $no = 0;
-			foreach($subkriteria as $row) : ?>
-		<tr>
-			<th style="width:10%; text-align:center">No</th>
-			<th>Kriteria Penilaian</th>
-			<th>Nilai</th>
+
+	<table style="width:70%; margin:auto" class="inti" >
+		<tr style="font-weight: bold; text-align:center">
+			<td style="width: 5%;">No</td>
+			<td>Kriteria Penilaian</td>
+			<td>Nilai</td>
 		</tr>
-			<td><?= $row -> nm_subkriteria?></td>
-			
+		
+		<?php foreach ($subkriteria as $id_subkriteria => $row) : 
+		$id_subkriteria++; ?>
+		<tr>
+			<td><?= $id_subkriteria ?></td>
+			<td><?= $row -> nm_subkriteria ?></td>
 			<td></td>
-		<tbody>
-				
-			
-		</tbody>
-	<?php endforeach?>
-    </table> -->
+		</tr>
+		<?php endforeach?>
+
+	</table>
+
+	<table style="font-size: medium; padding-bottom:10px; ">     
+    <tr>
+        <td style="padding-bottom: 10px;"><label>Catatan</label></td>
+        <td style="padding-bottom: 10px;">:</td>
+
+	</tr>
+	<tr>
+		<td style="padding-bottom: 10px;"><label></label></td>
+        <td style="padding-bottom: 10px;"></td>
+		<td style="padding-bottom: 10px;">..............................................................................................................................................</td>
+	</tr>
+	<tr>
+		<td style="padding-bottom: 10px;"><label></label></td>
+        <td style="padding-bottom: 10px;"></td>
+		<td style="padding-bottom: 10px;">..............................................................................................................................................</td>
+	</tr>
+	<tr>
+		<td style="padding-bottom: 10px;"><label></label></td>
+        <td style="padding-bottom: 10px;"></td>
+		<td style="padding-bottom: 10px;">..............................................................................................................................................</td>
+	</tr>
+		
     
-    <table style="font-size: smaller; padding-top:20px; width:40%">  
-        <tr style="padding-bottom: 10px;">
+    </table>
+	
+    
+    <table style="font-size: smaller; width:40%;">  
+        <tr>
             <td style="font-weight: bold; font-size: smaller;">Aspek Penilaian<br></td>
         </tr>              
         <tr>
             <td style="font-size: smaller; width:2%"><label>1 : Kurang Baik </label></td>
-        </tr>
-        <tr>
+		</tr>
+		<tr>
             <td style="font-size: smaller; width:2%"><label>2 : Bagus</label></td>
         </tr>
         <tr>
@@ -95,7 +122,8 @@
         </tr>
         <tr>
             <td style="font-size: smaller; width:2%"><label>5 : Sangat Baik</label></td>
-        </tr>        
+        </tr> 
+       
     </table>
 
 		<br style="clear: both;"><br><br>
@@ -105,7 +133,7 @@
 		        border-collapse: collapse;
 		        font-size: 15px;
 		        width: 100%;
-		        margin: 50px auto;
+		        margin: 25px auto;
 		        /*border: 1px solid black;*/
 		        /*padding: 5px;*/
 		      }
@@ -125,8 +153,7 @@
 		    }
 
 		    .demo-table td {
-		       /*border: 1px solid #2ed573; */
-		      padding: 7px 17px;
+		      padding: 0px 17px;
 		    }
 		    /* Table Body */
 		    .demo-table tbody td {
@@ -134,9 +161,9 @@
 		    }
           </style>
           
-          <table class="demo-table" style="margin: auto;">
-			<tr>
-                <td style="text-align: left">
+          <table class="demo-table" style="margin:auto" >
+			<tr style="margin:auto">
+                <td style="margin:auto">
                     <span>.............................................</span><br> 
 					<span>Kepala Cabang</span><br> 
 					<span>PT Jaya Utama Motor</span>
@@ -145,14 +172,13 @@
 					<br> 
 					<br>
 					<br>
-					<br>
 					<span>(Lutfi Amin)</span> 
 				</td>
 			</tr>
 		</table>
         
-        <table style="font-size: smaller; padding-top:20px; width:40%">  
-        <tr style="padding-bottom: 10px;">
+        <table style="font-size: smaller; padding-top:5px; width:40%">  
+        <tr style="padding-bottom: 3px;">
             <td style="font-size: smaller;">* : Beri tanda silang (X) pada pilihan yang sesuai<br></td>
         </tr>                  
     </table>

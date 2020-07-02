@@ -47,10 +47,11 @@ class C_Laporan extends MY_Controller {
 	function cetak_form_penilaian()
 	{	
 		
-		//$data['subkriteria']	= $this->M_Pendataan->getNamaKriteria()->result();
-		//print_r($data['subkriteria']);
+		$data['subkriteria']	= $this->M_Pendataan->get_subkriteria()->result();
+		$data['kriteria']		= $this->M_Pendataan->getIdKriteria()->result();
+		//print_r($data['kriteria']);
 
-		$this->mypdf->generate('admin/O_FormPenilaian',true);
+		$this->mypdf->generate('admin/O_FormPenilaian',$data, true);
 		
 	}
 

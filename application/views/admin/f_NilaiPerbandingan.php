@@ -25,14 +25,14 @@ table th {
 <div class="navigation" style="border: black;">
     <ul class="breadcrumb">
 		<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
-        <li>Perhitungan AHP</li>
+        <li>Entri Perbandingan Kriteria</li>
       </ul>
 </div>
 
 <div class="center-bar">
 	<h3>
 		<i class='far fa-file-alt'></i>&nbsp;
-		Proses Metode <i>Analytical Hierarchy Process</i>
+		Entri Perbandingan Kriteria
 	</h3> 
 
   	<div class="border"></div>

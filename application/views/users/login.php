@@ -10,7 +10,7 @@
 
     <div class="fadeIn first">
       <br>
-      <div class="left-bar-admin" style="padding-bottom: 10px"><img src="<?php echo base_url();?>assets/img/honda1.png"/></div>
+      <div class="left-bar-admin" style="padding-bottom: 10px;"><img src="<?php echo base_url();?>assets/img/login.png"/></div>
       <p style="font-family: Roboto; color:#ffff; font-weight:bold; font-size:20px; padding-bottom:20px;">SISTEM PENUNJANG KEPUTUSAN<br>SELEKSI CALON KARYAWAN</p>
     </div>
       

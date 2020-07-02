@@ -202,14 +202,5 @@ span{
 
 </div>
 
-    
-    <!-- <div class="home-periode"> -->
-      <!-- <h3>SISTEM PENUNJANG KEPUTUSAN PEMILIHAN CALON KARYAWAN <br> PT DEALER HONDA JAYA UTAMA</h3> -->
-    <!-- </div> -->
 </div>
 
-
-
-<!-- <div class="db-jmlkriteria"> 
-  <span>Jumlah Kriteria</span>
-</div> -->
