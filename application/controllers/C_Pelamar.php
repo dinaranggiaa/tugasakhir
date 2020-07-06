@@ -84,6 +84,7 @@ class C_Pelamar extends MY_Controller {
 		function ubah_pelamar()
 		{
 			$id_pelamar 		= $this->input->post('id_pelamar');
+			$id_divisi	 		= $this->input->post('id_divisi');
 			$tgl_daftar 		= $this->input->post('tgl_daftar');
 			$nm_pelamar 		= $this->input->post('nm_pelamar');
 			$almt_pelamar 		= $this->input->post('almt_pelamar');
@@ -91,6 +92,7 @@ class C_Pelamar extends MY_Controller {
 	 
 			$data = array(
 				'tgl_daftar' 		=> $tgl_daftar,
+				'id_divisi' 		=> $id_divisi,
 				'nm_pelamar' 		=> $nm_pelamar,
 				'almt_pelamar' 		=> $almt_pelamar,
 				'nohp_pelamar' 		=> $nohp_pelamar				
@@ -99,7 +101,7 @@ class C_Pelamar extends MY_Controller {
 			$where 				= array('id_pelamar' => $id_pelamar);
 
 			$data['pelamar']	= $this->M_Pendataan->ubah_data($where, $data, 'pelamar');
-			$this->session->set_flashdata('success', 'Data Pelamar Berhasil Dihapus');
+			$this->session->set_flashdata('success', 'Data Pelamar Berhasil Disimpan');
 			redirect('C_Pelamar/index');
 		}
 

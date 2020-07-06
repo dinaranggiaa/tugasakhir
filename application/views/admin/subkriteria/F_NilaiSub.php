@@ -1,4 +1,4 @@
-
+ 
 <?php $this->view('partials/sidebar_admin')?>
 
 <style>
@@ -20,39 +20,64 @@ table th {
   label{
 	font-weight: normal;
   }
+
+  select.form-control{
+  width: 460px;
+  margin-right: 10px;
+} 
+
 </style>
 
 <div class="navigation" style="border: black;">
     <ul class="breadcrumb">
 		<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
-        <li>Entri Perbandingan Kriteria</li>
+		<!-- <li><?php echo "<a href='".base_url()."C_ProsesAHP/input_kriteria'>Entri Perbandingan Kriteria</a>"; ?></li> -->
+        <li>Entri Perbandingan Sub Kriteria</li>
       </ul>
 </div>
 
 <div class="center-bar">
 	<h3>
 		<i class='far fa-file-alt'></i>&nbsp;
-		Entri Perbandingan Kriteria
+		
+		Entri Perbandingan Sub Kriteria 
+		
 	</h3> 
 
   	<div class="border"></div>
 	<br>
 
-	<?php $this->load->view('alert')?>
-	
-	<div class="inputsearch">
-    <?php echo form_open('C_ProsesAHP/hasil_perbandingan')?>
-    <button class="btn btn-info" type='submit' href="<?php echo site_url('C_Kriteria/index')?>"><span class="fas fa-eye">&nbsp; Hasil Perbandingan</span></button>
+	<?php echo form_open('C_ProsesAHP/tampil_subkriteria')?>
+	<table>
+		<tr>
+			<td>
+				<select name='id_kriteria' id='id_kriteria' required class="form-control">
+							<option value='' disabled selected>Pilih Kriteria</option>
+						<?php foreach ($kriteria as $row) {  ?>
+						<option name='id_kriteria' value="<?=$row->id_kriteria?>" <?php if(isset($row->id_kriteria)){echo "selected";} ?>><?=$row->nm_kriteria?> </option>
+						<?php }?>
+				</select>
+			</td>
+			<td>
+				<button type='submit' class="btn btn-primary" id='Tampilkan'><span>View</span></button>
+			</td>
+		</tr>
+	</table>
 	<?php echo form_close()?>
-	
-  </div>
 
-	<?php
-	  $n = $JmlKriteria['total'];
-	?>
-	
-	
-    <form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_data_perbandingan" method="POST">
+		<?php foreach ($getkriteria as $row) : ?>
+		<h4 style="text-align: center; margin-bottom:0px; padding-top:25px;">Kriteria <?= $row->nm_kriteria?></h4>
+		<?php endforeach ?>
+	<?php $this->load->view('alert')?>
+
+ 
+ <form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_perbandingan_subkriteria" method="POST">
+	 
+ 	<?php foreach ($getkriteria as $row) : ?>
+		<input readonly type="hidden" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?php echo $row->id_kriteria?>" placeholder="<?php echo $row->id_kriteria ?>">
+		
+	<?php endforeach?>
+
 	<div class="panel-body">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" style="width: 75%; font-size:13px; font-weight:normal;">	
@@ -63,6 +88,9 @@ table th {
 					<th style="width: 25%;">Kriteria Kedua</th>
 				</tr>
 			</thead>
+			<?php
+	  $n = $countsub['total'];
+	?>
 			<tbody>
     			<?php
 					//inisialisasi
@@ -77,8 +105,8 @@ table th {
   
   				<tr>
 					<td>		
-					<input name="kriteria1_<?php echo $x.$y?>" value="<?= $x?>" class="hidden";>
-						<label><?php echo $getNamaKriteria[$x-1]['nm_kriteria']; ?></label>
+					<input name="kriteria1_<?php echo $x.$y?>" value="<?= $subkriteria[$x-1]['id_subkriteria']?>" class="hidden";>
+						<label><?php echo $subkriteria[$x-1]['nm_subkriteria']; ?></label>
 					</td>
 
 					<td>
@@ -101,24 +129,13 @@ table th {
 							<option value="-7">-7 - Sangat penting dari </option>
 							<option value="-8">-8 - Mendekati mutlak dari </option>
 							<option value="-9">-9 - Mutlak sangat penting dari </option>
-
 						</select>
 					</td>
 					
 					<td>		
-					<input name="kriteria2_<?php echo $x.$y?>" value="<?= $y?>" class="hidden";>
-						<label><?php echo $getNamaKriteria[$y-1]['nm_kriteria']; ?></label>
+					<input name="kriteria2_<?php echo $x.$y?>" value="<?= $subkriteria[$y-1]['id_subkriteria']?>" class="hidden";>
+						<label><?php echo $subkriteria[$y-1]['nm_subkriteria']; ?></label>
 					</td>
-					<!-- <td>
-						<input name="kriteria2_<?php echo $x.$y?>" value="<?=$getIdKriteria[$y]['id_kriteria']?>" class="text">
-						<label><?php echo $getNamaKriteria[$y-1]['nm_kriteria']; ?></label>
-						<input name="kriteria2_<?php echo $urut?>" value="<?=$getIdKriteria[$y]['id_kriteria']?>" class="hidden" type="radio">
-						<label><?php echo $getNamaKriteria[$y]['nm_kriteria']; ?></label>
-					</td>
-
-					<td>
-						<input type="text" class ="form-control" name="nilai_pembanding<?php echo $x.$y?>" required>
-					</td> -->
 				</tr>
 				<?php
 
@@ -126,11 +143,12 @@ table th {
 				}
 				?>
 			</tbody>
+			
 			</table>
 			<button type="submit" class="button button1" name="submit" id="btn_simpan" style="float: right; margin-right: 130px;"><i class='fas fa-sync'></i>&nbsp;Process</button>
 
 		</div>
 	</div>
 	
+	
 	</form>
-</div>

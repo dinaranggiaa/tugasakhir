@@ -72,6 +72,7 @@
           <tr>
             <th>No</th>
             <th>Kode Pelamar</th>
+            <th>Divisi</th>
             <th>Periode</th>
             <th>Nama Lengkap</th>
             <th>No HP</th>
@@ -85,6 +86,7 @@
           <tr>
             <td><?= $no?></td>
             <td><?= $Pelamar -> id_pelamar?></td>
+            <td><?= $Pelamar -> nm_divisi?></td>
             <td><?= $Pelamar -> bulan?></td>
             <td><?= $Pelamar -> nm_pelamar?></td>
             <td><?= $Pelamar -> nohp_pelamar?></td>
@@ -94,9 +96,9 @@
               <a class="btn btn-default" href="<?php echo site_url('C_PenilaianPelamar/add_nilai_pelamar/'.$Pelamar->id_pelamar) ?>"><span class="fas fa-plus"></span></a>
 
              
-              <a class="btn btn-default" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-edit"></span></a>
+              <a class="btn btn-primary" id="<?= $Pelamar -> id_pelamar;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Pelamar -> id_pelamar; ?>"><span class="fas fa-edit"></span></a>
              
-              <a class="btn btn-default" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Pelamar/hapus_pelamar/'.$Pelamar -> id_pelamar)?>"><span class="fas fa-trash-alt"></span></a>
+              <a class="btn btn-danger" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Pelamar/hapus_pelamar/'.$Pelamar -> id_pelamar)?>"><span class="fas fa-trash-alt"></span></a>
 
             </td>
           </tr>
@@ -140,6 +142,22 @@
                 <option value='' disabled selected> -- pilih periode -- </option>";
                   foreach ($periode as $Periode) {  
                   echo "<option value='".$Periode->id_periode."'>".$Periode->bulan."</option>";
+                  }
+                  echo"
+                </select>";
+                ?>    
+            </td>     
+          </tr>
+          <tr>
+            <td><label for="id_divisi">Divisi</label></td>
+            <td>:</td>
+            <td>
+            <?php
+                echo "
+                <select name='id_divisi' id='id_divisi' required>
+                <option value='' disabled selected> -- pilih divisi -- </option>";
+                  foreach ($divisi as $row) {  
+                  echo "<option value='".$row->id_divisi."'>".$row->nm_divisi."</option>";
                   }
                   echo"
                 </select>";
@@ -204,6 +222,11 @@
                     <td><?= $Pelamar -> id_pelamar?></td>
                   </tr>
                   <tr>
+                    <td><label for="id_pelamar">Kode</label></td>
+                    <td>:</td>
+                    <td><?= $Pelamar -> id_divisi?></td>
+                  </tr>
+                  <tr>
                     <td><label for="id_periode">Periode</label></td>
                     <td>:</td>
                     <td><?= $Pelamar -> bulan?></td>
@@ -261,6 +284,13 @@
                     <td>:</td>
                     <td><input readonly type="text-form" name="id_periode" id="id_periode" value="<?= $Pelamar -> bulan?>" placeholder="<?php $Pelamar -> bulan?>" class="form-control">
                         <input type="hidden" name="id_periode" id="id_periode" value="<?= $Pelamar -> id_periode?>" placeholder="<?php $Pelamar -> id_periode?>" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="id_divisi">Divisi</label></td>
+                    <td>:</td>
+                    <td><input readonly type="text-form" name="id_divisi" id="id_divisi" value="<?= $Pelamar -> nm_divisi?>" placeholder="<?php $Pelamar -> nm_divisi?>" class="form-control">
+                        <input type="hidden" name="id_divisi" id="id_divisi" value="<?= $Pelamar -> id_divisi?>" placeholder="<?php $Pelamar -> id_divisi?>" class="form-control">
                     </td>
                 </tr>
                   <tr>

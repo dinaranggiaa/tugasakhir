@@ -434,6 +434,39 @@ class M_Proses extends MY_Model {
 		return $result;
 	}
 
+	function get_datasub($id_kriteria)
+	{
+		$result = $this->db->query("select * from subkriteria where id_kriteria = '$id_kriteria'");
+		return $result;
+	}
+
+	function get_jmlsub($id_kriteria)
+	{
+		$result = $this->db->query("select count(id_subkriteria) as total from subkriteria where id_kriteria = '$id_kriteria'");
+		return $result;
+	}
+
+	function get_data_subkriteria($id_kriteria)
+	{
+		$result = $this->db->query("select * from subkriteria where id_kriteria='$id_kriteria'");
+		return $result;
+	}
+
+	function get_datakriteria($id_kriteria)
+	{
+		$result = $this->db->query("select * from kriteria where id_kriteria='$id_kriteria'");
+		return $result;
+	}
+
+	function get_npsubkriteria($id_kriteria) 
+	{
+		$this->db->select('nilai_pembanding')
+				 ->from('perbandingan_subkriteria')
+				 ->where('id_kriteria',$id_kriteria);
+		$nilai = $this->db->get();
+		return $nilai;
+	}
+
 	
 
 

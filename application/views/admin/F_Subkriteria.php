@@ -50,13 +50,13 @@
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
 
   <div class="inputsearch" style="float: right; margin-top:12px;">
-    <?php echo form_open('C_NTarget/index')?>
+    <?php echo form_open('C_Subkriteria/index')?>
       <button class="btn-link" type='submit' href="<?php echo site_url('C_Karyawan/index')?>"><i class='fas fa-undo'></i></button>
     <?php echo form_close()?>
   </div>
 
   <div class="inputsearch">
-    <?php echo form_open('C_NTarget/cari_keyword')?>
+    <?php echo form_open('C_Subkriteria/cari_keyword')?>
       <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
       <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
     <?php echo form_close()?>
@@ -75,9 +75,6 @@
                             <th>Nama Kriteria</th>
                             <th>Kode Subkriteria</th>
                             <th>Nama Subkriteria</th>
-                            <th>Bobot Subkriteria</th>
-                            <th>Nilai Target</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -89,13 +86,10 @@
                         <td><?= $row -> nm_kriteria?></td>
                         <td><?= $row -> id_subkriteria?></td>
                         <td><?= $row -> nm_subkriteria?></td>
-                        <td><?= $row -> bobot_subkriteria?></td>
-                        <td><?= $row -> nilai_target?></td>
-                        <td><?= $row -> status_subkriteria?></td>
                         <td style="width: 15%;">
                           <a class="btn btn-info btn_edit" id="<?= $row -> id_subkriteria;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $row -> id_subkriteria; ?>"><span class="fas fa-eye"></span></a>
                           <a class="btn btn-primary btn_edit" id="<?= $row -> id_subkriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $row -> id_subkriteria; ?>"><span class="fas fa-edit"></span></a>
-                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_NTarget/hapus_subkriteria/'.$row -> id_subkriteria)?>"><span class="fas fa-trash-alt"></span></a>
+                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Subkriteria/hapus_subkriteria/'.$row -> id_subkriteria)?>"><span class="fas fa-trash-alt"></span></a>
                         </td>
                       </tr>
                       <?php $no++?>
@@ -122,7 +116,7 @@
                 <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Subkriteria Krtieria</h4>
               </div>
               <div class="modal-body">
-              <form action="<?php echo base_url()?>index.php/C_NTarget/input_data" method="POST">
+              <form action="<?php echo base_url()?>index.php/C_Subkriteria/input_data" method="POST">
                   <table>
                   <tr>
                     <td><label for="id_subkriteria">Kode Subkriteria</label></td>
@@ -150,7 +144,7 @@
                       <td>:</td>
                       <td><input type="text-form" name="nm_subkriteria" id="nm_subkriteria" class="form-control"></td>    
                     </tr>
-                    <tr>
+                    <!-- <tr>
                       <td><label for="nilai_target">Nilai Target</label></td>
                       <td>:</td>
                       <td>
@@ -172,7 +166,7 @@
                         <option value="CF">Core Factor</option>
                         <option value="SF">Secondary Factor</option>
                       </td>
-                    </tr>
+                    </tr> -->
                   </table>
               </div>
               <div class="modal-footer">
@@ -220,7 +214,7 @@
                       <td>:</td>
                       <td><?= $row -> nm_kriteria?></td>
                     </tr>     
-                    <tr>
+                    <!-- <tr>
                       <td><label for="nilai_target">Nilai Target</label></td>
                       <td>:</td>
                       <td><?= $row -> nilai_target?></td>
@@ -229,7 +223,7 @@
                       <td><label for="status_subkriteria">Status Subkriteria</label></td>
                       <td>:</td>
                       <td><?= $row -> status_subkriteria?></td>
-                    </tr>
+                    </tr> -->
                   </table>
               </div>
               </form>
@@ -257,7 +251,7 @@
                 <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Edit Subkriteria</h4>
               </div>
               <div class="modal-body">
-                <form action="<?php echo base_url()?>index.php/C_NTarget/ubah_subkriteria" method="POST">
+                <form action="<?php echo base_url()?>index.php/C_Subkriteria/ubah_subkriteria" method="POST">
                   <table>
                   <tr>
                       <td><label for="id_subkriteria">Kode Subkriteria</label></td>
@@ -274,7 +268,7 @@
                       <td>:</td>
                       <td><input type="text-form" class ="form-control" name="nm_subkriteria" id="nm_subkriteria" value="<?= $row -> nm_subkriteria?>" placeholder="<?= $row -> nm_subkriteria?>">
                     </tr>                  
-                    <tr>
+                    <!-- <tr>
                       <td><label for="nilai_target">Nilai Target</label></td>
                       <td>:</td>
                       <td>
@@ -296,7 +290,7 @@
                         <option value="CF" <?php if ($row -> status_subkriteria == 'CF') echo 'selected = "selected"'?>>Core Factor</option>
                         <option value="SF" <?php if ($row -> status_subkriteria == 'SF') echo 'selected = "selected"'?>>Secondary Factor</option>
                       </td>
-                    </tr>
+                    </tr> -->
                   </table>
               </div>
               <div class="modal-footer">

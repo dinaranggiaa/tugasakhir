@@ -1,10 +1,5 @@
 
-<?php
-
-use Mpdf\Tag\Td;
-use PhpParser\Node\Stmt\Echo_;
-
-$this->view('partials/sidebar_admin')?>
+<?php $this->view('partials/sidebar_admin')?>
 
 <style>
 
@@ -95,6 +90,7 @@ input[type=text], select {
       </ul>
 </div>
 
+
 <div class="center-bar">
 	<div class="tab">
 			<button class="tablinks" onclick="openCity(event, 'Penilaian')">Penilaian Pelamar</button>
@@ -103,6 +99,8 @@ input[type=text], select {
 	</div>
 
 	<div class="hasil-matriks">
+		
+
 		<!-- <?php	
 				$jml_subkriteria= $jmlsubkriteria['total'];
 				$jmlpelamar		= $jmlpelamar['total'];
@@ -291,6 +289,9 @@ input[type=text], select {
 			<h4>Entri Hasil Keputusan</h4>
 			<table class='table-striped'>
 				<form action="<?php echo base_url()?>index.php/C_ProsesPM/simpan_terpilih" method="POST">
+				<input type="text" class ="form-control" name="bulan" id="bulan" value="<?= $bulan?>" placeholder="<?= $bulan?>">
+
+				<input type="text" class ="form-control" name="tahun" id="tahun" value="<?= $tahun?>" placeholder="<?= $tahun?>">
 				<thead>
 					<tr>
 						<th>No</th>
@@ -305,7 +306,7 @@ input[type=text], select {
 						<tr>
 							<td><?= $x+1?></td>
 							<td>
-								<input type="hidden" class ="form-control" name="id_pelamar<?= $x?>" id="id_pelamar"><?php echo $rangking[$x]['id_pelamar']; ?>
+								<input type="hidden" class ="form-control" name="id_pelamar<?= $x?>" id="id_pelamar<?= $x?>" value="<?php echo $rangking[$x]['id_pelamar']; ?>"><?php echo $rangking[$x]['id_pelamar']; ?>
 							</td>
 							<td>
 								<input type="hidden" class ="form-control" name="nm_pelamar<?= $x?>" id="nm_pelamar"><?php echo $rangking[$x]['nm_pelamar']; ?>
@@ -314,7 +315,7 @@ input[type=text], select {
 								<input type="hidden" class ="form-control" name="nilai_akhir<?= $x?>" id="nilai_akhir"><?php echo $rangking[$x]['nilai_akhir']; ?>
 							</td>
 							<td style="width: 15%;">
-								<input type="checkbox" name="status_akhir<?=$x?>" value="<?= $rangking[$x]['id_pelamar'];?>"> Lolos Seleksi
+								<input type="checkbox" name="status_akhir<?=$x?>" id="status_akhir<?=$x?>" value="1" <?php if($rangking[$x]['status_akhir'] =="1"){echo "checked";}?>> Lolos Seleksi 
 
 						<?php } ?>
 							</td>

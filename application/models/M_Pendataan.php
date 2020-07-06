@@ -248,6 +248,12 @@ class M_Pendataan extends MY_Model {
 		$this->db->delete('subkriteria');
 	}
 
+	function hapus_psubkriteria($id_kriteria)
+	{
+		$this->db->where('id_kriteria', $id_kriteria);
+		$this->db->delete('perbandingan_subkriteria');
+	}
+
 	// <--Function Cari Data-->
 	function cari_kriteria($keyword)
 	{
@@ -424,6 +430,7 @@ class M_Pendataan extends MY_Model {
 			$pelamar = array(
 				'id_pelamar' 		=> $this->input->post('id_pelamar'),
 				'id_periode' 		=> $this->input->post('id_periode'),
+				'id_divisi' 		=> $this->input->post('id_divisi'),
 				'tgl_daftar' 		=> $this->input->post('tgl_daftar'),
 				'nm_pelamar'		=> $this->input->post('nm_pelamar'),
 				'almt_pelamar'		=> $this->input->post('almt_pelamar'),
@@ -438,16 +445,14 @@ class M_Pendataan extends MY_Model {
 		}
 	}
 
-	function simpan_ntarget()
+	function simpan_subkriteria()
 	{
 		if(isset($_POST['btn_simpan']))
 		{
 			$data = array(
 				'id_subkriteria	'	=> $this->input->post('id_subkriteria'),
 				'nm_subkriteria	'	=> $this->input->post('nm_subkriteria'),
-				'id_kriteria' 		=> $this->input->post('id_kriteria'),
-				'nilai_target' 		=> $this->input->post('nilai_target'),
-				'status_subkriteria'=> $this->input->post('status_subkriteria'),
+				'id_kriteria' 		=> $this->input->post('id_kriteria')
 				
 			);
 
@@ -611,16 +616,10 @@ class M_Pendataan extends MY_Model {
 	//Dipake untuk menampilkan hasil pencarian
 	function ambil_data_pelamar()
 	{
-    	$result = $this->db->SELECT('pelamar.*,periode.*')
-				 ->FROM('pelamar')
-				 ->join('periode','periode.id_periode=pelamar.id_periode')
-                 ->ORDER_BY('id_pelamar','DESC');
-        $pelamar = $this->db->get();
-
-		if($pelamar->num_rows() > 0){
-				$result = $pelamar->result();				
-        }
-        return $result;
+		$result = $this->db->query('SELECT pelamar.*, periode.*, divisi.* FROM pelamar, periode, divisi 
+									WHERE periode.id_periode=pelamar.id_periode AND pelamar.id_divisi = divisi.id_divisi
+									ORDER BY id_pelamar DESC');
+        return $result->result();
 	}
 
 	function get_pelamar($id_pelamar)
@@ -719,16 +718,12 @@ class M_Pendataan extends MY_Model {
 	
 	function ambil_data_divisi()
 	{
-        $result = array();
         $this->db->SELECT('*')
-                 ->FROM('divisi')
-                 ->ORDER_BY('id_divisi','DESC');
-        $divisi = $this->db->get();
-    
-        if($divisi->num_rows() > 0){
-			$result = $divisi->result();		
-        }
-        return $result;
+                  			->FROM('divisi')
+							 ->ORDER_BY('id_divisi','DESC');   
+		$result = $this->db->get();
+        
+        return $result->result();
 	}
 	
 	// <--DATA PENILAIAN-->
@@ -825,6 +820,13 @@ class M_Pendataan extends MY_Model {
 				$result = $periode->result();				
         }
         return $result;
+	}
+
+	function ambil_periode($bulan, $tahun)
+	{
+		$result = $this->db->query("select * from periode
+									where bulan = '$bulan' and tahun = '$tahun'");
+		return $result;
 	}
 
 	function ambil_data_tahun()

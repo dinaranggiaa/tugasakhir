@@ -65,7 +65,7 @@
                         <td style="width: 15%;">
                           <a class="btn btn-info btn_edit" id="<?= $Users -> id_user;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Users -> id_user; ?>"><span class="fas fa-eye"></span></a>
                           <a class="btn btn-primary btn_edit" id="<?= $Users -> id_user;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Users -> id_user; ?>"><span class="fas fa-edit"></span></a>
-                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Users/hapus_users/'.$Users -> id_user)?>"><span class="fas fa-trash-alt"></span></a>
+                          <a class="btn btn-danger btn_hapus" href="<?php echo site_url('index.php/C_ProsesAHP/tampil_subkriteria/'.$row->id_kriteria)?>"><span class="fas fa-trash-alt"></span></a>
                         </td>
                       </tr>
                       <?php $no++?>

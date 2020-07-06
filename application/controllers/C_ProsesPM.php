@@ -84,17 +84,30 @@ class C_ProsesPM extends MY_Controller {
 	{
 		$bulan				= $this->input->post('bulan');
 		$tahun				= $this->input->post('tahun');
+
 		$data['bulan']		= $bulan;
+
 		$data['tahun']		= $tahun;
 		$data['tgl'] 		= date('d M Y h:i:s');
-
-		$id_pelamar 	= $this->input->post('status_akhir');
-
-		$status_akhir 	= 1;
-
-		for($x=0; $x<3; $x++){
+		$this->db->select('pelamar.*, hasil_akhir.*, periode.*');
+		$this->db->from("hasil_akhir");
+		$this->db->join('pelamar', "pelamar.id_pelamar = hasil_akhir.id_pelamar");
+		$this->db->join('periode', "periode.id_periode = pelamar.id_periode");
+		$this->db->where('bulan',$bulan);
+		$this->db->where('tahun',$tahun);
+		$count_reponse  = $this->db->count_all_results();
+		$jml_data = $count_reponse;
+	
+		for($x=0; $x<$jml_data; $x++){
 			
-			$id_pelamar 	= $this->input->post('status_akhir'.$x);
+			$id_pelamar 	= $this->input->post('id_pelamar'.$x);
+			$status_akhir 	= $this->input->post('status_akhir'.$x);
+			
+			print_r($status_akhir);
+
+			if($status_akhir != '1'){
+				$status_akhir = 0;
+			}
 
 			$this->db->set('status_akhir', $status_akhir);
 			$this->db->where('id_pelamar', $id_pelamar);
@@ -142,6 +155,8 @@ class C_ProsesPM extends MY_Controller {
 	{
 		$bulan 					= $this->input->post('bulan');
 		$tahun 					= $this->input->post('tahun');
+			
+		
 		$data['c_alternatif']	= $this->M_Proses->get_alternatif($bulan, $tahun);
 
 
@@ -167,8 +182,10 @@ class C_ProsesPM extends MY_Controller {
 													$row['id_subkriteria'],
 													$row['nm_subkriteria'],
 													$row['nilai_target'],
-													$row['status_subkriteria']);
+													$row['status_subkriteria'],
+													$row['bobot_subkriteria']);
 		}
+		
 
 		//Get data alternatif
 		$getalternatif	= $this->M_Proses->get_alternatif($bulan, $tahun);
@@ -201,13 +218,20 @@ class C_ProsesPM extends MY_Controller {
 		foreach($getbobot as $key => $row){
 			$bobot[$row['id_pelamar']][$row['id_subkriteria']] = $row['bobot_nilai'];
 		}
-
+		
+		
+		$nilaitotal = array();
+		foreach($bobot as $id_pelamar => $val){
+			foreach($subkriteria as $id_subkriteria => $value){
+				$nilaitotal[$id_pelamar][$id_subkriteria] = $value[5] * $val[$id_subkriteria];
+			}
+		}
 
 		$temp = array();
 		$id_kriteria = array();
 		$cf			= array();
 		$sf			= array();
-		foreach($bobot as $id_pelamar =>$data){
+		foreach($nilaitotal as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$temp[$id_subkriteria] = $subkriteria[$id_subkriteria][0];
 				$id_kriteria[$id_subkriteria] = $temp[$id_subkriteria];
@@ -216,36 +240,38 @@ class C_ProsesPM extends MY_Controller {
 		
 
 		$hasilpm = array();
-		foreach($bobot as $id_pelamar =>$data){
-			foreach($data as $id_subkriteria => $value){
-				$id_kriteria = $subkriteria[$id_subkriteria][0];
-
-				if($subkriteria[$id_subkriteria][4] == 'CF'){
-					$cf[$id_kriteria][$id_subkriteria] = $value;
-					
-				} else {
-					$sf[$id_kriteria][$id_subkriteria] = $value;		
-				}
-			}
-		}
-
-		$hurutpm = 0;
-		$hhasilpm = array();
-		foreach($bobot as $id_pelamar =>$data){
+		foreach($nilaitotal as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$id_kriteria = $subkriteria[$id_subkriteria][0];
 
 				if($subkriteria[$id_subkriteria][4] == 'CF'){
 					$cf[$id_kriteria][$id_subkriteria] = $value;					
 				} else {
+					$sf[$id_kriteria][$id_subkriteria] = $value;		
+				}
+			}
+		}
+
+		
+
+		$hurutpm = 0;
+		$hhasilpm = array();
+		foreach($nilaitotal as $id_pelamar =>$data){
+			foreach($data as $id_subkriteria => $value){
+				$id_kriteria = $subkriteria[$id_subkriteria][0];
+
+				if($subkriteria[$id_subkriteria][4] == 'CF'){
+					$cf[$id_kriteria][$id_subkriteria] = $value;
+				} else {
 					$sf[$id_kriteria][$id_subkriteria] = $value;
 					
 				}
 			}
+			// echo"<br>"; print_r($hhasilpm);
 
 			foreach($kriteria as $id_kriteria => $value){
 				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) /count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;
-				$hhasilpm[$hurutpm] 				= $hasilpm[$id_pelamar][$id_kriteria];
+				$hhasilpm[$hurutpm] 				= round($hasilpm[$id_pelamar][$id_kriteria],4);
 				$hurutpm++;
 			}
 		}	
@@ -266,8 +292,10 @@ class C_ProsesPM extends MY_Controller {
 				$hrangking[$rurut] =$rangking[$id_pelamar];
 				$rurut++;
 			}
-		}	
-		
+		}
+				
+		$data['bulan'] 			=  $bulan;
+		$data['tahun'] 			=  $tahun;
 
 		$data['nmpelamar']	 	= $this->M_Proses->getnamapelamar($bulan, $tahun);
 		$data['gappelamar']	 	= $this->M_Proses->getgappelamar($bulan, $tahun);

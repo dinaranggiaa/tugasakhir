@@ -57,7 +57,8 @@ class C_Divisi extends MY_Controller {
 
 		$where 				= array('id_divisi' => $id_divisi);
 
-		$data['divisi'] 	= $this->M_Pendataan->ubah_divisi($where, $data, 'divisi');
+		$data['divisi'] 	= $this->M_Pendataan->ubah_data($where, $data, 'divisi');
+		$this->session->set_flashdata('success', 'Data Kriteria Berhasil Diubah');
 		redirect('C_Divisi/index');
 	}
 

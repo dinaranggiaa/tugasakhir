@@ -33,16 +33,13 @@ class C_ProsesAHP extends MY_Controller {
 
 	public function input_nilai_perbandingan()
 	{
-
-		// $data['JmlKriteria'] 		= $this->M_Proses->getJmlKriteria();
 		$data['JmlKriteria'] 		= $this->M_Proses->get_jmlkriteria();
 		$data['NmKriteria'] 		= $this->M_Proses->getNamaKriteria()->result_array();
 		$data['IdKriteria'] 		= $this->M_Proses->getIdKriteria()->result_array();
 		$data['getNamaKriteria']	= $this->M_Proses->getNmKriteria()->result_array();
 		$data['getIdKriteria'] 		= $this->M_Proses->getIdKriteria()->result_array();
 
-		$this->load->view("admin/F_NilaiPerbandingan", $data);
-		
+		$this->load->view("admin/F_NilaiPerbandingan", $data);	
 	}
 
 	function hasil_perbandingan()
@@ -267,6 +264,7 @@ class C_ProsesAHP extends MY_Controller {
 		redirect('C_Kriteria/index');
 	}
 
+	
 	//ini udah tidak terpakai 
 	function input_perbandingan_kriteria()
 	{
@@ -591,6 +589,347 @@ class C_ProsesAHP extends MY_Controller {
 		$data['CR'] = $CR;
 	
 	}
+
+	public function input_kriteria()
+	{
+		$data['kriteria']	 		= $this->M_Proses->get_kriteria()->result();
+		$data['JmlSubKriteria'] 	= $this->M_Proses->get_jmlkriteria();
+		$this->load->view("admin/subkriteria/F_InputKriteria", $data);
+
+	}
+
+	public function tampil_subkriteria()
+	{
+		$id_kriteria			= $this->input->post('id_kriteria');
+		$data['kriteria']	 	= $this->M_Proses->get_kriteria()->result();
+		$data['getkriteria'] 	= $this->M_Proses->get_datakriteria($id_kriteria)->result();
+		$data['subkriteria']	= $this->M_Proses->get_datasub($id_kriteria)->result_array();
+		$data['countsub']		= $this->M_Proses->get_jmlsub($id_kriteria)->row_array();
+		
+		$this->load->view("admin/subkriteria/F_NilaiSub", $data);
+
+	}
+
+	public function tampil_subkriteria2($id_kriteria)
+	{
+		$data['kriteria']	 	= $this->M_Proses->get_kriteria()->result();
+		$data['getkriteria'] 	= $this->M_Proses->get_datakriteria($id_kriteria)->result();
+		$data['subkriteria']	= $this->M_Proses->get_datasub($id_kriteria)->result_array();
+		$data['countsub']		= $this->M_Proses->get_jmlsub($id_kriteria)->row_array();
+		//print_r($data['countsub']);
+		$this->load->view("admin/subkriteria/F_NilaiSub", $data);
+
+	}
+
+	function input_perbandingan_subkriteria()
+	{
+		$id_kriteria			= $this->input->post('id_kriteria');
+		$data['getkriteria']	= $this->M_Proses->get_datakriteria($id_kriteria)->result();
+		
+		$jml_subkriteria 		= $this->db->where(['id_kriteria'=>$id_kriteria])->from("subkriteria")->count_all_results();
+		
+		$urut			= 1;
+		$item 			= array();
+		$nb_kriteria	= array();
+
+		for ($x=1; $x<= $jml_subkriteria; $x++) {
+			for ($y=1; $y <= $jml_subkriteria ; $y++) {	
+				
+
+				if($x === $y)
+				{		
+					$id_kriteria1		= $urut;
+					$id_kriteria2 		= $urut;
+				
+					$nilai_pembanding 	= 1;
+
+					$nb_kriteria[$x][$y] = ['id_subkriteria1' 		=> $id_kriteria1,
+											'id_subkriteria2' 		=> $id_kriteria2,
+											'nilai_pembanding' 	=> $nilai_pembanding];
+					$urut++;
+					
+
+				} elseif ($x<$y) {
+					
+
+					if($this->input->post('nilai_pembanding'.$x.$y) < 0){
+						$convertMinus 		= $this->input->post('nilai_pembanding'.$x.$y);
+						$nilai_pembanding 	= round(abs(1/$convertMinus),4);
+					}else{
+						$nilai_pembanding	= $this->input->post('nilai_pembanding'.$x.$y);
+					}
+
+					$id_kriteria1			= $this->input->post('kriteria1_'.$x.$y);
+					$id_kriteria2 			= $this->input->post('kriteria2_'.$x.$y);		
+					$nb_kriteria[$x][$y]	= ['id_subkriteria1' 		=> $id_kriteria1,
+										 	   'id_subkriteria2' 		=> $id_kriteria2,
+										 	   'nilai_pembanding' 	=> $nilai_pembanding];
+					
+					$nilai_banding 			= $this->input->post('nilai_pembanding'.$x.$y);
+					
+					$nilai_banding_invers	=  ~intval($nilai_banding+1);
+					
+					if($nilai_banding_invers < 0){
+						$nilai_pembanding2 	= abs(1/$nilai_banding);
+					} else {
+						$nilai_pembanding2	= $nilai_banding_invers+2;	
+					}
+					$nb_kriteria[$y][$x]	= ['id_subkriteria1' 		=> $id_kriteria2,
+											   'id_subkriteria2' 		=> $id_kriteria1,
+												'nilai_pembanding' 	=> $nilai_pembanding2];						
+				} 
+					
+			}
+		}
+		//data udh disimpan di array, tinggal buat looping baru dengan variabel baru untuk menampung nilai array. baru setelah itu dieksekusi.
+		//(Perhitungan -> pengurutan -> insert data)		
+
+		//Proses Penyimpanan
+		//$jml_kriteria = $this->db->count_all('kriteria');
+		// print_r($jml_kriteria);
+		$data['subkriteria'] = $this->M_Pendataan->hapus_psubkriteria($id_kriteria);
+		$data = array();
+		$urutan = 1;
+		$id_kriteria = $this->input->post('id_kriteria');
+		for ($x=1; $x <= $jml_subkriteria; $x++) {
+			for ($y=1; $y <= $jml_subkriteria ; $y++) {
+
+				$urut_kriteria1[$urutan] = $nb_kriteria[$x][$y]['id_subkriteria1'];
+
+				$urut_kriteria2[$urutan] = $nb_kriteria[$x][$y]['id_subkriteria2'];
+
+				$urut_pembanding[$urutan] = $nb_kriteria[$x][$y]['nilai_pembanding'];
+				
+				
+				$item = [
+					'id_kriteria'			=> $id_kriteria,
+					'id_subkriteria1'		=> $urut_kriteria1[$urutan],
+					'id_subkriteria2' 		=> $urut_kriteria2[$urutan],
+					'nilai_pembanding' 	=> $urut_pembanding[$urutan]
+				];
+				array_push($data, $item);
+				$urutan++;
+			}
+		}
+		
+			$this->db->insert_batch('perbandingan_subkriteria', $data);
+
+			/*MATRIKS SUB KRITERIA*/
+			$data['JmlKriteria'] 				= $this->M_Proses->get_jmlsub($id_kriteria)->row_array();
+			$data['getkriteria'] 				= $this->M_Proses->get_datakriteria($id_kriteria)->result();
+		
+			$data['NilaiPerbandinganKriteria'] 	= $this->M_Proses->get_npsubkriteria($id_kriteria)->result_array();
+			$data['getSubkriteria'] 			= $this->M_Proses->get_data_subkriteria($id_kriteria)->result_array();
+			//$data['getNamaKriteria'] 			= $this->M_Proses->get_data_subkriteria($id_kriteria)->result_array();
+			//$data['getIdKriteria'] 				= $this->M_Proses->getIdKriteria()->result_array();
+	
+			//Proses Perhitungan AHP
+			$nilaiA = $this->M_Proses->get_npsubkriteria($id_kriteria)->result_array();
+			
+			//Mengubah nilaiA menjadi matriks A
+			$jml_subkriteria 		= $this->db->where(['id_kriteria'=>$id_kriteria])->from("subkriteria")->count_all_results();
+
+			$uruta 			= 0;
+			$matriksA 		= array();
+			for($i=0; $i<$jml_subkriteria; $i++){
+				for($j=0; $j<$jml_subkriteria; $j++){
+					$matriksA[$i][$j] = $nilaiA[$uruta];
+					$uruta++;
+				}
+			}
+	
+			//Mengubah nilaiA menjadi matriks B
+			$urutb = 0;
+			$matriksB = array();
+			for($i=0; $i<$jml_subkriteria; $i++){
+				for($j=0; $j<$jml_subkriteria; $j++){
+					
+					$matriksB[$i][$j] = $nilaiA[$urutb];
+					$urutb++;
+				}
+			}
+			
+			//Hasil Perkalia Matriks A dan B
+			
+			$hasilkali		= array(); //hasil perkalian matriks 2 dimensi
+			$hasilmatriks 	= array(); //Hasil Perkalian matriks 1 dimensi
+			$urut		 	= 0;
+			for($x=0; $x<$jml_subkriteria; $x++){
+				$tempjml = 0;
+				for($y=0; $y<$jml_subkriteria; $y++){
+					$temp = 0;
+					for($z=0; $z<$jml_subkriteria; $z++){
+						$temp += round($matriksA[$x][$z]['nilai_pembanding'] * $matriksB[$z][$y]['nilai_pembanding'],4);
+					}
+					$hasilkali[$x][$y] = round($temp,4); //Hasil perkalian matriks
+					$hasilmatriks[$urut] = round($hasilkali[$x][$y],4); 
+					$urut++;
+					$tempjml += $hasilkali[$x][$y];				
+				}
+				//Hasil jumlah kali per kolom
+				$hasiljumlahkali[$x] = $tempjml;	
+			}
+		
+			
+			//Total perkalian
+			$totaljmlkali = 0;
+			for($x=0; $x<$jml_subkriteria; $x++){
+				$totaljmlkali += round($hasiljumlahkali[$x],4);
+			}
+			
+			 
+	
+			//Normalisasi eigen vector
+			$egienvector = array();
+			$jmleigen = 0;
+			for($x=0; $x<count($hasiljumlahkali); $x++){
+				$hasiljmlkalibagi[$x] = round($hasiljumlahkali[$x]/$totaljmlkali,4); //Hasil egienvector
+				$jmleigen += $hasiljmlkalibagi[$x];
+				$egienvector[$x] = [$hasiljmlkalibagi[$x]];
+				
+			}	
+	//print_r($egienvector);
+	
+			//Perhitungan pengujian konsistensi
+			//perkalian matriks dengan egien vector
+			for($x=0; $x<$jml_subkriteria; $x++){
+				$matriksxeigen =0;
+				for($y=0; $y<$jml_subkriteria; $y++){
+					// echo "hasilkalibagi<br>";
+					// print_r($hasiljmlkalibagi[$y]);
+					$matriksxeigen += round($matriksA[$x][$y]['nilai_pembanding'] * $hasiljmlkalibagi[$y],4);
+				}
+				$hasilmatriksxeigen[$x] = round($matriksxeigen,4);	
+			}
+			//print_r($hasilmatriksxeigen);
+			
+			
+	
+			//Consistency Vector
+			$CV = array();
+			for($x=0; $x<$jml_subkriteria; $x++){
+				$CV[$x] = round($hasilmatriksxeigen[$x]/$hasiljmlkalibagi[$x], 4);
+			}
+			
+	
+	
+	
+			//Jumlah Consistency Vector
+			$jmlcv = 0;
+			$lamdamax = 0;
+			for($x=0; $x<count($CV); $x++){
+				$jmlcv += round($CV[$x],4);
+			}
+			// print_r($jmlcv); echo"<br>";
+	
+	
+			$lamdamax = round($jmlcv / $jml_subkriteria, 4); //Mencari lamda eigen max
+			//print_r($lamdamax);
+			$data['CV'] = $lamdamax;
+			
+			
+			//Menghitung CI
+			$CI = round(($lamdamax - $jml_subkriteria) / ($jml_subkriteria - 1), 4);
+			// print_r($CI);
+	
+	
+			//Menghitung CR
+			$RI = 0;
+			if(count($hasilmatriksxeigen) == 1){
+				$RI = 0;
+			} elseif(count($hasilmatriksxeigen) == 2){
+				$RI = 0;
+			} elseif(count($hasilmatriksxeigen) == 3){
+				$RI = 0.58;
+			} elseif(count($hasilmatriksxeigen) == 4){
+				$RI = 0.9;
+			} elseif(count($hasilmatriksxeigen) == 5){
+				$RI = 1.12;
+			} elseif(count($hasilmatriksxeigen) == 6){
+				$RI = 1.24;
+			} elseif(count($hasilmatriksxeigen) == 7){
+				$RI = 1.32;
+			} elseif(count($hasilmatriksxeigen) == 8){
+				$RI = 1.41;
+			} elseif(count($hasilmatriksxeigen) == 9){
+				$RI = 1.45;
+			} elseif(count($hasilmatriksxeigen) == 10){
+				$RI = 1.49;
+			} elseif(count($hasilmatriksxeigen) == 11){
+				$RI = 1.51;
+			} elseif(count($hasilmatriksxeigen) == 12){
+				$RI = 1.48;
+			} elseif(count($hasilmatriksxeigen) == 13){
+				$RI = 1.56;
+			} elseif(count($hasilmatriksxeigen) == 14){
+				$RI = 1.57;
+			} elseif(count($hasilmatriksxeigen) == 15){
+				$RI = 1.59;
+			}
+
+			if($RI == 0){
+				$CR = 0;
+				$pesan = "SUDAH KONSISTEN";
+			} else {
+				$CR = 0;
+				$CR = round($CI/$RI,4);
+			
+				if($CR <= 0.1){
+					$pesan = "SUDAH KONSISTEN";
+				} else {
+					$pesan = "BELUM KONSISTEN";
+				}
+
+			}
+			
+	
+			//Proses Update Data Kriteria
+		
+	
+			//Proses AHP
+			$data['hasilkali'] 			= $hasilkali; //hasil perkalian matriks 2 dimensi
+			$data['matriks']	 		= $hasilmatriks; //hasil perkalian matriks 1 dimensi
+			$data['sum_row_kriteria'] 	= $hasiljumlahkali; //hasil penjumlahan tiap baris matriks
+			$data['total_row'] 			= $totaljmlkali; //total penjumlahan sum_row_kriteria
+			$data['eigenvector'] 		= $hasiljmlkalibagi; //eigenvector
+			$data['jmleigen']			= $jmleigen;
+			//Pengujian Konsistensi
+			$data['bobot'] 				= $hasilmatriksxeigen;//Bobot
+			$data['CV'] 				= $CV; //hasil data CV tiap kriteria
+			$data['sum_cv'] 			= $jmlcv;
+			$data['CI'] 				= $CI; //hasil data CI
+			$data['CR'] 				= $CR; //hasil data CR
+			$data['pesan']				= $pesan;
+		
+			
+			$this->load->view("admin/subkriteria/h_Subkriteria", $data);
+			//redirect('C_ProsesAHP/get_hperbandingan_sub');
+
+	}
+	
+	function simpan_eigenvector_subkriteria()
+	{
+		$id_kriteria			= $this->input->post('id_kriteria');
+		$data['getkriteria']	= $this->M_Proses->get_datakriteria($id_kriteria)->result();
+		
+		$jml_subkriteria 		= $this->db->where(['id_kriteria'=>$id_kriteria])->from("subkriteria")->count_all_results();
+		
+		$data = array();
+		for($x=0; $x< $jml_subkriteria; $x++){
+			$id_kriteria	= $id_kriteria;
+			$id_subkriteria = $this->input->post('id_subkriteria'.$x);
+			$bobot_subkriteria = $this->input->post('bobot_subkriteria'.$x);
+		
+			$this->db->set('bobot_subkriteria',$bobot_subkriteria);
+			$this->db->where('id_kriteria', $id_kriteria);
+			$this->db->where('id_subkriteria', $id_subkriteria);
+			$this->db->update('subkriteria');
+		}
+		$this->session->set_flashdata('success', 'Bobot Sub Kriteria Berhasil Disimpan');
+		redirect('C_NTarget/index');
+	}
+
+
 
 
 }

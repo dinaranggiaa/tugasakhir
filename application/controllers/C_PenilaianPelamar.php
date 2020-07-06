@@ -123,8 +123,12 @@ class C_PenilaianPelamar extends MY_Controller {
 													$row['id_subkriteria'],
 													$row['nm_subkriteria'],
 													$row['nilai_target'],
-													$row['status_subkriteria']);
+													$row['status_subkriteria'],
+													$row['bobot_subkriteria']);
 		}
+		print_r($subkriteria);
+
+		
 
 		$id_pelamar 	= $this->input->post('id_pelamar');
 		$getsample		= $this->M_Proses->data_npelamar($id_pelamar)->result_array();
@@ -138,7 +142,7 @@ class C_PenilaianPelamar extends MY_Controller {
 			$gap[$id_pelamar] = array();
 			foreach($subkriteria as $id_subkriteria => $val){
 				$gap[$id_pelamar][$id_subkriteria] 	= $data[$id_subkriteria]- $val[3];
-				$nilai_gap 								= $gap[$id_pelamar][$id_subkriteria];
+				$nilai_gap 							= $gap[$id_pelamar][$id_subkriteria];
 				$this->db->set('gap',$nilai_gap);
 				$this->db->where('id_pelamar', $id_pelamar)
 						 ->where('id_subkriteria', $id_subkriteria);
@@ -175,6 +179,7 @@ class C_PenilaianPelamar extends MY_Controller {
 				}
 
 				$terbobot[$id_pelamar][$id_subkriteria] 	= $bobot_gap;
+				print_r($terbobot[$id_pelamar][$id_subkriteria]);echo"<br>";
 				$bobot_nilai 								= $terbobot[$id_pelamar][$id_subkriteria];
 				$this->db->set('bobot_nilai',$bobot_nilai);
 				$this->db->where('id_pelamar', $id_pelamar)
@@ -183,11 +188,20 @@ class C_PenilaianPelamar extends MY_Controller {
 			}
 		}
 
+		$nilaitotal = array();
+		foreach($terbobot as $id_pelamar => $val){
+			foreach($subkriteria as $id_subkriteria => $value){
+				$nilaitotal[$id_pelamar][$id_subkriteria] = $value[5] * $val[$id_subkriteria];
+				print_r($id_pelamar);   echo"   "; print_r($id_subkriteria); echo"   ";
+				print_r($nilaitotal[$id_pelamar][$id_subkriteria]); echo"<br>";
+			}
+		}
+
 		$id_kriteria = array();
 		$cf			= array();
 		$sf			= array();
 		$hasilpm = array();
-		foreach($terbobot as $id_pelamar =>$data){
+		foreach($nilaitotal as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
 				$id_kriteria = $subkriteria[$id_subkriteria][0];
 				if($subkriteria[$id_subkriteria][4] == 'CF'){
@@ -200,6 +214,7 @@ class C_PenilaianPelamar extends MY_Controller {
 				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) / count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;
 			}
 		}
+		print_r($hasilpm); echo"<br>";
 		
 		$nilaiakhir = 0;
 		foreach($hasilpm as $id_pelamar => $datapm){			
@@ -207,7 +222,7 @@ class C_PenilaianPelamar extends MY_Controller {
 				$nilaiakhir = 0;
 			}
 			foreach ($datapm as $id_kriteria => $nilai_total){	
-				$nilaiakhir += $nilai_total * $kriteria[$id_kriteria][2];
+				$nilaiakhir += round($nilai_total * $kriteria[$id_kriteria][2],4);
 			}	
 			$this->db->set('id_pelamar',$id_pelamar);
 			$this->db->set('nilai_akhir',$nilaiakhir);
@@ -219,6 +234,7 @@ class C_PenilaianPelamar extends MY_Controller {
 			$this->db->where('id_pelamar',$id_pelamar);
 			$this->db->update('pelamar');
 		}
+		
 		$this->session->set_flashdata('success', 'Data Penilaian Pelamar Berhasil Disimpan');
 		redirect('C_PenilaianPelamar/index');
 	}
@@ -260,7 +276,8 @@ class C_PenilaianPelamar extends MY_Controller {
 														$row['id_subkriteria'],
 														$row['nm_subkriteria'],
 														$row['nilai_target'],
-														$row['status_subkriteria']);
+														$row['status_subkriteria'],
+														$row['bobot_subkriteria']);
 			}
 	
 			$id_pelamar 	= $this->input->post('id_pelamar');
@@ -276,10 +293,10 @@ class C_PenilaianPelamar extends MY_Controller {
 				foreach($subkriteria as $id_subkriteria => $val){
 					$gap[$id_pelamar][$id_subkriteria] 	= $data[$id_subkriteria]- $val[3];
 					$nilai_gap 								= $gap[$id_pelamar][$id_subkriteria];
-					$this->db->set('gap',$nilai_gap);
-					$this->db->where('id_pelamar', $id_pelamar)
-							 ->where('id_subkriteria', $id_subkriteria);
-					$this->db->update('nilai_alternatif');
+					// $this->db->set('gap',$nilai_gap);
+					// $this->db->where('id_pelamar', $id_pelamar)
+					// 		 ->where('id_subkriteria', $id_subkriteria);
+					// $this->db->update('nilai_alternatif');
 					
 				}
 			}
@@ -313,10 +330,19 @@ class C_PenilaianPelamar extends MY_Controller {
 	
 					$terbobot[$id_pelamar][$id_subkriteria] 	= $bobot_gap;
 					$bobot_nilai 								= $terbobot[$id_pelamar][$id_subkriteria];
-					$this->db->set('bobot_nilai',$bobot_nilai);
-					$this->db->where('id_pelamar', $id_pelamar)
-							 ->where('id_subkriteria', $id_subkriteria);
-					$this->db->update('nilai_alternatif');
+					// $this->db->set('bobot_nilai',$bobot_nilai);
+					// $this->db->where('id_pelamar', $id_pelamar)
+					// 		 ->where('id_subkriteria', $id_subkriteria);
+					// $this->db->update('nilai_alternatif');
+				}
+			}
+			
+			$nilaitotal = array();
+			foreach($terbobot as $id_pelamar => $val){
+				foreach($subkriteria as $id_subkriteria => $value){
+					$nilaitotal[$id_pelamar][$id_subkriteria] = $value[5] * $val[$id_subkriteria];
+					print_r($id_pelamar);   echo"   "; print_r($id_subkriteria); echo"   ";
+					print_r($nilaitotal[$id_pelamar][$id_subkriteria]); echo"<br>";
 				}
 			}
 	
@@ -324,7 +350,7 @@ class C_PenilaianPelamar extends MY_Controller {
 			$cf			= array();
 			$sf			= array();
 			$hasilpm = array();
-			foreach($terbobot as $id_pelamar =>$data){
+			foreach($nilaitotal as $id_pelamar =>$data){
 				foreach($data as $id_subkriteria => $value){
 					$id_kriteria = $subkriteria[$id_subkriteria][0];
 					if($subkriteria[$id_subkriteria][4] == 'CF'){
@@ -340,11 +366,13 @@ class C_PenilaianPelamar extends MY_Controller {
 			
 			$nilaiakhir = 0;
 			foreach($hasilpm as $id_pelamar => $datapm){			
+				print_r($datapm);
 				if(!isset($nilaiakhir)){
 					$nilaiakhir = 0;
 				}
 				foreach ($datapm as $id_kriteria => $nilai_total){	
 					$nilaiakhir += $nilai_total * $kriteria[$id_kriteria][2];
+					print_r($nilai_total); echo" X "; print_r($kriteria[$id_kriteria][2]); echo" = "; print_r($nilaiakhir); echo"<br>";
 				}	
 				$this->db->where('id_pelamar', $id_pelamar);
 				$this->db->set('nilai_akhir', $nilaiakhir);
@@ -352,8 +380,8 @@ class C_PenilaianPelamar extends MY_Controller {
 				$this->db->update('hasil_akhir');
 			}
 
-		$this->session->set_flashdata('success', 'Data Penilaian Pelamar Berhasil Diubah');
-		redirect('C_PenilaianPelamar/index');
+		//$this->session->set_flashdata('success', 'Data Penilaian Pelamar Berhasil Diubah');
+		//redirect('C_PenilaianPelamar/index');
 	}
 
 

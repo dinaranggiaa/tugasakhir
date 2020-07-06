@@ -27,8 +27,15 @@
     font-size: 16px;
     text-align: center;
     color: #243f4d;
-  } 
+  }
 </style>
+
+<div class="navigation" style="border: black;">
+    <ul class="breadcrumb">
+        <li><a href="#">Dashboard</a></li>
+        <li>Data Divisi</li>
+      </ul>
+</div>
 
 <div class="center-bar">
   <h3><i class='far fa-folder-open'></i>&nbsp;Data Divisi</h3> 
@@ -39,9 +46,9 @@
   
   <div class="inputsearch">
     <?php echo form_open('C_Divisi/cari_keyword')?>
-    <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
-    <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
-    <button class="btn-link" type='submit' href="<?php echo site_url('C_Divisi/index')?>"><i class='fas fa-undo'></i></button>
+      <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
+      <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
+      <button class="btn-link" type='submit' href="<?php echo site_url('C_Divisi/index')?>"><i class='fas fa-undo'></i></button>
     <?php echo form_close()?>
   </div>
   <br>
@@ -50,7 +57,7 @@
   <!-- Data Divisi -->
   <div class="panel-body">
             <div class="table-responsive">
-            <table class= "table table-striped table-bordered table-hover" style="text-align: center; font-size:15px">
+                <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
