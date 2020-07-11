@@ -38,7 +38,7 @@
 </div>
 
 <div class="center-bar">
-  <h3><i class='far fa-folder-open'></i>&nbsp;Data Divisi</h3> 
+  <h3><i class='far fa-folder-open'></i>&nbsp;Data Posisi</h3> 
   <div class="border"></div>
   
   <br>
@@ -57,12 +57,12 @@
   <!-- Data Divisi -->
   <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
+                <table class="table table-striped table-bordered table-hover" style="text-align: center; font-size:15px">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode Divisi</th>
-                            <th>Nama Divisi</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -99,18 +99,18 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Divisi</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Posisi</h4>
               </div>
               <div class="modal-body">
               <form action="<?php echo base_url()?>index.php/C_Divisi/simpan_divisi" method="POST">
                   <table>
                     <tr>
-                      <td><label for="id_divisi">Kode Divisi</label></td>
+                      <td><label for="id_divisi">Kode</label></td>
                       <td>:</td>
                       <td><input readonly type="text-form" class ="form-control" name="id_divisi" id="id_divisi" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
                     </tr>
                     <tr>
-                      <td><label for="nm_divisi">Nama Divisi</label></td>
+                      <td><label for="nm_divisi">Nama</label></td>
                       <td>:</td>
                       <td><input type="text-form" name="nm_divisi" id="nm_divisi" class="form-control"></td>
                     </tr>
@@ -141,18 +141,18 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Divisi</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Posisi</h4>
               </div>
               <div class="modal-body">
               <form action="<?php echo base_url()?>index.php/C_Divisi/simpan_divisi" method="POST">
                   <table>
                     <tr>
-                      <td><label for="id_divisi">Kode Divisi</label></td>
+                      <td><label for="id_divisi">Kode</label></td>
                       <td>:</td>
                       <td><?= $row -> id_divisi?></td>
                     </tr>
                     <tr>
-                      <td><label for="nm_divisi">Nama Divisi</label></td>
+                      <td><label for="nm_divisi">Nama</label></td>
                       <td>:</td>
                       <td><?= $row -> nm_divisi?></td>
                     </tr> 
@@ -180,18 +180,18 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Divisi</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Posisi</h4>
               </div>
               <div class="modal-body">
                 <form action="<?php echo base_url()?>index.php/C_Divisi/ubah_divisi" method="POST">
                   <table>
                     <tr>
-                      <td><label for="id_Divisi">Kode Divisi</label></td>
+                      <td><label for="id_Divisi">Kode</label></td>
                       <td>:</td>
-                      <td><input readonly type="text-form" class ="form-control" name="id_Divisi" id="id_Divisi" value="<?= $row -> id_divisi?>" placeholder="<?= $row -> id_divisi?>"></td>
+                      <td><input readonly type="text-form" class ="form-control" name="id_divisi" id="id_divisi" value="<?= $row -> id_divisi?>" placeholder="<?= $row -> id_divisi?>"></td>
                     </tr>
                     <tr>
-                      <td><label for="nm_divisi">Nama Divisi</label></td>
+                      <td><label for="nm_divisi">Nama</label></td>
                       <td>:</td>
                       <td><input type="text-form" name="nm_divisi" id="nm_divisi" value="<?= $row -> nm_divisi?>" placeholder="<?= $row -> nm_divisi?>" class="form-control"></td>
                     </tr>

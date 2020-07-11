@@ -72,9 +72,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode Kriteria</th>
-                            <th>Nama Kriteria</th>
-                            <th>Bobot Kriteria</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -85,7 +84,6 @@
                         <td><?= $no?></td>
                         <td><?= $Kriteria -> id_kriteria?></td>
                         <td><?= $Kriteria -> nm_kriteria?></td>
-                        <td><?= $Kriteria -> bobot_kriteria?></td>
                         <td style="width: 15%;">
                           <a class="btn btn-info btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-eye"></span></a>
                           <a class="btn btn-primary btn_edit" id="<?= $Kriteria -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $Kriteria -> id_kriteria; ?>"><span class="fas fa-edit"></span></a>
@@ -175,11 +173,6 @@
                       <td>:</td>
                       <td><?= $Kriteria -> nm_kriteria?></td>
                     </tr>
-                    <tr>
-                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
-                      <td>:</td>
-                      <td><?= $Kriteria -> bobot_kriteria?></td>
-                    </tr>
                   </table>
               </div>
               </form>
@@ -218,11 +211,6 @@
                       <td><label for="nm_kriteria">Nama Kriteria</label></td>
                       <td>:</td>
                       <td><input type="text-form" name="nm_kriteria" id="nm_kriteria" value="<?= $Kriteria -> nm_kriteria?>" placeholder="<?= $Kriteria -> nm_kriteria?>" class="form-control"></td>
-                    </tr>
-                    <tr>
-                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
-                      <td>:</td>
-                      <td><input readonly type="text-form" name="bobot_kriteria" id="bobot_kriteria" value="<?= $Kriteria -> bobot_kriteria?>" placeholder="<?= $Kriteria -> bobot_kriteria?>" class="form-control"></td>
                     </tr>
                   </table>
               </div>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_NTarget extends MY_Controller {
+class C_TargetKriteria extends MY_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -30,8 +30,8 @@ class C_NTarget extends MY_Controller {
     
     function index()
 	{	
-		$config['base_url'] = site_url('C_NTarget/index'); // site_url
-		$config['total_rows'] = $this->db->count_all('subkriteria');
+		$config['base_url'] = site_url('C_TargetKriteria/index'); // site_url
+		$config['total_rows'] = $this->db->count_all('target_kriteria');
 		$config['per_page'] = 10; // record yang ditampilkan per halaman
 		$config["uri segment"] = 3; // uri parameter
 		$choice = $config["total_rows"] / $config["per_page"];
@@ -48,27 +48,38 @@ class C_NTarget extends MY_Controller {
 		$data['pagination'] = $this->pagination->create_links();
 
 		$data['kode'] 		= $this->M_Pendataan->get_id_subkriteria();
+		$data['posisi'] 	= $this->M_Pendataan->ambil_data_divisi();
 		$data['kriteria'] 	= $this->M_Pendataan->ambil_data_kriteria()->result();
-		$data['ntarget']	= $this->M_Pendataan->data_target_subkriteria($config['per_page'], $data['page'])->result();
-		$this->load->view('admin/F_NTarget',$data);		
-    }
+		$data['ntarget']	= $this->M_Pendataan->data_target_kriteria($config['per_page'], $data['page'])->result();
+		$this->load->view('admin/F_TargetKriteria',$data);		
+	}
+	
+	function cari_keyword()
+	{
+		$data['pagination'] = $this->pagination->create_links();
+
+		$data['keyword'] 	= $this->input->post("keyword");
+		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
+		$data['ntarget']	= $this->M_Pendataan->cari_target_kriteria($data['keyword'])->result();
+		$this->load->view('admin/F_TargetKriteria', $data);
+	}
     
 
 	function input_data()
 	{
-		$data['simpan'] 	= $this->M_Pendataan->simpan_ntarget();
-		$this->session->set_flashdata('success', 'Data Subkriteria Berhasil Disimpan');
-		redirect('C_NTarget/index');
+		$data['simpan'] 	= $this->M_Pendataan->simpan_target_kriteria();
+		$this->session->set_flashdata('success', 'Data Kriteria Berhasil Disimpan');
+		redirect('C_TargetKriteria/index');
 	}
 
-	function hapus_subkriteria($id_subkriteria)
+	function hapus_data($id_kriteria)
 	{
-		$data['subkriteria'] = $this->M_Pendataan->hapus_subkriteria($id_subkriteria);
-		$this->session->set_flashdata('success', 'Data Subkriteria Berhasil Dihapus');
-		redirect('C_NTarget/index');
+		$data['subkriteria'] = $this->M_Pendataan->hapus_target_kriteria($id_kriteria);
+		$this->session->set_flashdata('success', 'Data Kriteria Berhasil Dihapus');
+		redirect('C_TargetKriteria/index');
 	}
 
-	function ubah_subkriteria()
+	function ubah_target_kriteria()
 	{
 		$id_subkriteria	 	= $this->input->post('id_subkriteria');
 		$nm_subkriteria 	= $this->input->post('nm_subkriteria');
@@ -87,14 +98,6 @@ class C_NTarget extends MY_Controller {
 		redirect('C_NTarget/index');
 	}
 
-	function cari_keyword()
-	{
-		$data['pagination'] = $this->pagination->create_links();
 
-		$data['keyword'] 	= $this->input->post("keyword");
-		$data['kode'] 		= $this->M_Pendataan->get_id_kriteria();
-		$data['ntarget']		= $this->M_Pendataan->cari_subkriteria($data['keyword'])->result();
-		$this->load->view('admin/F_NTarget', $data);
-	}
 	
 }

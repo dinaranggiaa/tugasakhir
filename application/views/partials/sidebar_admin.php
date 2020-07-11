@@ -46,17 +46,31 @@
                 <button class="dropbtn"><i class='fas fa-archive'> &nbsp; </i>Entri Data Master&nbsp;<i class='fas fa-caret-down'></i></button>
               </div>
               <div class="dropdown-child">
-                <ul><?php echo "<a href='".base_url()."C_Pelamar/index'><i class='fa fa-file-text-o'> &nbsp; </i>Data Pelamar</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_Pelamar/index'><i class='fas fa-user-alt'> &nbsp; </i>Data Pelamar</a>"; ?></ul>
                 <ul><?php echo "<a href='".base_url()."C_Karyawan/index'><i class='fas fa-user-alt'> &nbsp; </i>Data Karyawan</a>"; ?></ul>
-                <ul><?php echo "<a href='".base_url()."C_Divisi/index'><i class='fas fa-user-alt'> &nbsp; </i>Data Divisi</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_Divisi/index'><i class='fas fa-user-alt'> &nbsp; </i>Data Posisi</a>"; ?></ul>
                 <!-- <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='fab fa-readme'> &nbsp; </i>Data Penilaian</a>"; ?></ul> -->
                 <ul><?php echo "<a href='".base_url()."C_Kriteria/index'><i class='fab fa-kickstarter'> &nbsp; </i>Data Kriteria</a>"; ?></ul>
                 <ul><?php echo "<a href='".base_url()."C_Subkriteria/index'><i class='far fa-file-alt'> &nbsp; </i> Data Sub Kriteria</a>"; ?></ul>
-                <ul><?php echo "<a href='".base_url()."C_NTarget/index'><i class='far fa-file-alt'> &nbsp; </i> Data Nilai Target</a>"; ?></ul>
-                <!-- <ul><?php echo "<a href='".base_url()."C_Divisi/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Divisi</a>"; ?></ul> -->
+                <!-- <ul><?php echo "<a href='".base_url()."C_NTarget/index'><i class='far fa-file-alt'> &nbsp; </i> Data Nilai Target</a>"; ?></ul> -->
+                <!-- <ul><?php echo "<a href='".base_url()."C_Divisi/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Posisi</a>"; ?></ul> -->
                 <ul><?php echo "<a href='".base_url()."C_Periode/index'><i class='far fa-calendar-alt'> &nbsp; </i>Data Periode</a>"; ?></ul>
               </div>
             </li>
+
+            <li>
+              <div class="dropdown">
+                <button class="dropbtn"><i class='fas fa-archive'> &nbsp; </i>Entri Data Transaksi&nbsp;<i class='fas fa-caret-down'></i></button>
+              </div>
+              <div class="dropdown-child">
+                <ul><?php echo "<a href='".base_url()."C_TargetKriteria/index'><i class='far fa-file-alt'> &nbsp; </i> Data 
+                Target Kriteria</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_TargetSubkriteria/index'><i class='far fa-file-alt'> &nbsp; </i> Data Target Sub Kriteria</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='far fa-list-alt'> &nbsp; </i>Penilaian Pelamar</a>"; ?></ul>
+               
+              </div>
+            </li>
+
             <li>
               <!-- <div class="dropdown">
                 <button class="dropbtn"><i class='fas fa-archive'> &nbsp; </i>Entri Data Penilaian&nbsp;<i class='fas fa-caret-down'></i></button>
@@ -73,9 +87,8 @@
                 <button class="dropbtn"><i class='fas fa-calculator'> &nbsp; </i>Proses Perhitungan&nbsp;<i class='fas fa-caret-down'></i></button>
               </div>
               <div class="dropdown-child">
-                <ul><?php echo "<a href='".base_url()."C_ProsesAHP/input_nilai_perbandingan'><i class='fa fa-spinner'> &nbsp; </i>Perbandingan Kriteria</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_ProsesAHP/input_divisi'><i class='fa fa-spinner'> &nbsp; </i>Perbandingan Kriteria</a>"; ?></ul>
                 <ul><?php echo "<a href='".base_url()."C_ProsesAHP/input_kriteria'><i class='fa fa-spinner'> &nbsp; </i>Perbandingan Sub Kriteria</a>"; ?></ul>
-                <ul><?php echo "<a href='".base_url()."C_PenilaianPelamar/index'><i class='far fa-list-alt'> &nbsp; </i>Penilaian Pelamar</a>"; ?></ul>
                 <ul><?php echo "<a href='".base_url()."C_ProsesPM/index'><i class='fas fa-sync'> &nbsp; </i>Analisis Pelamar</a>"; ?></ul>
                 <!-- <ul><?php echo "<a href='".base_url()."C_ProsesPM/periode_keputusan'><i class='fas fa-newspaper'> &nbsp; </i>Hasil Keputusan</a>"; ?></ul> -->
               </div>
@@ -86,8 +99,8 @@
               </div>
               <div class="dropdown-child">
                 <ul><?php echo "<a href='".base_url()."C_Laporan/Periode_Rekomendasi'><i class='fas fa-medal'> &nbsp; </i>Rekomendasi Pelamar</a>"; ?></ul>
-                <ul><?php echo "<a href='".base_url()."C_Laporan/Periode_Keputusan''><i class='far fa-list-alt'> &nbsp; </i>Karyawan Diterima</a>"; ?></ul>
-                <ul><?php echo "<a href='".base_url()."C_Laporan/index''><i class='far fa-address-book'> &nbsp; </i>Data Karyawan Baru</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_Laporan/Periode_Keputusan''><i class='far fa-list-alt'> &nbsp; </i>Hasil Keputusan</a>"; ?></ul>
+                <ul><?php echo "<a href='".base_url()."C_Laporan/Periode_Karyawan_Baru''><i class='far fa-address-book'> &nbsp; </i>Data Karyawan Baru</a>"; ?></ul>
               </div>
             </li>
             

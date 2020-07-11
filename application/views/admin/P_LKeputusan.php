@@ -63,28 +63,41 @@
   <div class="home-periode">
     <div class="home-judul"><span>Periode Pendaftaran</span></div>
         <?php echo form_open('C_Laporan/Cetak_KeputusanPelamar')?>
-          <table>
+        <table>
             <tr>
-              <td style="padding-right: 15px;">
+              <td style="padding-left:15px;padding-right:15px;">
+                <select name='id_divisi' id='id_divisi' required class="form-control">
+                      <option value='' disabled selected>Pilih Divisi</option>
+                    <?php foreach ($divisi as $row) {  ?>
+                      <option name='id_divisi' value="<?=$row->id_divisi?>" ><?= $row->nm_divisi?> </option>;
+                    <?php }?>
+                </select> 
+              </td>
+            </tr>
+            <tr>
+            <td style="padding-left:15px;padding-right:15px;">
                 <select name='bulan' id='bulan' required class="form-control">
                     <option value='' disabled selected>Pilih Bulan</option>
                   <?php foreach ($periode as $Periode) {  ?>
                     <option name='bulan' value="<?=$Periode->bulan?>"><?= $Periode->bulan?> </option>;
-                <?php }?>
-              </select>
+                  <?php }?>
+                </select>
               </td>
-              <td>
+            </tr>
+            <tr>
+            <td style="padding-left:15px;padding-right:15px;">
                 <select name='tahun' id='tahun' required class="form-control">
                     <option value='' disabled selected>Pilih Tahun</option>
                   <?php foreach ($tahun as $Periode) {  ?>
                     <option name='bulan' value="<?=$Periode->tahun?>"><?= $Periode->tahun?> </option>;
                 <?php }?>
-              </select>
+                </select>
               </td>
+            </tr>           
+              
             </tr>
             <tr>
-              <td></td>
-              <td style="float:right; padding-bottom: 10px; padding-top: 10px;"> 
+              <td style="float:right; padding-bottom: 10px; padding-top: 10px; padding-right:20px;"> 
                 <button type='submit' class="btn btn-primary" id='Tampilkan'><span>View</span></button>
               </td>
             </tr>

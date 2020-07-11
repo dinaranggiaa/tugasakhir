@@ -91,6 +91,14 @@
                 <td><input type="hidden" class ="form-control" name="id_periode" id="id_periode" value="<?= $pelamar['id_periode']?>"></td>
               </tr>
               <tr>
+                <tr>
+                  <td style="width: 25%"><label for="id_pelamar">Posisi</label></td>
+                  <td style="width: 5%">:</td>
+                  <td><input readonly type="text-form" name="id_pelamar" id="id_pelamar" class="form-control" value="<?= $pelamar['nm_divisi']?>"></td>
+                </tr>
+                <td><input type="hidden" class ="form-control" name="id_divisi" id="id_divisi" value="<?= $pelamar['id_divisi']?>"></td>
+              </tr>
+              <tr>
                 <td><label for="nm_karyawan">Nama Lengkap</label></td>
                 <td>:</td>
                 <td><input type="text-form" name="nm_karyawan" id="nm_karyawan" class="form-control" value="<?= $pelamar['nm_pelamar']?>"></td>

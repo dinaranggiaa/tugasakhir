@@ -32,22 +32,32 @@ class C_Laporan extends MY_Controller {
     
     function Periode_Rekomendasi()
 	{	
+		$data['divisi']		= $this->M_Pendataan->ambil_data_divisi();
 		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
 		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
+
 		$this->load->view('admin/P_RekomendasiPelamar', $data);		
 	}
 	
 	function Periode_Keputusan()
 	{	
+		$data['divisi']		= $this->M_Pendataan->ambil_data_divisi();
 		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
 		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
 		$this->load->view('admin/P_LKeputusan', $data);		
 	}
 
+	function Periode_Karyawan_Baru()
+	{	
+		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
+		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
+		$this->load->view('admin/P_KaryawanBaru', $data);		
+	}
+
 	function cetak_form_penilaian()
 	{	
 		
-		$data['subkriteria']	= $this->M_Pendataan->get_subkriteria()->result();
+		$data['subkriteria']	= $this->M_Pendataan->data_target_subkriteria()->result();
 		$data['kriteria']		= $this->M_Pendataan->getIdKriteria()->result();
 		//print_r($data['kriteria']);
 
@@ -77,12 +87,38 @@ class C_Laporan extends MY_Controller {
 	{
 		$bulan				= $this->input->post('bulan');
 		$tahun				= $this->input->post('tahun');
+		$divisi				= $this->input->post('id_divisi');
 		
 		$data['bulan']		= $bulan;
 		$data['tahun']		= $tahun;
+		$data['divisi']		= $divisi;
+
 		$data['tgl'] 		= date('d M Y h:i:s');
-		$data['pelamar']	= $this->M_Pendataan->keputusan_pelamar($bulan, $tahun)->result();
+		$data['pelamar']	= $this->M_Pendataan->keputusan_pelamar($bulan, $tahun, $divisi)->result();
+		print_r($data['pelamar']);
+		print_r($bulan);
+		print_r($tahun);
+		print_r($divisi);
 		$this->mypdf->generate('admin/L_KeputusanPelamar',$data,true);
 	}
+
+	public function Cetak_KaryawanBaru()
+	{
+		$bulan				= $this->input->post('bulan');
+		$tahun				= $this->input->post('tahun');
+		// $divisi				= $this->input->post('id_divisi');
+		
+		$data['bulan']		= $bulan;
+		$data['tahun']		= $tahun;
+		// $data['divisi']		= $divisi;
+
+		$data['tgl'] 		= date('d M Y h:i:s');
+		$data['karyawan']	= $this->M_Pendataan->karyawan_baru($bulan, $tahun)->result();
+		//print_r($data['karyawan']);
+		$this->mypdf->generate('admin/L_KaryawanBaru',$data,true);
+	}
+
+
+	
     
 }

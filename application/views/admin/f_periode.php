@@ -120,7 +120,7 @@
                       <td><label for="bulan">Bulan</label></td>
                       <td>:</td>
                       <td><select name="bulan" id="bulan" class="form-control">
-                            <option>Pilih Bulan</option>
+                            <option disabled>Pilih Bulan</option>
                             <option>Januari</option>
                             <option>Februari</option>
                             <option>Maret</option>
@@ -222,7 +222,7 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Periode</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Edit Data Periode</h4>
               </div>
               <div class="modal-body">
                 <form action="<?php echo base_url()?>index.php/C_Periode/ubah_periode" method="POST">
@@ -235,7 +235,23 @@
                     <tr>
                       <td><label for="bulan">Bulan</label></td>
                       <td>:</td>
-                      <td><input type="text-form" name="bulan" id="bulan" value="<?= $Periode -> bulan?>" placeholder="<?= $Periode -> bulan?>" class="form-control"></td>
+                      <td>
+                        <select name="bulan" id="bulan" class="form-control">
+                            <option disabled>Pilih Bulan</option>
+                            <option <?php if($Periode -> bulan == 'Januari') echo 'selected = "selected"'?>>Januari</option>
+                            <option <?php if($Periode -> bulan == 'Februari') echo 'selected = "selected"'?>>Februari</option>
+                            <option <?php if($Periode -> bulan == 'Maret') echo 'selected = "selected"'?>>Maret</option>
+                            <option <?php if($Periode -> bulan == 'April') echo 'selected = "selected"'?>>April</option>
+                            <option <?php if($Periode -> bulan == 'Mei') echo 'selected = "selected"'?>>Mei</option>
+                            <option <?php if($Periode -> bulan == 'Juni') echo 'selected = "selected"'?>>Juni</option>
+                            <option <?php if($Periode -> bulan == 'Juli') echo 'selected = "selected"'?>>Juli</option>
+                            <option <?php if($Periode -> bulan == 'Agustus') echo 'selected = "selected"'?>>Agustus</option>
+                            <option <?php if($Periode -> bulan == 'September') echo 'selected = "selected"'?>>September</option>
+                            <option <?php if($Periode -> bulan == 'Oktober') echo 'selected = "selected"'?>>Oktober</option>
+                            <option <?php if($Periode -> bulan == 'November') echo 'selected = "selected"'?>>November</option>
+                            <option <?php if($Periode -> bulan == 'Desember') echo 'selected = "selected"'?>>Desember</option>
+                          </select>
+                    </td>
                     </tr>
                     <tr>
                       <td><label for="tahun">Tahun</label></td>

@@ -71,10 +71,10 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Kode Pelamar</th>
-            <th>Divisi</th>
+            <th>Kode</th>
+            <th>Posisi</th>
             <th>Periode</th>
-            <th>Nama Lengkap</th>
+            <th>Nama</th>
             <th>No HP</th>
             <th style="width: 30%;">Alamat</th>
             <th style="width: 15%;">Action</th>
@@ -127,7 +127,7 @@
           <form action="<?php echo base_url()?>index.php/C_Pelamar/simpan_pelamar" method="POST">
           <table>
           <tr>
-            <td><label for="id_pelamar">Kode Pelamar</label></td>
+            <td><label for="id_pelamar">Kode</label></td>
             <td>:</td>
             <td><input readonly type="text-form" class ="form-control" name="id_pelamar" id="id_pelamar" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
           </tr>
@@ -149,19 +149,15 @@
             </td>     
           </tr>
           <tr>
-            <td><label for="id_divisi">Divisi</label></td>
+            <td><label for="id_divisi">Posisi</label></td>
             <td>:</td>
             <td>
-            <?php
-                echo "
-                <select name='id_divisi' id='id_divisi' required>
-                <option value='' disabled selected> -- pilih divisi -- </option>";
-                  foreach ($divisi as $row) {  
-                  echo "<option value='".$row->id_divisi."'>".$row->nm_divisi."</option>";
-                  }
-                  echo"
-                </select>";
-                ?>    
+                <select name='id_divisi' id='id_divisi' required class="form-control">
+                  <option value='' disabled selected>Pilih Posisi</option>
+                <?php foreach ($divisi as $row) {  ?>
+                  <option name='id_divisi' value="<?=$row->id_divisi?>" ><?= $row->nm_divisi?> </option>;
+                <?php }?>
+            </select>  
             </td>     
           </tr>
           <tr>
@@ -282,15 +278,35 @@
                   <tr>
                     <td><label for="id_periode">Periode</label></td>
                     <td>:</td>
-                    <td><input readonly type="text-form" name="id_periode" id="id_periode" value="<?= $Pelamar -> bulan?>" placeholder="<?php $Pelamar -> bulan?>" class="form-control">
-                        <input type="hidden" name="id_periode" id="id_periode" value="<?= $Pelamar -> id_periode?>" placeholder="<?php $Pelamar -> id_periode?>" class="form-control">
+                    <td>
+                      <select name='id_periode' id='id_periode' required class="form-control">
+                            <?php foreach ($periode as $row) { 
+                              if($Pelamar -> id_periode == $row -> id_periode) {
+                                $keterangan = "selected";
+                              } else {
+                                $keterangan = "";
+                              }
+                              ?>
+                          <option <?= $keterangan ?> name='id_periode' value="<?=$row -> id_periode?>"><?= $row -> bulan?> </option>;
+                        <?php }?>
+                        </select> 
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="id_divisi">Divisi</label></td>
+                    <td><label for="id_divisi">Posisi</label></td>
                     <td>:</td>
-                    <td><input readonly type="text-form" name="id_divisi" id="id_divisi" value="<?= $Pelamar -> nm_divisi?>" placeholder="<?php $Pelamar -> nm_divisi?>" class="form-control">
-                        <input type="hidden" name="id_divisi" id="id_divisi" value="<?= $Pelamar -> id_divisi?>" placeholder="<?php $Pelamar -> id_divisi?>" class="form-control">
+                    <td>
+                      <select name='id_divisi' id='id_divisi' required class="form-control">
+                          <?php foreach ($divisi as $row) { 
+                            if($Pelamar -> id_divisi == $row -> id_divisi) {
+                              $keterangan = "selected";
+                            } else {
+                              $keterangan = "";
+                            }
+                            ?>
+                        <option <?= $keterangan ?> name='id_divisi' value="<?=$row -> id_divisi?>"><?= $row -> nm_divisi?> </option>;
+                      <?php }?>
+                      </select>  
                     </td>
                 </tr>
                   <tr>

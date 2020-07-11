@@ -34,7 +34,7 @@ class C_ProsesPM extends MY_Controller {
 
 	public function index()
 	{
-
+		$data['divisi']		= $this->M_Pendataan->ambil_data_divisi();
 		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
 		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
 		$this->load->view("admin/P_ProfileMatching", $data);
@@ -48,6 +48,7 @@ class C_ProsesPM extends MY_Controller {
 
 		$data['periode'] 	= $this->M_Pendataan->ambil_data_periode();
 		$data['tahun']		= $this->M_Pendataan->ambil_data_tahun();
+		
 		$data['pelamar']	= $this->M_Pendataan->rekomendasi_pelamar($bulan, $tahun)->result_array();
 		$this->load->view("admin/P_Keputusan", $data);
 		
@@ -84,6 +85,11 @@ class C_ProsesPM extends MY_Controller {
 	{
 		$bulan				= $this->input->post('bulan');
 		$tahun				= $this->input->post('tahun');
+		$divisi				= $this->input->post('divisi');
+
+		$data['bulan'] 			=  $bulan;
+		$data['tahun'] 			=  $tahun;
+		$data['divisi'] 		=  $divisi;
 
 		$data['bulan']		= $bulan;
 
@@ -113,8 +119,9 @@ class C_ProsesPM extends MY_Controller {
 			$this->db->where('id_pelamar', $id_pelamar);
 			$this->db->update('hasil_akhir');
 		}
-	
-		redirect('C_ProsesPM/entri_keputusan');
+		//$this->load->view('C_Laporan/Cetak_HasilKeputusan', $data);
+		redirect(base_url().'C_Laporan/Cetak_HasilKeputusan/'.$bulan/$tahun/$divisi);
+		//redirect('C_Laporan/Cetak_HasilKeputusan/'.$bulan/$tahun/$divisi);
 	}
 
 	function proses_nkriteria()
@@ -155,25 +162,31 @@ class C_ProsesPM extends MY_Controller {
 	{
 		$bulan 					= $this->input->post('bulan');
 		$tahun 					= $this->input->post('tahun');
+		$divisi					= $this->input->post('id_divisi');
 			
 		
-		$data['c_alternatif']	= $this->M_Proses->get_alternatif($bulan, $tahun);
-
+		$data['c_alternatif']	= $this->M_Proses->get_alternatif($bulan, $tahun, $divisi);
+		print_r($data['c_alternatif']); echo"<br><br>";
+ 
 
 		// <!--Pengambilan nilai pada database-->
 		//Get data Kriteria
-		$getkriteria	= $this->M_Proses->get_kriteria()->result_array();
+		$getkriteria	= $this->M_Proses->get_target_kriteria($divisi)->result_array();
+		
+		
 		$kriteria 		= array();
 
 		foreach ($getkriteria as $row){
-			$kriteria[$row['id_kriteria']] = array( 
+			$kriteria[$row['id_kriteria']] = array( $row['id_divisi'],
 													$row['id_kriteria'],
 													$row['nm_kriteria'],
 													$row['bobot_kriteria']);
-		}		
-
+		}	
+		
+		echo "kriteria : "; print_r($kriteria); echo"<br><br>";
+		
 		//Get data SubKriteria
-		$getsubkriteria	= $this->M_Proses->get_subkriteria()->result_array();
+		$getsubkriteria	= $this->M_Proses->get_target_subkriteria($divisi)->result_array();
 		$subkriteria 		= array();
 
 		foreach ($getsubkriteria as $row){
@@ -185,17 +198,20 @@ class C_ProsesPM extends MY_Controller {
 													$row['status_subkriteria'],
 													$row['bobot_subkriteria']);
 		}
-		
+
+		echo "Subkriteria : "; print_r($subkriteria); echo"<br><br>";
 
 		//Get data alternatif
-		$getalternatif	= $this->M_Proses->get_alternatif($bulan, $tahun);
+		$getalternatif	= $this->M_Proses->get_alternatif($bulan, $tahun, $divisi);
 		$alternatif		= array();
 		foreach ($getalternatif as $row){
 			$alternatif[$row['id_pelamar']] = array($row['nm_pelamar']);
 		}
+		echo "Get Data Alternatif : "; print_r($alternatif); echo"<br><br>";
+		
 	
 		//Get data alternatif join dengan kriteria
-		$getsample		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
+		$getsample		= $this->M_Proses->data_penilaian($bulan, $tahun, $divisi)->result_array();
 		$sample			= array();
 		$hsample		= array();
 		$surut			= 0;
@@ -204,118 +220,84 @@ class C_ProsesPM extends MY_Controller {
 			$hsample[$surut] = $sample[$row['id_pelamar']][$row['id_subkriteria']];
 			$surut++;
 		}
+		echo "Get Data Sample : "; print_r($sample); echo"<br><br>";
 
 		//Get gap nilai pelamar		
-		$getgap		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
+		$getgap		= $this->M_Proses->data_match_subkriteria($bulan, $tahun, $divisi)->result_array();
+		$temp_gap		= array();
 		$gap		= array();
+		$urutgap	= 0;
 		foreach($getgap as $key => $row){
-			$gap[$row['id_pelamar']][$row['id_subkriteria']] = $row['gap'];
+			$temp_gap[$row['id_pelamar']][$row['id_divisi']][$row['id_subkriteria']] = $row['gap'];
+			$gap[$urutgap] = $temp_gap[$row['id_pelamar']][$row['id_divisi']][$row['id_subkriteria']];
+			$urutgap++;
 		}
+
+		echo "Get Data Gap : "; print_r($gap); echo"<br><br>";
 
 		//Get bobot nilai pelamar
-		$getbobot		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
+		//$getbobot		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
 		$bobot			= array();
-		foreach($getbobot as $key => $row){
-			$bobot[$row['id_pelamar']][$row['id_subkriteria']] = $row['bobot_nilai'];
-		}
-		
-		
-		$nilaitotal = array();
-		foreach($bobot as $id_pelamar => $val){
-			foreach($subkriteria as $id_subkriteria => $value){
-				$nilaitotal[$id_pelamar][$id_subkriteria] = $value[5] * $val[$id_subkriteria];
-			}
+		$temp_bobot		= array();
+		$urutbobot	= 0;
+		foreach($getgap as $key => $row){
+			$temp_bobot[$row['id_pelamar']][$row['id_divisi']][$row['id_subkriteria']] = $row['bobot_nilai'];
+			$bobot[$urutbobot] = $temp_bobot[$row['id_pelamar']][$row['id_divisi']][$row['id_subkriteria']];
+			$urutbobot++;
 		}
 
-		$temp = array();
-		$id_kriteria = array();
-		$cf			= array();
-		$sf			= array();
-		foreach($nilaitotal as $id_pelamar =>$data){
-			foreach($data as $id_subkriteria => $value){
-				$temp[$id_subkriteria] = $subkriteria[$id_subkriteria][0];
-				$id_kriteria[$id_subkriteria] = $temp[$id_subkriteria];
-			}
-		}
+		echo "Get Data Bobot : "; print_r($bobot); echo"<br><br>";
 		
+		
+		// $nilaitotal = array();
+		// foreach($bobot as $id_pelamar => $val){
+		// 	foreach($subkriteria as $id_subkriteria => $value){
+		// 		$nilaitotal[$id_pelamar][$id_subkriteria] = $value[5] * $val[$id_subkriteria];
+		// 	}
+		// }
 
-		$hasilpm = array();
-		foreach($nilaitotal as $id_pelamar =>$data){
-			foreach($data as $id_subkriteria => $value){
-				$id_kriteria = $subkriteria[$id_subkriteria][0];
-
-				if($subkriteria[$id_subkriteria][4] == 'CF'){
-					$cf[$id_kriteria][$id_subkriteria] = $value;					
-				} else {
-					$sf[$id_kriteria][$id_subkriteria] = $value;		
-				}
-			}
+		$getmatchkriteria	= $this->M_Proses->data_match_kriteria($bulan, $tahun, $divisi)->result_array();
+		$temp_total			= array();
+		$nilaitotal			= array();
+		$urut				= 0;
+		foreach($getmatchkriteria as $key => $row){
+			$temp_total[$row['id_pelamar']][$row['id_kriteria']] = $row['nilai_total'];
+			$nilaitotal[$urut] = $temp_total[$row['id_pelamar']][$row['id_kriteria']];
+			$urut++;
 		}
 
+		echo "Get Data Nilai Total : "; print_r($nilaitotal); echo"<br><br>";
 		
-
-		$hurutpm = 0;
-		$hhasilpm = array();
-		foreach($nilaitotal as $id_pelamar =>$data){
-			foreach($data as $id_subkriteria => $value){
-				$id_kriteria = $subkriteria[$id_subkriteria][0];
-
-				if($subkriteria[$id_subkriteria][4] == 'CF'){
-					$cf[$id_kriteria][$id_subkriteria] = $value;
-				} else {
-					$sf[$id_kriteria][$id_subkriteria] = $value;
-					
-				}
-			}
-			// echo"<br>"; print_r($hhasilpm);
-
-			foreach($kriteria as $id_kriteria => $value){
-				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) /count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;
-				$hhasilpm[$hurutpm] 				= round($hasilpm[$id_pelamar][$id_kriteria],4);
-				$hurutpm++;
-			}
-		}	
-
-		$rurut = 0;
+		$gethasilakhir	= $this->M_Proses->data_hasil_akhir($bulan, $tahun, $divisi)->result_array();
 		$rangking = array();
-		$hrangking = array();
-		foreach($hasilpm as $id_pelamar => $datapm){
-			
-			if(!isset($rangking[$id_pelamar])){
-				$rangking[$id_pelamar] = 0;
-			}
-		
-			foreach ($datapm as $id_kriteria => $nilai_total){
-				
-				$rangking[$id_pelamar] += $nilai_total * $kriteria[$id_kriteria][2];
-				
-				$hrangking[$rurut] =$rangking[$id_pelamar];
-				$rurut++;
-			}
+		foreach($gethasilakhir as $key => $row){
+			$rangking[$row['id_pelamar']] = $row['nilai_akhir'];
 		}
+		echo "Get Data Peringkat : "; print_r($gethasilakhir); echo"<br><br>";
+
 				
 		$data['bulan'] 			=  $bulan;
 		$data['tahun'] 			=  $tahun;
+		$data['divisi'] 		=  $divisi;
 
-		$data['nmpelamar']	 	= $this->M_Proses->getnamapelamar($bulan, $tahun);
-		$data['gappelamar']	 	= $this->M_Proses->getgappelamar($bulan, $tahun);
-		$data['bobotpelamar'] 	= $this->M_Proses->getbobotpelamar($bulan, $tahun);
-		$data['jmlpelamar'] 	= $this->M_Proses->get_jmlnpelamar($bulan, $tahun);
+		$data['pelamar']	 	= $this->M_Proses->getnamapelamar($bulan, $tahun, $divisi);
+		$data['jmlpelamar'] 	= $this->M_Proses->get_jmlnpelamar($bulan, $tahun,$divisi);
 
-		$data['jmlsubkriteria'] = $this->M_Proses->getjmlsubkriteria();
-		$data['jmlkriteria'] 	= $this->M_Proses->get_jmlkriteria();
-		$data['nmsubkriteria'] 	= $this->M_Proses->getnmsubkriteria()->result_array();
-		$data['idsubkriteria'] 	= $this->M_Proses->getidkriteria_sub()->result_array();
-		$data['idkriteria']		= $this->M_Proses->getIdKriteria()->result_array();
-		$data['ntarget']		= $this->M_Proses->getntarget()->result_array();
-		$data['nilaipelamar'] 	= $this->M_Proses->getnilaipelamar($bulan, $tahun)->result_array();	
-		$data['kriteria']		= $this->M_Proses->NmKriteria();
+		$data['jmlsubkriteria'] = $this->M_Proses->get_jml_subkriteria($divisi);
+		$data['jmlkriteria']  	= $this->M_Proses->get_jml_kriteria($divisi);
+		$data['nmsubkriteria']  = $this->M_Proses->getnmsubkriteria()->result_array();
+		$data['subkriteria'] 	 	= $getsubkriteria;
+		$data['kriteria']			= $getkriteria;
+		echo"<br><br>";
+		$data['ntarget']		= $this->M_Proses->getntarget($divisi)->result_array();
+		$data['nilaipelamar'] 	= $this->M_Proses->getnilaipelamar($bulan, $tahun, $divisi)->result_array();	
 		
-		$data['rangking']		= $this->M_Pendataan->rekomendasi_pelamar($bulan, $tahun)->result_array();
+		$data['gapbobot'] 		= $getgap;
+		
+		$data['total_kriteria']		= $nilaitotal;
 
-		
-		$data['hasilpm'] 		= $hhasilpm;
-		
+		$data['rangking']		= $gethasilakhir;
+	
 		$this->load->view("admin/h_PerhitunganPM", $data);
 
 	}

@@ -52,28 +52,28 @@
 
 <div class="navigation" style="border: black;">
     <ul class="breadcrumb">
-	    	<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
-        <li>Periode Hasil Keputusan</li>
+			  <li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
+        <li>Periode Laporan Rekomendasi Pelamar</li>
       </ul>
 </div>
 
 <div class="center-bar">
-  <h3><i class='far fa-folder-open'></i>&nbsp;Hasil Keputusan</h3> 
+  <h3><i class='far fa-folder-open'></i>&nbsp;Laporan Karyawan Baru</h3> 
   <div class="border"></div>
   <div class="home-periode">
     <div class="home-judul"><span>Periode Pendaftaran</span></div>
-      <?php echo form_open('C_ProsesPM/entri_keputusan')?>
-      <table>
-            <tr>
+        <?php echo form_open('C_Laporan/Cetak_KaryawanBaru')?>
+        <table>
+            <!-- <tr>
               <td style="padding-left:15px;padding-right:15px;">
                 <select name='id_divisi' id='id_divisi' required class="form-control">
                       <option value='' disabled selected>Pilih Divisi</option>
                     <?php foreach ($divisi as $row) {  ?>
-                      <option name='id_divisi' value="<?=$row -> id_divisi?>" ><?= $row->nm_divisi?> </option>;
+                      <option name='id_divisi' value="<?=$row -> id_divisi?>" ><?= $row -> nm_divisi?> </option>;
                     <?php }?>
                 </select> 
               </td>
-            </tr>
+            </tr> -->
             <tr>
             <td style="padding-left:15px;padding-right:15px;">
                 <select name='bulan' id='bulan' required class="form-control">

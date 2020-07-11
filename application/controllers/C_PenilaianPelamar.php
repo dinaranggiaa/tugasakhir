@@ -43,9 +43,7 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function entri_penilaian()
 	{
-		//$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
 		$data['kriteria'] 		= $this->M_Pendataan->get_subkriteria()->result_array();
-		
 		//where tanda=1
 		$data['pelamar'] 		= $this->M_Pendataan->data_pelamar();
 		$data['penilaian'] 		= $this->M_Pendataan->ambil_id_penilaian();
@@ -81,6 +79,7 @@ class C_PenilaianPelamar extends MY_Controller {
 	function hapus_npelamar($id_pelamar)
 	{
 		$data['npelamar'] 	= $this->M_Pendataan->hapus_npelamar($id_pelamar);
+		
 
 		$this->db->set('tanda', 0);
 		$this->db->where('id_pelamar', $id_pelamar);
@@ -93,8 +92,11 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function simpan_penilaian()
 	{
+		$divisi	= $this->input->post('id_divisi');
+		//print_r($divisi);
+
 		if(isset($_POST['btn_simpan'])){
-			$jmlsub = $this->db->count_all('subkriteria');
+			$jmlsub = $this->db->count_all('target_subkriteria');
 			$data = array();
 			for($i=0; $i < $jmlsub; $i++){
 				$item = [
@@ -106,7 +108,9 @@ class C_PenilaianPelamar extends MY_Controller {
 			} $this->db->insert_batch('nilai_alternatif', $data);
 		}
 
-		$getkriteria	= $this->M_Proses->get_kriteria()->result_array();
+		$getkriteria	= $this->M_Proses->get_target_kriteria($divisi)->result_array();
+		//print_r($getkriteria);
+		//echo"<br><br>";
 		$kriteria 		= array();
 		foreach ($getkriteria as $row){
 			$kriteria[$row['id_kriteria']] = array( 
@@ -114,8 +118,12 @@ class C_PenilaianPelamar extends MY_Controller {
 													$row['nm_kriteria'],
 													$row['bobot_kriteria']);
 		}
+		
+		// echo"kriteria : <br>";
+		// print_r($kriteria); echo"<br><br>";
 
-		$getsubkriteria	= $this->M_Proses->get_subkriteria()->result_array();
+		$getsubkriteria	= $this->M_Proses->get_target_subkriteria($divisi)->result_array();
+		//print_r($getsubkriteria); echo"<br><br>";
 		$subkriteria 	= array();
 		foreach ($getsubkriteria as $row){
 			$subkriteria[$row['id_subkriteria']] = array( 
@@ -126,9 +134,9 @@ class C_PenilaianPelamar extends MY_Controller {
 													$row['status_subkriteria'],
 													$row['bobot_subkriteria']);
 		}
-		print_r($subkriteria);
-
 		
+		// echo"subkriteria : <br>";
+		// print_r($subkriteria); echo"<br><br>";	
 
 		$id_pelamar 	= $this->input->post('id_pelamar');
 		$getsample		= $this->M_Proses->data_npelamar($id_pelamar)->result_array();
@@ -141,15 +149,21 @@ class C_PenilaianPelamar extends MY_Controller {
 		foreach ($sample as $id_pelamar => $data){
 			$gap[$id_pelamar] = array();
 			foreach($subkriteria as $id_subkriteria => $val){
+			
 				$gap[$id_pelamar][$id_subkriteria] 	= $data[$id_subkriteria]- $val[3];
 				$nilai_gap 							= $gap[$id_pelamar][$id_subkriteria];
-				$this->db->set('gap',$nilai_gap);
-				$this->db->where('id_pelamar', $id_pelamar)
-						 ->where('id_subkriteria', $id_subkriteria);
-				$this->db->update('nilai_alternatif');
+				
+				$this->db->set('id_pelamar', $id_pelamar)
+						 ->set('id_divisi', $divisi)				
+						 ->set('id_subkriteria', $id_subkriteria)
+						 ->set('gap',$nilai_gap);
+				$this->db->insert('match_subkriteria');
 				
 			}
 		}
+		
+		// echo"gap : <br>";
+		// print_r($gap); echo"<br><br>";
 
 		$terbobot 	= array();
 		foreach ($gap as $id_pelamar => $data) {
@@ -179,23 +193,32 @@ class C_PenilaianPelamar extends MY_Controller {
 				}
 
 				$terbobot[$id_pelamar][$id_subkriteria] 	= $bobot_gap;
-				print_r($terbobot[$id_pelamar][$id_subkriteria]);echo"<br>";
+				//print_r($terbobot[$id_pelamar][$id_subkriteria]);echo"<br>";
 				$bobot_nilai 								= $terbobot[$id_pelamar][$id_subkriteria];
 				$this->db->set('bobot_nilai',$bobot_nilai);
 				$this->db->where('id_pelamar', $id_pelamar)
+						 ->where('id_divisi', $divisi)
 						 ->where('id_subkriteria', $id_subkriteria);
-				$this->db->update('nilai_alternatif');
+				$this->db->update('match_subkriteria');
 			}
 		}
+		// echo"terbobot : <br>";
+		// print_r($terbobot); echo"<br><br>";
 
 		$nilaitotal = array();
 		foreach($terbobot as $id_pelamar => $val){
 			foreach($subkriteria as $id_subkriteria => $value){
 				$nilaitotal[$id_pelamar][$id_subkriteria] = $value[5] * $val[$id_subkriteria];
-				print_r($id_pelamar);   echo"   "; print_r($id_subkriteria); echo"   ";
-				print_r($nilaitotal[$id_pelamar][$id_subkriteria]); echo"<br>";
+				// print_r($nilaitotal[$id_pelamar][$id_subkriteria]);   echo"   "; print_r( $value[5]); echo"   ";
+				// print_r($val[$id_subkriteria]); echo"<br>";
+				
 			}
 		}
+
+		// echo"nilai total : <br>";
+		// print_r($nilaitotal); echo"<br><br>";
+
+		//print_r($nilaitotal);
 
 		$id_kriteria = array();
 		$cf			= array();
@@ -203,18 +226,43 @@ class C_PenilaianPelamar extends MY_Controller {
 		$hasilpm = array();
 		foreach($nilaitotal as $id_pelamar =>$data){
 			foreach($data as $id_subkriteria => $value){
+				
 				$id_kriteria = $subkriteria[$id_subkriteria][0];
 				if($subkriteria[$id_subkriteria][4] == 'CF'){
 					$cf[$id_kriteria][$id_subkriteria] = $value;
+					// echo"cf : <br>";
+					// print_r([$id_subkriteria]);echo"<br><br>"; print_r($cf[$id_kriteria][$id_subkriteria]);
+					// echo"<br><br>";
 				} else {
 					$sf[$id_kriteria][$id_subkriteria] = $value;
+					// echo"sf : <br>";
+					// print_r([$id_subkriteria]);echo"<br><br>"; print_r($sf[$id_kriteria][$id_subkriteria]);
+					// echo"<br><br>";
 				}
 			}
+			//print_r($cf);
+
 			foreach($kriteria as $id_kriteria => $value){
-				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) / count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;
+				
+				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) / count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;		
+				echo"CF id Kriteria : "; print_r($cf[$id_kriteria]); echo"   <br>  ";
+				echo"SF id Kriteria : "; print_r($sf[$id_kriteria]); 
+				print_r($hasilpm[$id_pelamar][$id_kriteria]); echo"   <br>  ";
+
+				$total_nilai = $hasilpm[$id_pelamar][$id_kriteria];
+				
+				$this->db->set('id_pelamar',$id_pelamar)
+						->set('id_divisi',$divisi)
+						->set('id_kriteria',$id_kriteria)
+						->set('nilai_total',$total_nilai);
+				$this->db->insert('match_kriteria');	
+
 			}
+			
 		}
-		print_r($hasilpm); echo"<br>";
+
+		echo"hasilpm : <br>";
+		print_r($hasilpm); echo"<br><br>";
 		
 		$nilaiakhir = 0;
 		foreach($hasilpm as $id_pelamar => $datapm){			
@@ -234,6 +282,8 @@ class C_PenilaianPelamar extends MY_Controller {
 			$this->db->where('id_pelamar',$id_pelamar);
 			$this->db->update('pelamar');
 		}
+		// echo"nlai akhir : <br>";
+		// print_r($nilaiakhir); echo"<br><br>";
 		
 		$this->session->set_flashdata('success', 'Data Penilaian Pelamar Berhasil Disimpan');
 		redirect('C_PenilaianPelamar/index');
@@ -248,8 +298,15 @@ class C_PenilaianPelamar extends MY_Controller {
 
 	function ubah_penilaian()
 	{
-		$jml_subkriteria = $this->db->count_all('subkriteria');
+		$divisi	= $this->input->post('id_divisi');
+		print_r($divisi);
+
+		$jml_subkriteria = $this->db->count_all('target_subkriteria');
+		print_r($jml_subkriteria);
+		
 		$id_pelamar 		= $this->input->post('id_pelamar');
+
+
 		for($x=0; $x< $jml_subkriteria; $x++){
 			$id_subkriteria 	= $this->input->post('id_subkriteria'.$x);
 			$nilai_tes 			= $this->input->post('nilai_tes'.$x);
@@ -259,16 +316,18 @@ class C_PenilaianPelamar extends MY_Controller {
 			$this->db->where('id_subkriteria', $id_subkriteria);
 			$this->db->update('nilai_alternatif');
 		}
-			$getkriteria	= $this->M_Proses->get_kriteria()->result_array();
+			$getkriteria	= $this->M_Proses->get_target_kriteria($divisi)->result_array();
+
 			$kriteria 		= array();
 			foreach ($getkriteria as $row){
-				$kriteria[$row['id_kriteria']] = array( 
-														$row['id_kriteria'],
-														$row['nm_kriteria'],
-														$row['bobot_kriteria']);
-			}
+			$kriteria[$row['id_kriteria']] = array( 
+													$row['id_kriteria'],
+													$row['nm_kriteria'],
+													$row['bobot_kriteria']);
+		}
+		
 	
-			$getsubkriteria	= $this->M_Proses->get_subkriteria()->result_array();
+			$getsubkriteria	= $this->M_Proses->get_target_subkriteria($divisi)->result_array();
 			$subkriteria 	= array();
 			foreach ($getsubkriteria as $row){
 				$subkriteria[$row['id_subkriteria']] = array( 
@@ -286,17 +345,20 @@ class C_PenilaianPelamar extends MY_Controller {
 			foreach ($getsample as $key => $row){
 				$sample[$row['id_pelamar']][$row['id_subkriteria']] = $row['nilai_tes'];
 			}
+
 	
 			$gap 	= array();		
 			foreach ($sample as $id_pelamar => $data){
 				$gap[$id_pelamar] = array();
 				foreach($subkriteria as $id_subkriteria => $val){
 					$gap[$id_pelamar][$id_subkriteria] 	= $data[$id_subkriteria]- $val[3];
-					$nilai_gap 								= $gap[$id_pelamar][$id_subkriteria];
-					// $this->db->set('gap',$nilai_gap);
-					// $this->db->where('id_pelamar', $id_pelamar)
-					// 		 ->where('id_subkriteria', $id_subkriteria);
-					// $this->db->update('nilai_alternatif');
+					$nilai_gap 							= $gap[$id_pelamar][$id_subkriteria];
+
+					$this->db->set('gap',$nilai_gap);
+					$this->db->where('id_pelamar', $id_pelamar)
+							 ->where('id_subkriteria', $id_subkriteria)
+							 ->where('id_divisi', $divisi)				;
+					$this->db->update('match_subkriteria');
 					
 				}
 			}
@@ -329,11 +391,13 @@ class C_PenilaianPelamar extends MY_Controller {
 					}
 	
 					$terbobot[$id_pelamar][$id_subkriteria] 	= $bobot_gap;
-					$bobot_nilai 								= $terbobot[$id_pelamar][$id_subkriteria];
-					// $this->db->set('bobot_nilai',$bobot_nilai);
-					// $this->db->where('id_pelamar', $id_pelamar)
-					// 		 ->where('id_subkriteria', $id_subkriteria);
-					// $this->db->update('nilai_alternatif');
+					//print_r($terbobot[$id_pelamar][$id_subkriteria]);echo"<br>";
+					$bobot_nilai 								= $terbobot[$id_pelamar][$id_subkriteria];							
+					$this->db->set('bobot_nilai',$bobot_nilai);
+					$this->db->where('id_pelamar', $id_pelamar)
+							 ->where('id_subkriteria', $id_subkriteria)
+							 ->where('id_divisi', $divisi);
+					$this->db->update('match_subkriteria');
 				}
 			}
 			
@@ -341,46 +405,69 @@ class C_PenilaianPelamar extends MY_Controller {
 			foreach($terbobot as $id_pelamar => $val){
 				foreach($subkriteria as $id_subkriteria => $value){
 					$nilaitotal[$id_pelamar][$id_subkriteria] = $value[5] * $val[$id_subkriteria];
-					print_r($id_pelamar);   echo"   "; print_r($id_subkriteria); echo"   ";
-					print_r($nilaitotal[$id_pelamar][$id_subkriteria]); echo"<br>";
+					// print_r($nilaitotal[$id_pelamar][$id_subkriteria]);   echo"   "; print_r( $value[5]); echo"   ";
+					// print_r($val[$id_subkriteria]); echo"<br>";
+					
 				}
 			}
-	
+
 			$id_kriteria = array();
-			$cf			= array();
-			$sf			= array();
-			$hasilpm = array();
-			foreach($nilaitotal as $id_pelamar =>$data){
-				foreach($data as $id_subkriteria => $value){
-					$id_kriteria = $subkriteria[$id_subkriteria][0];
-					if($subkriteria[$id_subkriteria][4] == 'CF'){
-						$cf[$id_kriteria][$id_subkriteria] = $value;
-					} else {
-						$sf[$id_kriteria][$id_subkriteria] = $value;
-					}
-				}
-				foreach($kriteria as $id_kriteria => $value){
-					$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) / count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;
+		$cf			= array();
+		$sf			= array();
+		$hasilpm = array();
+		foreach($nilaitotal as $id_pelamar =>$data){
+			foreach($data as $id_subkriteria => $value){
+				
+				$id_kriteria = $subkriteria[$id_subkriteria][0];
+				if($subkriteria[$id_subkriteria][4] == 'CF'){
+					$cf[$id_kriteria][$id_subkriteria] = $value;
+					// echo"cf : <br>";
+					// print_r([$id_subkriteria]);echo"<br><br>"; print_r($cf[$id_kriteria][$id_subkriteria]);
+					// echo"<br><br>";
+				} else {
+					$sf[$id_kriteria][$id_subkriteria] = $value;
+					// echo"sf : <br>";
+					// print_r([$id_subkriteria]);echo"<br><br>"; print_r($sf[$id_kriteria][$id_subkriteria]);
+					// echo"<br><br>";
 				}
 			}
+			//print_r($cf);
+
+			foreach($kriteria as $id_kriteria => $value){
+				
+				$hasilpm[$id_pelamar][$id_kriteria] = array_sum($cf[$id_kriteria]) / count($cf[$id_kriteria]) * 0.6 + array_sum($sf[$id_kriteria])/ count($sf[$id_kriteria]) * 0.4;		
+				echo"CF id Kriteria : "; print_r($cf[$id_kriteria]); echo"   <br>  ";
+				echo"SF id Kriteria : "; print_r($sf[$id_kriteria]); 
+				print_r($hasilpm[$id_pelamar][$id_kriteria]); echo"   <br>  ";
+
+				$total_nilai = $hasilpm[$id_pelamar][$id_kriteria];
+				
+				$this->db->where('id_pelamar',$id_pelamar)
+						->where('id_divisi',$divisi)
+						->where('id_kriteria',$id_kriteria)
+						->set('nilai_total',$total_nilai);
+				$this->db->update('match_kriteria');	
+
+			}
+			
+		}
+
 			
 			$nilaiakhir = 0;
 			foreach($hasilpm as $id_pelamar => $datapm){			
-				print_r($datapm);
 				if(!isset($nilaiakhir)){
 					$nilaiakhir = 0;
 				}
 				foreach ($datapm as $id_kriteria => $nilai_total){	
-					$nilaiakhir += $nilai_total * $kriteria[$id_kriteria][2];
-					print_r($nilai_total); echo" X "; print_r($kriteria[$id_kriteria][2]); echo" = "; print_r($nilaiakhir); echo"<br>";
-				}	
+						$nilaiakhir += round($nilai_total * $kriteria[$id_kriteria][2],4);
+				}		
 				$this->db->where('id_pelamar', $id_pelamar);
 				$this->db->set('nilai_akhir', $nilaiakhir);
 				$this->db->set('status_akhir',0);
 				$this->db->update('hasil_akhir');
 			}
 
-		//$this->session->set_flashdata('success', 'Data Penilaian Pelamar Berhasil Diubah');
+		$this->session->set_flashdata('success', 'Data Penilaian Pelamar Berhasil Diubah');
 		//redirect('C_PenilaianPelamar/index');
 	}
 
@@ -412,8 +499,7 @@ class C_PenilaianPelamar extends MY_Controller {
 	function add_nilai_pelamar($id_pelamar)
 	{
 		//$data['kriteria'] 		= $this->M_Proses->get_kriteria()->result_array();
-		$data['kriteria'] 		= $this->M_Pendataan->get_subkriteria()->result_array();
-		
+		$data['kriteria'] 		= $this->M_Pendataan->get_subkriteria()->result_array();		
 		//where tanda=1
 
 		$data['pelamar'] 		= $this->M_Pendataan->data_pelamar();

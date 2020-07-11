@@ -30,6 +30,51 @@ class M_Proses extends MY_Model {
 		$this->load->database();
 	}
 	
+	function get_target_kriteria($divisi)
+	{
+		$result = $this->db->query(" SELECT kriteria.nm_kriteria, kriteria.id_kriteria, target_kriteria.* 
+									FROM kriteria, target_kriteria
+									WHERE kriteria.id_kriteria = target_kriteria.id_kriteria AND id_divisi='$divisi'
+									ORDER BY target_kriteria.id_kriteria ASC");
+		return $result;
+	}
+
+	function get_data_target_kriteria()
+	{
+		$result = $this->db->query(" SELECT kriteria.nm_kriteria, kriteria.id_kriteria, target_kriteria.* 
+									FROM kriteria, target_kriteria
+									WHERE kriteria.id_kriteria = target_kriteria.id_kriteria
+									ORDER BY target_kriteria.id_kriteria ASC");
+		return $result;
+	}
+
+	function get_target_subkriteria($divisi)
+	{
+		$result = $this->db->query(" SELECT a.*, b.*, c.*
+									FROM target_subkriteria a, subkriteria b, kriteria c
+									WHERE a.id_subkriteria = b.id_subkriteria
+									AND b.id_kriteria = c.id_kriteria
+									AND id_divisi='$divisi'
+									ORDER BY a.id_subkriteria ASC");
+		return $result;
+	}
+
+	function get_nama_target_kriteria($divisi)
+	{
+		$result = $this->db->query(" select kriteria.nm_kriteria from kriteria, target_kriteria
+		where kriteria.id_kriteria = target_kriteria.id_kriteria 
+		and id_divisi='$divisi'");
+		return $result;
+	}
+
+	function get_id_target_kriteria($divisi)
+	{
+		$result = $this->db->query(" select target_kriteria.id_kriteria from kriteria, target_kriteria
+		where kriteria.id_kriteria = target_kriteria.id_kriteria 
+		and id_divisi='$divisi'");
+		return $result;
+	}
+	
 	//Mengambil Nama Kriteria
 	function getNamaKriteria()
 	{
@@ -40,12 +85,15 @@ class M_Proses extends MY_Model {
 		return $kriteria;
 	}
 
-	//Mengambil Target Kriteria
-	function getntarget()
+	
+
+	//Mengambil Target Sub Kriteria
+	function getntarget($divisi)
 	{
 		$this->db->select('nilai_target')
-				 ->from('subkriteria')
-				 ->order_by('id_subkriteria');
+				 ->from('target_subkriteria')
+				 ->where('id_divisi', $divisi)
+				 ->order_by('id_subkriteria ASC');
 		$kriteria = $this->db->get();
 		return $kriteria;
 	}
@@ -140,12 +188,12 @@ class M_Proses extends MY_Model {
 		return $nilai;
 	}
 
-	function getnilaipelamar($bulan, $tahun) 
+	function getnilaipelamar($bulan, $tahun, $divisi) 
 	{
 		$nilai = $this->db->query(" SELECT nilai_tes
 		FROM pelamar inner join nilai_alternatif 
     	ON pelamar.id_pelamar = nilai_alternatif.id_pelamar INNER JOIN periode on
-        periode.id_periode = pelamar.id_periode and bulan='$bulan' and tahun='$tahun'");
+        periode.id_periode = pelamar.id_periode and bulan='$bulan' and tahun='$tahun' and pelamar.id_divisi='$divisi'");
 		
 		return $nilai;
 	}
@@ -157,6 +205,20 @@ class M_Proses extends MY_Model {
 		$result = array();
 		$this->db->SELECT('count(id_kriteria) as total')
 				 ->FROM('kriteria');
+		$kriteria = $this->db->get();
+		if($kriteria->num_rows() > 0)
+		{
+			$result = $kriteria->row_array();
+		}
+		return $result;
+	}
+	
+	function get_jml_target_kriteria($divisi) {
+
+		$result = array();
+		$this->db->SELECT('count(id_kriteria) as total')
+				->WHERE('id_divisi', $divisi)
+				 ->FROM('target_kriteria');
 		$kriteria = $this->db->get();
 		if($kriteria->num_rows() > 0)
 		{
@@ -222,7 +284,7 @@ class M_Proses extends MY_Model {
 	}
 
 	// <!--  PROSES PROFILE MATCHING -->
-	function get_alternatif($bulan,$tahun)
+	function get_alternatif($bulan,$tahun,$divisi)
 	{
 		$result = $this->db->query("SELECT c.*, a.nm_pelamar, d.id_subkriteria, d.nm_subkriteria,
 		b.bulan, b.tahun
@@ -230,7 +292,7 @@ class M_Proses extends MY_Model {
 		where a.id_periode = b.id_periode
 		and a.id_pelamar = c.id_pelamar
 		and c.id_subkriteria = d.id_subkriteria
-		and b.bulan = '$bulan' and b.tahun='$tahun'");
+		and b.bulan = '$bulan' and b.tahun='$tahun' and a.id_divisi = '$divisi'");
 		return $result->result_array();
 	}
 
@@ -317,13 +379,13 @@ class M_Proses extends MY_Model {
 		return $result->result_array();
 	}
 
-	function getnamapelamar($bulan, $tahun)
+	function getnamapelamar($bulan, $tahun, $divisi)
 	{
 		$result = $this->db->query(" SELECT DISTINCT nm_pelamar
 									FROM pelamar inner join nilai_alternatif 
 									ON pelamar.id_pelamar = nilai_alternatif.id_pelamar 
 									INNER JOIN periode on periode.id_periode = pelamar.id_periode 
-									and bulan= '$bulan' and tahun='$tahun'");
+									and bulan= '$bulan' and tahun='$tahun' and id_divisi='$divisi'");
 		return $result->result_array();
 	}
 
@@ -398,15 +460,31 @@ class M_Proses extends MY_Model {
 		return $result->row_array();;
 	}
 
-	function get_jmlnpelamar($bulan,$tahun)
+	function get_jmlnpelamar($bulan,$tahun,$divisi)
 	{
 		$result = $this->db->query("SELECT count(DISTINCT nilai_alternatif.id_pelamar) as total
 									FROM pelamar inner join nilai_alternatif 
     								ON pelamar.id_pelamar = nilai_alternatif.id_pelamar 
 									INNER JOIN periode 
 									ON periode.id_periode = pelamar.id_periode 
-									AND bulan='$bulan' AND tahun='$tahun'");
-		return $result->row_array();;
+									AND bulan='$bulan' AND tahun='$tahun' AND pelamar.id_divisi='$divisi'");
+		return $result->row_array();
+	}
+
+	function get_jml_subkriteria($divisi)
+	{
+		$result = $this->db->query("SELECT count(id_divisi) as total
+									FROM target_subkriteria
+									WHERE id_divisi='$divisi'");
+		return $result->row_array();
+	}
+
+	function get_jml_kriteria($divisi)
+	{
+		$result = $this->db->query("SELECT count(id_divisi) as total
+									FROM target_kriteria
+									WHERE id_divisi='$divisi'");
+		return $result->row_array();
 	}
 
 	function getnilaialternatif($bulan, $tahun) 
@@ -416,12 +494,40 @@ class M_Proses extends MY_Model {
 
 	}
 
-	function data_penilaian($bulan,$tahun)
+	function data_penilaian($bulan,$tahun,$divisi)
 	{
-		$result = $this->db->query("select * from nilai_alternatif a join subkriteria b
-		using (id_subkriteria) join pelamar c using (id_pelamar)
-		join periode d using (id_periode)
-		where bulan='$bulan' and tahun='$tahun'");
+		$result = $this->db->query("SELECT a.*, c.id_divisi FROM nilai_alternatif a JOIN subkriteria b
+		USING (id_subkriteria) JOIN pelamar c USING (id_pelamar)
+		JOIN periode d USING (id_periode)
+		WHERE bulan='$bulan' AND tahun='$tahun' AND id_divisi='$divisi'");
+		return $result;
+	}
+
+	function data_match_subkriteria($bulan,$tahun,$divisi)
+	{
+		$result = $this->db->query("select a.* from match_subkriteria a, pelamar b, periode c
+		where a.id_pelamar = b.id_pelamar
+		and c.id_periode = b.id_periode
+		and bulan='$bulan' and tahun='$tahun' and a.id_divisi='$divisi'");
+		return $result;
+	}
+
+	function data_hasil_akhir($bulan,$tahun,$divisi)
+	{
+		$result = $this->db->query("SELECT a.*, c.nm_pelamar FROM hasil_akhir a 
+		JOIN pelamar c USING (id_pelamar)
+		JOIN periode d USING (id_periode)
+		WHERE bulan='$bulan' AND tahun = '$tahun' AND c.id_divisi='$divisi'
+		ORDER BY nilai_akhir DESC");
+		return $result;
+	}
+
+	function data_match_kriteria($bulan,$tahun,$divisi)
+	{
+		$result = $this->db->query("select a.* from match_kriteria a, pelamar b, periode c
+		where a.id_pelamar = b.id_pelamar
+		and c.id_periode = b.id_periode
+		and bulan='$bulan' and tahun='$tahun' and a.id_divisi='$divisi'");
 		return $result;
 	}
 
@@ -434,15 +540,29 @@ class M_Proses extends MY_Model {
 		return $result;
 	}
 
-	function get_datasub($id_kriteria)
+	function get_datasub($id_kriteria, $divisi)
 	{
-		$result = $this->db->query("select * from subkriteria where id_kriteria = '$id_kriteria'");
+		$result = $this->db->query("SELECT target_subkriteria.*, subkriteria.* FROM target_subkriteria, kriteria, subkriteria 
+		WHERE target_subkriteria.id_subkriteria = subkriteria.id_subkriteria 
+		AND subkriteria.id_kriteria = kriteria.id_kriteria
+		AND subkriteria.id_kriteria = '$id_kriteria' AND id_divisi='$divisi'
+		ORDER BY target_subkriteria.id_subkriteria ASC");
 		return $result;
 	}
 
-	function get_jmlsub($id_kriteria)
+	function get_jmlsub($id_kriteria, $divisi)
 	{
-		$result = $this->db->query("select count(id_subkriteria) as total from subkriteria where id_kriteria = '$id_kriteria'");
+		$result = $this->db->query("SELECT count(target_subkriteria.id_subkriteria) as total FROM target_subkriteria, kriteria, subkriteria 
+		WHERE target_subkriteria.id_subkriteria = subkriteria.id_subkriteria 
+		AND subkriteria.id_kriteria = kriteria.id_kriteria
+		AND subkriteria.id_kriteria = '$id_kriteria'  AND id_divisi='$divisi'");
+		return $result;
+	}
+
+	function get_jmlsub_divisi()
+	{
+		$result = $this->db->query("SELECT count(id_subkriteria) as total FROM target_subkriteria");
+
 		return $result;
 	}
 
@@ -454,7 +574,13 @@ class M_Proses extends MY_Model {
 
 	function get_datakriteria($id_kriteria)
 	{
-		$result = $this->db->query("select * from kriteria where id_kriteria='$id_kriteria'");
+		$result = $this->db->query("SELECT * FROM kriteria WHERE id_kriteria='$id_kriteria'");
+		return $result;
+	}
+
+	function get_datadivisi($divisi)
+	{
+		$result = $this->db->query("SELECT * FROM divisi WHERE id_divisi='$divisi'");
 		return $result;
 	}
 
@@ -466,6 +592,7 @@ class M_Proses extends MY_Model {
 		$nilai = $this->db->get();
 		return $nilai;
 	}
+
 
 	
 

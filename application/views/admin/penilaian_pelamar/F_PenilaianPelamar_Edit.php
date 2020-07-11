@@ -103,6 +103,12 @@ select.form-control{
                 <td><input readonly type="text-form" name="nm_pelamar" id="nm_pelamar" class="form-control" value="<?= $row -> nm_pelamar?>"></td>
               </tr>
               <tr>
+                <td style="width: 25%"><label for="nm_posisi">Posisi</label></td>
+                <td style="width: 5%">:</td>
+                <td><input readonly type="text-form" class ="form-control" name="nm_posisi" id="nm_posisi" value="<?= $row -> nm_divisi?>">
+                <input type="text" class ="form-control" name="id_divisi" id="id_divisi" value="<?= $row -> id_divisi?>"></td>
+              </tr>
+              <tr>
                 <td><label for="nohp_pelamar">No Handphone</label></td>
                 <td>:</td>
                 <td><input readonly type="text-form" name="nohp_pelamar" id="nohp_pelamar" class="form-control" value="<?= $row -> nohp_pelamar?>"></td>

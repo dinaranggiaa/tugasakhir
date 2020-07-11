@@ -52,9 +52,14 @@ table th {
 		<tr>
 			<td>
 				<select name='id_kriteria' id='id_kriteria' required class="form-control">
-							<option value='' disabled selected>Pilih Kriteria</option>
-						<?php foreach ($kriteria as $row) {  ?>
-						<option name='id_kriteria' value="<?=$row->id_kriteria?>" <?php if(isset($row->id_kriteria)){echo "selected";} ?>><?=$row->nm_kriteria?> </option>
+					<?php foreach ($getkriteria as $row) : ?>
+						<?php foreach ($kriteria as $value) {  
+							if($row -> id_kriteria == $value -> id_kriteria) {
+								$keterangan = "selected";
+							} else {
+								$keterangan = "";
+							}?> 
+							<option <?= $keterangan?> name='id_kriteria' value="<?=$value->id_kriteria?>"><?= $value -> nm_kriteria?> </option>;
 						<?php }?>
 				</select>
 			</td>
@@ -64,9 +69,7 @@ table th {
 		</tr>
 	</table>
 	<?php echo form_close()?>
-
-		<?php foreach ($getkriteria as $row) : ?>
-		<h4 style="text-align: center; margin-bottom:0px; padding-top:25px;">Kriteria <?= $row->nm_kriteria?></h4>
+	
 		<?php endforeach ?>
 	<?php $this->load->view('alert')?>
 
@@ -75,6 +78,11 @@ table th {
 	 
  	<?php foreach ($getkriteria as $row) : ?>
 		<input readonly type="hidden" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?php echo $row->id_kriteria?>" placeholder="<?php echo $row->id_kriteria ?>">
+		
+	<?php endforeach?>
+
+	<?php foreach ($getdivisi as $row) : ?>
+		<input type="hidden" class ="form-control" name="id_divisi" id="id_divisi" value="<?php echo $row->id_divisi?>" placeholder="<?php echo $row->id_divisi ?>">
 		
 	<?php endforeach?>
 

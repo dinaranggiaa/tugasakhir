@@ -119,7 +119,11 @@ input[type=text], select {
 					
 				?>
 					<tbody>
-						<th style="background: #f4f1f1; font-weight:bold; padding-top:5px; padding-bottom:5px;">Kriteria</th>
+						<th style="background: #f4f1f1; font-weight:bold; padding-top:5px; padding-bottom:5px;">
+							<?php foreach ($getkriteria as $row) : 
+								echo $row->nm_kriteria?>
+							<?php endforeach?></th>
+						</th>
 						<?php
 							for ($x=0; $x <= ($n-1); $x++) { ?>
 								<th><?= $getSubkriteria[$x]['nm_subkriteria']?></th>
@@ -141,6 +145,8 @@ input[type=text], select {
 				
 				<br>
 
+				
+
 				<h4>Hasil Perkalian Matriks</h4>
 				<table style="width: 100%">
 				<?php
@@ -150,7 +156,10 @@ input[type=text], select {
 					
 				?>
 					<tbody>
-						<th style="background: #f4f1f1; font-weight:bold; padding-top:5px; padding-bottom:5px;">Kriteria</th>
+						<th style="background: #f4f1f1; font-weight:bold; padding-top:5px; padding-bottom:5px;">
+						<?php foreach ($getkriteria as $row) : 
+							echo $row->nm_kriteria?>
+						<?php endforeach?></th>
 						<?php
 						for ($x=0; $x <= ($n-1); $x++) { ?>
 						<th><?= $getSubkriteria[$x]['nm_subkriteria']?></th>
@@ -184,8 +193,15 @@ input[type=text], select {
 
 				<h4>Eigen Vector Kriteria</h4>
 				<form action="<?php echo base_url()?>index.php/C_ProsesAHP/simpan_eigenvector_subkriteria" method="POST">
+
+				<?php foreach ($getdivisi as $rows) : ?>
+					<input type="hidden" class ="form-control" name="id_divisi" id="id_divisi" value="<?php echo $rows->id_divisi?>" placeholder="<?php echo $rows->id_divisi ?>">
+					<?php endforeach?>
+
 				<?php foreach ($getkriteria as $row) : ?>
 					<input type="hidden" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?php echo $row->id_kriteria?>" placeholder="<?php echo $row->id_kriteria ?>">
+					
+					
 				
 				<table style="width: 50%;">
 					<thead>

@@ -148,7 +148,7 @@ input[type=text], select {
 				<?php
 					for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
 						<tr>
-							<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+							<td><?= $pelamar[$y]['nm_pelamar']?></td>
 								<?php for($z=0; $z<=$jml_subkriteria-1; $z++) {
 										$Nilai[$y][$z] = $nilaipelamar[$purut]['nilai_tes'];
 										$purut++; ?>
@@ -162,6 +162,9 @@ input[type=text], select {
 		<!-- <br><br> -->
 		<div id="Penilaian" class="tabcontent">
 			<h4>Hasil Penilaian Pelamar</h4>
+			
+			
+
 			<table class='table-striped'>
 				<?php	
 
@@ -177,7 +180,7 @@ input[type=text], select {
 								<?php 
 								$row_count=0;
 								$temp = 1;
-								if($idsubkriteria[$y]['id_kriteria'] == $idkriteria[$x]['id_kriteria']){?>
+								if($subkriteria[$y]['id_kriteria'] == $kriteria[$x]['id_kriteria']){?>
 										<?php
 												$temp++
 										?>
@@ -189,7 +192,7 @@ input[type=text], select {
 					</tr>
 					<tr>
 						<?php for ($x=0; $x <= ($jml_subkriteria-1); $x++) {?>
-								<th><?=$nmsubkriteria[$x]['nm_subkriteria']?></th>
+								<th><?=$subkriteria[$x]['nm_subkriteria']?></th>
 						<?php } ?>
 					</tr>
 				</thead>
@@ -197,7 +200,7 @@ input[type=text], select {
 					<?php
 						for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
 							<tr>
-								<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+								<td><?= $pelamar[$y]['nm_pelamar']?></td>
 									<?php for($z=0; $z<=$jml_subkriteria-1; $z++) {
 											$Nilai[$y][$z] = $nilaipelamar[$purut]['nilai_tes'];
 											$purut++; ?>
@@ -214,9 +217,9 @@ input[type=text], select {
 					<?php
 						for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
 							<tr>
-								<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+								<td><?= $pelamar[$y]['nm_pelamar']?></td>
 										<?php for($z=0; $z<=$jml_subkriteria-1; $z++) { 
-												$Nilai[$y][$z] = $gappelamar[$gurut]['gap'];
+												$Nilai[$y][$z] = $gapbobot[$gurut]['gap'];
 												$gurut++;?>
 								<td><?= $Nilai[$y][$z]?></td>
 								<?php } ?>
@@ -243,9 +246,9 @@ input[type=text], select {
 						<?php
 							for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
 								<tr>
-									<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+									<td><?= $pelamar[$y]['nm_pelamar']?></td>
 										<?php for($z=0; $z<=$n-1; $z++) {
-												$Nilai[$y][$z] = $bobotpelamar[$turut]['bobot_nilai'];
+												$Nilai[$y][$z] = $gapbobot[$turut]['bobot_nilai'];
 												$turut++; ?>
 									<td><?=$Nilai[$y][$z]?></td>	
 									<?php } ?>
@@ -273,9 +276,9 @@ input[type=text], select {
 					<?php
 						for ($y=0; $y <= ($jmlpelamar-1); $y++) { ?>
 							<tr>
-								<td><?= $nmpelamar[$y]['nm_pelamar']?></td>
+								<td><?= $pelamar[$y]['nm_pelamar']?></td>
 									<?php for($z=0; $z<=$jml_kriteria-1; $z++) {
-											$Nilai[$y][$z] = $hasilpm[$purut];
+											$Nilai[$y][$z] = $total_kriteria[$purut];
 											$purut++; ?>
 								<td><?=$Nilai[$y][$z]?></td>	
 								<?php } ?>
@@ -289,9 +292,13 @@ input[type=text], select {
 			<h4>Entri Hasil Keputusan</h4>
 			<table class='table-striped'>
 				<form action="<?php echo base_url()?>index.php/C_ProsesPM/simpan_terpilih" method="POST">
+
 				<input type="text" class ="form-control" name="bulan" id="bulan" value="<?= $bulan?>" placeholder="<?= $bulan?>">
 
 				<input type="text" class ="form-control" name="tahun" id="tahun" value="<?= $tahun?>" placeholder="<?= $tahun?>">
+
+				<input type="text" class ="form-control" name="tahun" id="tahun" value="<?= $divisi?>" placeholder="<?= $tahun?>">
+
 				<thead>
 					<tr>
 						<th>No</th>

@@ -87,6 +87,7 @@ input[type=text], select {
 
 </style>
 
+
 <div class="navigation" style="border: black;">
     <ul class="breadcrumb">
 		<li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
@@ -307,7 +308,12 @@ input[type=text], select {
 								</form>
 							</td>
 							<td style="width: 20px; padding-right:10px; padding-top:7px; border:hidden;">
-								<form action="<?php echo base_url()?>index.php/C_ProsesAHP/input_nilai_perbandingan">
+							<?php foreach($getdivisi as $value) { ?>
+								<input type="hidden" id="id_divisi" name="id_divisi" value="<?php $value -> id_divisi?>"> 
+								
+								<form action="<?php echo site_url('index.php/C_ProsesAHP/input_nilai_kembali/'.$value -> id_divisi)?>">		
+									<?php }
+									?>
 									<button type="submit" class="btn btn-warning fa fa-arrow-left" > Back</button>
 								</form>
 							</td>

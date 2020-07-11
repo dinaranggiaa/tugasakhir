@@ -85,6 +85,7 @@ class C_Pelamar extends MY_Controller {
 		{
 			$id_pelamar 		= $this->input->post('id_pelamar');
 			$id_divisi	 		= $this->input->post('id_divisi');
+			$id_periode	 		= $this->input->post('id_periode');
 			$tgl_daftar 		= $this->input->post('tgl_daftar');
 			$nm_pelamar 		= $this->input->post('nm_pelamar');
 			$almt_pelamar 		= $this->input->post('almt_pelamar');
@@ -92,6 +93,7 @@ class C_Pelamar extends MY_Controller {
 	 
 			$data = array(
 				'tgl_daftar' 		=> $tgl_daftar,
+				'id_periode'		=> $id_periode,
 				'id_divisi' 		=> $id_divisi,
 				'nm_pelamar' 		=> $nm_pelamar,
 				'almt_pelamar' 		=> $almt_pelamar,

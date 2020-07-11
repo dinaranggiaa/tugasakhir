@@ -35,12 +35,12 @@
 <div class="navigation" style="border: black;">
     <ul class="breadcrumb">
         <li><?php echo "<a href='".base_url()."Dashboard/dashboard_admin'><i class='fas fa-fas fa-desktop'> &nbsp; </i>Dashboard</a>"; ?></li>
-        <li>Data Subkriteria</li>
+        <li>Data Target Kriteria</li>
       </ul>
 </div>
 
 <div class="center-bar">
-  <h3><i class='far fa-folder-open'></i>&nbsp;Entri Sub Kriteria</h3> 
+  <h3><i class='far fa-folder-open'></i>&nbsp;Entri Target Kriteria</h3> 
   <div class="border"></div>
   
   <br>
@@ -50,13 +50,13 @@
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalAdd"><i class='fas fa-plus'></i>&nbsp;Add Data</button>
 
   <div class="inputsearch" style="float: right; margin-top:12px;">
-    <?php echo form_open('C_Subkriteria/index')?>
-      <button class="btn-link" type='submit' href="<?php echo site_url('C_Karyawan/index')?>"><i class='fas fa-undo'></i></button>
+    <?php echo form_open('C_TargetKriteria/index')?>
+      <button class="btn-link" type='submit' href="<?php echo site_url('C_TargetKriteria/index')?>"><i class='fas fa-undo'></i></button>
     <?php echo form_close()?>
   </div>
 
   <div class="inputsearch">
-    <?php echo form_open('C_Subkriteria/cari_keyword')?>
+    <?php echo form_open('C_TargetKriteria/cari_keyword')?>
       <input type="text" name="keyword" id="btn-search" class="form-control" placeholder="Search">
       <button class="button button1" type='submit' name='btncari'><i class='fas fa-search'></i></button>
     <?php echo form_close()?>
@@ -72,9 +72,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode Subkriteria</th>
-                            <th>Nama Subkriteria</th>
+                            <th>Nama Posisi</th>
                             <th>Nama Kriteria</th>
+                            <th>Bobot Kriteria</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -83,13 +83,17 @@
                       <?php foreach ($ntarget as $row):?>
                       <tr>
                         <td><?= $no?></td>
-                        <td><?= $row -> id_subkriteria?></td>
-                        <td><?= $row -> nm_subkriteria?></td>
+                        <td><?= $row -> nm_divisi?></td>
                         <td><?= $row -> nm_kriteria?></td>
+                        <td><?= $row -> bobot_kriteria?></td>
                         <td style="width: 15%;">
-                          <a class="btn btn-info btn_edit" id="<?= $row -> id_subkriteria;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $row -> id_subkriteria; ?>"><span class="fas fa-eye"></span></a>
-                          <a class="btn btn-primary btn_edit" id="<?= $row -> id_subkriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $row -> id_subkriteria; ?>"><span class="fas fa-edit"></span></a>
-                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_Subkriteria/hapus_subkriteria/'.$row -> id_subkriteria)?>"><span class="fas fa-trash-alt"></span></a>
+                          <a class="btn btn-info btn_edit" id="<?= $row -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalView<?php echo $row -> id_kriteria; ?>"><span class="fas fa-eye"></span></a>
+                          
+                          <!-- <a class="btn btn-primary btn_edit" id="<?= $row -> id_kriteria;?>" data-toggle = "modal" data-target = "#ModalEdit<?php echo $row -> id_kriteria; ?>"><span class="fas fa-edit"></span></a> -->
+                          
+                          <a class="btn btn-danger btn_hapus" onclick="return confirm('Yakin Hapus Data?')" href="<?php echo site_url('C_TargetKriteria/hapus_data/'.$row -> id_kriteria)?>"><span class="fas fa-trash-alt"></span></a>
+                          
+                          
                         </td>
                       </tr>
                       <?php $no++?>
@@ -113,26 +117,21 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Subkriteria Krtieria</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Target Krtieria</h4>
               </div>
               <div class="modal-body">
-              <form action="<?php echo base_url()?>index.php/C_Subkriteria/input_data" method="POST">
+              <form action="<?php echo base_url()?>index.php/C_TargetKriteria/input_data" method="POST">
                   <table>
-                  <tr>
-                    <td><label for="id_subkriteria">Kode Subkriteria</label></td>
-                    <td>:</td>
-                    <td><input readonly type="text-form" class ="form-control" name="id_subkriteria" id="id_subkriteria" value="<?php echo $kode?>" placeholder="<?php echo $kode ?>"></td>
-                  </tr>
                     <tr>
-                      <td><label for="id_kriteria">Nama Kriteria</label></td>
+                      <td><label for="id_kriteria">Nama Posisi</label></td>
                       <td>:</td>
                       <td>
                       <?php
                           echo "
-                          <select name='id_kriteria' id='id_kriteria' required>
-                          <option value='' disabled selected> Pilih Kriteria </option>";
-                            foreach ($kriteria as $Kriteria) {  
-                            echo "<option value='".$Kriteria->id_kriteria."'>".$Kriteria->nm_kriteria."</option>";
+                          <select name='id_divisi' id='id_divisi' required>
+                          <option value='' disabled selected> -- Pilih Divisi -- </option>";
+                            foreach ($posisi as $row) {  
+                            echo "<option value='".$row->id_divisi."'>".$row->nm_divisi."</option>";
                             }
                             echo"
                           </select>";
@@ -140,9 +139,20 @@
                       </td>     
                     </tr>
                     <tr>
-                      <td><label for="nm_subkriteria">Nama Subkriteria</label></td>
+                      <td><label for="id_kriteria">Nama Kriteria</label></td>
                       <td>:</td>
-                      <td><input type="text-form" name="nm_subkriteria" id="nm_subkriteria" class="form-control"></td>    
+                      <td>
+                      <?php
+                          echo "
+                          <select name='id_kriteria' id='id_kriteria' required>
+                          <option value='' disabled selected> -- Pilih Kriteria -- </option>";
+                            foreach ($kriteria as $Kriteria) {  
+                            echo "<option value='".$Kriteria->id_kriteria."'>".$Kriteria->nm_kriteria."</option>";
+                            }
+                            echo"
+                          </select>";
+                          ?>    
+                      </td>     
                     </tr>
                   </table>
               </div>
@@ -163,7 +173,7 @@
   <div class="form-pendataan">
     
         <!-- Modal -->
-    <div class="modal fade" id="ModalView<?= $row -> id_subkriteria?>" role="dialog">
+    <div class="modal fade" id="ModalView<?= $row -> id_kriteria?>" role="dialog">
         <div class="modal-dialog">
         
           <!-- Modal content-->
@@ -171,26 +181,36 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Subkriteria</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Data Target Kriteria</h4>
               </div>
               <div class="modal-body">
               <form>
                   <table>
-                  <tr>
-                      <td><label for="id_subkriteria">Kode Subkriteria</label></td>
+                  <!-- <tr>
+                      <td><label for="id_divisi">Kode Posisi</label></td>
                       <td>:</td>
-                      <td><?= $row -> id_subkriteria?></td>
-                    </tr>
+                      <td><?= $row -> id_divisi?></td>
+                    </tr> -->
                   <tr>
-                      <td><label for="nm_subkriteria">Nama Subkriteria</label></td>
+                      <td><label for="id_divisi">Nama Posisi</label></td>
                       <td>:</td>
-                      <td><?= $row -> nm_subkriteria?></td>
+                      <td><?= $row -> nm_divisi?></td>
                     </tr>
-                  <tr>
+                    <!-- <tr>
+                      <td><label for="id_kriteria">Kode Kriteria</label></td>
+                      <td>:</td>
+                      <td><?= $row -> id_kriteria?></td>
+                    </tr> -->
+                    <tr>
                       <td><label for="nm_kriteria">Nama Kriteria</label></td>
                       <td>:</td>
                       <td><?= $row -> nm_kriteria?></td>
                     </tr>     
+                    <tr>
+                      <td><label for="nilai_target">Bobot</label></td>
+                      <td>:</td>
+                      <td><?= $row -> bobot_kriteria?></td>
+                    </tr>
                   </table>
               </div>
               </form>
@@ -207,7 +227,7 @@
   <div class="form-pendataan">
     
         <!-- Modal -->
-    <div class="modal fade" id="ModalEdit<?= $row -> id_subkriteria?>" role="dialog">
+    <div class="modal fade" id="ModalEdit<?= $row -> id_kriteria?>" role="dialog">
         <div class="modal-dialog">
         
           <!-- Modal content-->
@@ -215,25 +235,29 @@
             
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Edit Subkriteria</h4>
+                <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Edit Target Kriteria</h4>
               </div>
               <div class="modal-body">
-                <form action="<?php echo base_url()?>index.php/C_Subkriteria/ubah_subkriteria" method="POST">
+                <form action="<?php echo base_url()?>index.php/C_TargetKriteria/ubah_target_kriteria" method="POST">
                   <table>
                   <tr>
-                      <td><label for="id_subkriteria">Kode Subkriteria</label></td>
+                      <td><label for="nm_divisi">Nama Posisi</label></td>
                       <td>:</td>
-                      <td><input readonly type="text-form" class ="form-control" name="id_subkriteria" id="nm_subkriteria" value="<?= $row -> id_subkriteria?>" placeholder="<?= $row -> id_subkriteria?>">
+                      <td><input readonly type="text-form" class ="form-control" name="nm_kriteria" id="nm_kriteria" value="<?= $row -> nm_divisi?>">
+
+                      <input type="hidden" class ="form-control" name="id_divisi" id="id_divisi" value="<?= $row -> id_divisi?>">
                     </tr>
                     <tr>
                       <td><label for="nm_kriteria">Nama Kriteria</label></td>
                       <td>:</td>
                       <td><input readonly type="text-form" class ="form-control" name="nm_kriteria" id="nm_kriteria" value="<?= $row -> nm_kriteria?>" placeholder="<?= $row -> nm_kriteria?>">   
+                      
+                      <input type="hidden" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?= $row -> id_kriteria?>">
                     </tr>
                     <tr>
-                      <td><label for="nm_subkriteria">Nama Subkriteria</label></td>
+                      <td><label for="bobot_kriteria">Bobot Kriteria</label></td>
                       <td>:</td>
-                      <td><input type="text-form" class ="form-control" name="nm_subkriteria" id="nm_subkriteria" value="<?= $row -> nm_subkriteria?>" placeholder="<?= $row -> nm_subkriteria?>">
+                      <td><input readonly type="text-form" class ="form-control" name="bobot_kriteria" id="bobot_kriteria" value="<?= $row -> bobot_kriteria?>" placeholder="<?= $row -> bobot_kriteria?>">
                     </tr>                  
                   </table>
               </div>

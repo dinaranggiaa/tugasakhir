@@ -94,7 +94,7 @@
                         <tr>
                             <th>No</th>
                             <th>Kode</th>
-                            <th>Nama Lengkap</th>
+                            <th>Nama</th>
                             <th>Alamat</th>
                             <th>No Handphone</th>
                             <th>Action</th>
@@ -261,7 +261,7 @@
               
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Entri Data Karyawan</h4>
+                  <h4 class="modal-title"><i class='fas fa-user-alt'></i>&nbsp; Edit Data Karyawan</h4>
                 </div>
                 <div class="modal-body">
                   <form action="<?php echo base_url()?>index.php/C_Karyawan/ubah_karyawan" method="POST">
@@ -270,7 +270,12 @@
                         <td><label for="id_karyawan">Kode Karyawan</label></td>
                         <td>:</td>
                         <td><input readonly type="text-form" class ="form-control" name="id_karyawan" id="id_karyawan" value="<?= $row -> id_karyawan?>" placeholder="<?= $row -> id_karyawan?>"></td>
-                      </tr>
+                      </tr>     
+                      <tr>
+                        <td><label for="id_divisi">Posisi</label></td>
+                        <td>:</td>
+                        <td><input readonly type="text-form" class ="form-control" name="id_divisi" id="id_divisi" value="<?= $row -> nm_divisi?>" placeholder="<?= $row -> nm_divisi?>"></td>
+                      </tr>                    
                       <tr>
                         <td><label for="nm_karyawan">Nama Lengkap</label></td>
                         <td>:</td>

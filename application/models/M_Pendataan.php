@@ -201,6 +201,18 @@ class M_Pendataan extends MY_Model {
 	{
 		$this->db->where('id_pelamar', $id_pelamar);
 		$this->db->delete('pelamar');
+
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('nilai_alternatif');
+
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('match_kriteria');
+
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('match_subkriteria');
+
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('hasil_akhir');
 	}
 
 	function hapus_users($id_user)
@@ -225,6 +237,12 @@ class M_Pendataan extends MY_Model {
 	{
 		$this->db->where('id_pelamar', $id_pelamar);
 		$this->db->delete('nilai_alternatif');
+
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('match_kriteria');
+
+		$this->db->where('id_pelamar', $id_pelamar);
+		$this->db->delete('match_subkriteria');
 
 		$this->db->where('id_pelamar', $id_pelamar);
 		$this->db->delete('hasil_akhir');
@@ -254,6 +272,19 @@ class M_Pendataan extends MY_Model {
 		$this->db->delete('perbandingan_subkriteria');
 	}
 
+	function hapus_target_kriteria($id_kriteria)
+	{
+		$this->db->where('id_kriteria', $id_kriteria);
+		$this->db->delete('target_kriteria');
+	}
+	
+
+	function hapus_target_subkriteria($id_subkriteria)
+	{
+		$this->db->where('id_subkriteria', $id_subkriteria);
+		$this->db->delete('target_subkriteria');
+	}
+
 	// <--Function Cari Data-->
 	function cari_kriteria($keyword)
 	{
@@ -278,6 +309,36 @@ class M_Pendataan extends MY_Model {
 
 		return $result;
 	}
+
+	function cari_target_kriteria($keyword)
+	{
+		$this->db->SELECT('divisi.*, kriteria.*, target_kriteria.*')
+				->FROM('kriteria')
+				->join('target_kriteria','kriteria.id_kriteria=target_kriteria.id_kriteria')
+				->join('divisi','divisi.id_divisi = target_kriteria.id_divisi')
+				->like('kriteria.nm_kriteria', $keyword)
+				->or_like('nm_divisi', $keyword);
+
+		$result = $this->db->get();
+
+		return $result;
+	}
+
+	function cari_target_subkriteria($keyword)
+	{
+		$this->db->SELECT('divisi.*, kriteria.*, target_subkriteria.*, subkriteria.*')
+				->FROM('kriteria')
+				->join('subkriteria','kriteria.id_kriteria=subkriteria.id_kriteria')
+				->join('target_subkriteria','subkriteria.id_subkriteria = target_subkriteria.id_subkriteria')
+				->join('divisi','divisi.id_divisi = target_subkriteria.id_divisi')
+				->like('kriteria.nm_kriteria', $keyword)
+				->or_like('nm_divisi', $keyword)
+				->or_like('nm_subkriteria', $keyword);
+
+		$result = $this->db->get();
+
+		return $result;
+	}
 	
 	function cari_data_pelamar($keyword)
 	{
@@ -294,9 +355,10 @@ class M_Pendataan extends MY_Model {
 	//Form Entri Data Karyawan
 	function get_data_pelamar($keyword)
 	{
-		$this->db->SELECT('id_pelamar, nm_pelamar, almt_pelamar, nohp_pelamar, pelamar.id_periode')
+		$this->db->SELECT('id_pelamar, nm_pelamar, almt_pelamar, nohp_pelamar, pelamar.id_periode, pelamar.id_divisi, divisi.nm_divisi')
 				->FROM('pelamar')
 				->join('periode','periode.id_periode=pelamar.id_periode')
+				->join('divisi','divisi.id_divisi=pelamar.id_divisi')
 				->like('id_pelamar', $keyword)
 				->or_like('nm_pelamar', $keyword);
 		$pelamar = $this->db->get();
@@ -361,10 +423,12 @@ class M_Pendataan extends MY_Model {
 
 	function cari_pelamar($keyword)
 	{
-		$this->db->SELECT('pelamar.*, periode.bulan')
+		$this->db->SELECT('pelamar.*, periode.bulan, divisi.*')
 				->FROM('pelamar')
 				->join('periode','periode.id_periode=pelamar.id_periode')
+				->join('divisi','divisi.id_divisi=pelamar.id_divisi')
 				->like('id_pelamar', $keyword)
+				->or_like('nm_divisi', $keyword)
 				->or_like('nm_pelamar', $keyword)
 				->or_like('bulan', $keyword);
 
@@ -391,6 +455,7 @@ class M_Pendataan extends MY_Model {
 				'id_karyawan' 			=> $this->input->post('id_karyawan'),
 				'id_pelamar' 			=> $this->input->post('id_pelamar'),
 				'id_periode' 			=> $this->input->post('id_periode'),
+				'id_divisi' 			=> $this->input->post('id_divisi'),
 				'nm_karyawan' 			=> $this->input->post('nm_karyawan'),
 				'tempat_lahir' 			=> $this->input->post('tempat_lahir'),
 				'tanggal_lahir' 		=> $this->input->post('tanggal_lahir'),
@@ -500,15 +565,20 @@ class M_Pendataan extends MY_Model {
 	{
 		if(isset($_POST['btn_simpan']))
 		{
-			$n = 8;
+			$this->db->select('target_subkriteria.id_subkriteria');
+			$this->db->from("target_subkriteria");
+			$count_reponse  = $this->db->count_all_results();
+
+			$n = $count_reponse;
+
 
 			$data = array();
 			for($i=0; $i < $n; $i++){
 				
 				$item = [
-					'id_pelamar' => $this->input->post('id_pelamar'),
-					'id_kriteria' => $this->input->post('id_subkriteria'.$i),
-					'nilai_tes' => $this->input->post('nilai_tes'.$i)
+					'id_pelamar' 	=> $this->input->post('id_pelamar'),
+					'id_kriteria' 	=> $this->input->post('id_subkriteria'.$i),
+					'nilai_tes'		=> $this->input->post('nilai_tes'.$i)
 				];
 				array_push($data, $item);
 			}
@@ -555,12 +625,46 @@ class M_Pendataan extends MY_Model {
 		}
 	}
 
+	function simpan_target_kriteria()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$data = array(
+				'id_kriteria' 		=> $this->input->post('id_kriteria'),
+				'id_divisi' 		=> $this->input->post('id_divisi'),
+			);
+
+			$this->db->set($data);
+			$this->db->insert('target_kriteria');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
+	function simpan_target_subkriteria()
+	{
+		if(isset($_POST['btn_simpan']))
+		{
+			$data = array(
+				'id_subkriteria' 	=> $this->input->post('id_subkriteria'),
+				'id_divisi' 		=> $this->input->post('id_divisi'),
+				'nilai_target' 		=> $this->input->post('nilai_target'),
+				'status_subkriteria'=> $this->input->post('status_subkriteria'),
+			);
+
+			$this->db->set($data);
+			$this->db->insert('target_subkriteria');
+			echo "<script> alert('Data Sudah Di Simpan');window.location='';</script>";
+
+		}
+	}
+
 		// <!--FUNCTION MENGHITUNG JUMLAH-->
 	function getjmlsubkriteria()
 	{
 		$result = array();
 		$this->db->SELECT('count(id_subkriteria) as total')
-				 ->FROM('subkriteria');
+				 ->FROM('target_subkriteria');
 		$kriteria = $this->db->get();
 		if($kriteria->num_rows() > 0)
 		{
@@ -598,9 +702,10 @@ class M_Pendataan extends MY_Model {
 	function ambil_data_karyawan()
 	{
     	$result = array();
-        $this->db->SELECT('karyawan.*, kontak_darurat.*')
+        $this->db->SELECT('karyawan.*, kontak_darurat.*, divisi.*')
 				 ->FROM('karyawan')
 				 ->join('kontak_darurat','kontak_darurat.id_karyawan = karyawan.id_karyawan')
+				 ->join('divisi','karyawan.id_divisi = divisi.id_divisi')
 				 ->WHERE('status_kerja = "Aktif" ')
 				 ->ORDER_BY('karyawan.id_karyawan','DESC');
 				 
@@ -676,6 +781,28 @@ class M_Pendataan extends MY_Model {
         $result = $this->db->get();
         return $result;
 	}
+
+	function ambil_target_kriteria()
+	{
+        $result = array();
+        $this->db->SELECT('kriteria.*, target_kriteria.*')
+				 ->FROM('kriteria')
+				 ->JOIN('target_kriteria','kriteria.id_kriteria=target_kriteria.id_kriteria')
+                 ->ORDER_BY('target_kriteria.id_kriteria','DESC');
+        $result = $this->db->get();
+        return $result;
+	}
+
+	function ambil_target_subkriteria($id_kriteria)
+	{
+        $result = array();
+        $this->db->SELECT('*')
+				 ->FROM('subkriteria')
+				 ->WHERE('id_kriteria', $id_kriteria)
+                 ->ORDER_BY('id_kriteria','DESC');
+        $result = $this->db->get();
+        return $result;
+	}
 	
 	//Mengambil Nama Kriteria
 	function getNamaKriteria()
@@ -741,12 +868,13 @@ class M_Pendataan extends MY_Model {
 	function data_nilai_pelamar($id_pelamar)
 	{
 		$pelamar = $this->db->query("SELECT pelamar.id_pelamar, pelamar.nm_pelamar, pelamar.nohp_pelamar, pelamar.almt_pelamar, 
-		nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria, subkriteria.id_subkriteria, subkriteria.nm_subkriteria 
-		FROM pelamar, nilai_alternatif, kriteria, subkriteria 
-		WHERE pelamar.id_pelamar = nilai_alternatif.id_pelamar 
-		AND kriteria.id_kriteria = subkriteria.id_kriteria
-		AND subkriteria.id_subkriteria = nilai_alternatif.id_subkriteria
-		AND pelamar.id_pelamar='$id_pelamar'");
+									nilai_alternatif.*, kriteria.id_kriteria, kriteria.nm_kriteria, subkriteria.id_subkriteria, subkriteria.nm_subkriteria, divisi.* 
+									FROM pelamar, nilai_alternatif, kriteria, subkriteria, divisi 
+									WHERE pelamar.id_pelamar 		= nilai_alternatif.id_pelamar 
+									AND kriteria.id_kriteria 		= subkriteria.id_kriteria
+									AND pelamar.id_divisi			= divisi.id_divisi
+									AND subkriteria.id_subkriteria	= nilai_alternatif.id_subkriteria
+									AND pelamar.id_pelamar='$id_pelamar'");
 		return $pelamar;
 	}
 
@@ -801,9 +929,12 @@ class M_Pendataan extends MY_Model {
 		return $result;
 	}
 
-	function get_subkriteria()
+	function get_ssubkriteria()
 	{
-		$result = $this->db->query("select subkriteria.id_subkriteria, subkriteria.nm_subkriteria, subkriteria.nilai_target, subkriteria.status_subkriteria, kriteria.id_kriteria, kriteria.nm_kriteria from subkriteria, kriteria where kriteria.id_kriteria = subkriteria.id_kriteria;
+		$result = $this->db->query("select b.*, c.*
+		from target_subkriteria a, subkriteria b, kriteria c
+		where a.id_subkriteria = b.id_subkriteria
+		and b.id_kriteria = c.id_kriteria;
 		");
 		return $result;
 	}
@@ -832,6 +963,12 @@ class M_Pendataan extends MY_Model {
 	function ambil_data_tahun()
 	{
 		$result = $this->db->query("SELECT DISTINCT tahun FROM periode ");
+        return $result->result();
+	}
+
+	function ambil_divisi()
+	{
+		$result = $this->db->query("SELECT DISTINCT * FROM divisi ");
         return $result->result();
 	}
 
@@ -878,6 +1015,28 @@ class M_Pendataan extends MY_Model {
 		return $result;
 	}
 
+	// Nilai Target 
+
+	function data_target_kriteria()
+	{
+		$result = $this->db->query("SELECT divisi.*, kriteria.nm_kriteria, kriteria.id_kriteria, target_kriteria.bobot_kriteria FROM divisi, kriteria, target_kriteria
+										WHERE divisi.id_divisi = target_kriteria.id_divisi
+										AND kriteria.id_kriteria = target_kriteria.id_kriteria;");
+		
+		return $result;
+	}
+
+	function data_target_subkriteria()
+	{
+		$result = $this->db->query("SELECT target_subkriteria.*, divisi.*, kriteria.*, subkriteria.* FROM divisi
+									INNER JOIN target_subkriteria ON divisi.id_divisi = target_subkriteria.id_divisi
+									INNER JOIN subkriteria ON subkriteria.id_subkriteria = target_subkriteria.id_subkriteria
+									INNER JOIN kriteria ON subkriteria.id_kriteria = kriteria.id_kriteria;
+		");
+		
+		return $result;
+	}
+
 
 
 
@@ -901,16 +1060,26 @@ class M_Pendataan extends MY_Model {
 		return $result;
 	}
 
-	function keputusan_pelamar($bulan, $tahun)
+	function keputusan_pelamar($bulan, $tahun, $divisi)
 	{
-		$result = $this->db->query("select a.id_pelamar, a.nm_pelamar, a.nohp_pelamar, b.nilai_akhir 
-									from pelamar a, hasil_akhir b, periode c 
-									where a.id_pelamar = b.id_pelamar
-									and a.id_periode = c.id_periode
-									and b.status_akhir = '1' 
-									and bulan='$bulan' 
-									and tahun='$tahun'
-									order by nilai_akhir desc");
+		$result = $this->db->query(" SELECT a.*, a.nohp_pelamar, b.nilai_akhir 
+		from pelamar a, hasil_akhir b, periode c 
+		where a.id_pelamar = b.id_pelamar
+		and a.id_periode = c.id_periode
+		and b.status_akhir = '1' 
+		and bulan='$bulan' 
+		and tahun='$tahun'
+		and id_divisi='$divisi'
+		order by nilai_akhir desc;");
+		return $result;
+	}
+
+	function karyawan_baru($bulan, $tahun)
+	{
+		$result = $this->db->query("select * from karyawan, kontak_darurat, periode
+		where karyawan.id_karyawan = kontak_darurat.id_karyawan
+		and periode.id_periode = karyawan.id_periode
+		and bulan='$bulan' and tahun='$tahun';");
 		return $result;
 	}
 	

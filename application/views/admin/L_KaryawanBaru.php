@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Laporan Rekomendasi Pelamar</title>
+	<title>Laporan Karyawan Baru</title>
 </head>
 <body style="font-family: Arial, Helvetica, sans-serif;">
 	<table style="margin:auto; border: 0px solid black; width:100% ">
@@ -18,10 +18,10 @@
 	</table>
 	
 	<hr style="height: 3px; background-color: black;">
-	<?php foreach ($periode as $row): { ?>
+	<!-- <?php foreach ($periode as $row): { ?>
 		<p style="text-align: center; font-size: 25px; margin: 10px;">Laporan Rekomendasi Pelamar <br> Periode <?= $row -> bulan ?></p>
 	<?php }?>
-	<?php endforeach?>
+	<?php endforeach?> -->
 	
 	<!-- <p style="text-align: center; margin-top: 0px;">Periode <?= $tglawal ?> s/d <?= $tglakhir?></p> -->
 
@@ -40,19 +40,20 @@
 		}
 	</style>
 	
-	<h3 style="text-align: center;">Laporan Rekomendasi Pelamar<br>Periode Bulan <?= $bulan?> Tahun <?= $tahun?></h3>
+	<h3 style="text-align: center;">Laporan Karyawan Baru<br>Periode Bulan <?= $bulan?> Tahun <?= $tahun?></h3>
 
 	<table style="width: 100%; font-size:x-small" class="inti">
 		<tr>
-			<th style="width: 3%;">No</th>
-			<th style="width: 12%;">Kode</th>
-			<th style="width: 30%;">Nama</th>
-			<th style="width: 20%;">No HP</th>
-			<th style="width: 15%;">Nilai Akhir</th>
-			<th style="width: 20%;">Peringkat</th>
+			<th style="width: 1%;">No</th>
+			<th style="width: 10%;">Nama</th>
+			<th style="width: 10%;">No KTP</th>
+			<th style="width: 10%;">No HP</th>
+			<th style="width: 7%;">Pendidikan</th>
+			<th style="width: 10%;">Mulai Kerja</th>
+			<th style="width: 30%;">Alamat</th>
 		</tr>
 		<?php $no = 1; ?>
-		<?php foreach ($pelamar as $row) { ?>
+		<?php foreach ($karyawan as $row) { ?>
 
 		<tr>
 			<td>
@@ -60,21 +61,23 @@
 			</td>
 
 			<td>
-				<?= $row -> id_pelamar; ?>
+				<?= $row -> nm_karyawan; ?>
 			</td>
 
 			<td>
-				<?= $row -> nm_pelamar; ?>
-			</td>
-
-			<td>
-				<?= $row -> nohp_pelamar; ?>
+				<?= $row -> no_ktp; ?>
 			</td>
 			<td>
-				<?= $row -> nilai_akhir; ?>
+				<?= $row -> nohp_karyawan; ?>
 			</td>
 			<td>
-				<?= $no; ?>
+				<?= $row -> pendidikan_terakhir; ?>
+			</td>
+			<td>
+				<?= $row -> tglmasukkerja; ?>
+			</td>
+			<td>
+				<?= $row -> almt_karyawan; ?>
 			</td>
 			<?php $no++; ?>
 		</tr>
