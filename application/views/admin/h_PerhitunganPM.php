@@ -256,8 +256,11 @@ input[type=text], select {
 						<?php } ?>
 					</tbody>
 				</table>
+			<br>
+			<h4>Nilai Total Sub Kriteria</h4>
+			<br>
 				
-			<h4>Nilai Total Pelamar</h4>
+			<h4>Nilai Total Kriteria</h4>
 			<table class='table-striped'>
 				<?php	
 					$purut=0;	//Pelamar
@@ -293,11 +296,11 @@ input[type=text], select {
 			<table class='table-striped'>
 				<form action="<?php echo base_url()?>index.php/C_ProsesPM/simpan_terpilih" method="POST">
 
-				<input type="text" class ="form-control" name="bulan" id="bulan" value="<?= $bulan?>" placeholder="<?= $bulan?>">
+				<input type="hidden" class ="form-control" name="bulan" id="bulan" value="<?= $bulan?>" placeholder="<?= $bulan?>">
 
-				<input type="text" class ="form-control" name="tahun" id="tahun" value="<?= $tahun?>" placeholder="<?= $tahun?>">
+				<input type="hidden" class ="form-control" name="tahun" id="tahun" value="<?= $tahun?>" placeholder="<?= $tahun?>">
 
-				<input type="text" class ="form-control" name="tahun" id="tahun" value="<?= $divisi?>" placeholder="<?= $tahun?>">
+				<input type="hidden" class ="form-control" name="id_divisi" id="id_divisi" value="<?= $divisi?>" placeholder="<?= $tahun?>">
 
 				<thead>
 					<tr>

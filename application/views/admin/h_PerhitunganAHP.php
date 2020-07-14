@@ -310,7 +310,6 @@ input[type=text], select {
 							<td style="width: 20px; padding-right:10px; padding-top:7px; border:hidden;">
 							<?php foreach($getdivisi as $value) { ?>
 								<input type="hidden" id="id_divisi" name="id_divisi" value="<?php $value -> id_divisi?>"> 
-								
 								<form action="<?php echo site_url('index.php/C_ProsesAHP/input_nilai_kembali/'.$value -> id_divisi)?>">		
 									<?php }
 									?>

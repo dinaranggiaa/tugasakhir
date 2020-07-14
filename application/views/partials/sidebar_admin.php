@@ -115,9 +115,9 @@
         <div class="menu">
           <ul>
             <li style="font-family: Roboto;"><?= $this->session->userdata('level'); ?>&nbsp;&nbsp;<i class='fas fa-angle-down'></i>
-                <ul class="submenu">
-                  <li class="listmenu" style="font-family: Roboto;" ><?= $this->session->userdata('nama'); ?></li><br>
-                  <li class="listmenu" style="font-family: Roboto; font-weight:normal; margin-right:10px;"><?php echo "<a href='".base_url()."Login/logout'>Logout</a>"; ?></li>
+                <ul class="submenu" style="width:fit-content;  border: 1px solid black">
+                  <li class="listmenu" style="font-family: Roboto; padding-bottom:10px" ><?= $this->session->userdata('nama'); ?></li>
+                  <li class="listmenu" style="font-family: Roboto; font-weight:normal;"><?php echo "<a style='color:#ffff' href='".base_url()."Login/logout'>Logout</a>"; ?></li>
                 </ul>
             </li>
           </ul>

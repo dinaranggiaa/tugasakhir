@@ -39,7 +39,7 @@
 } 
 
 .home-judul{
-  width: fit-content;
+  width: 500px;
   margin:auto;
   text-align: center;
   border: 1px solid black;
@@ -68,7 +68,7 @@
             <tr>
               <td style="padding-left:15px;padding-right:15px;">
                 <select name='id_divisi' id='id_divisi' required class="form-control">
-                      <option value='' disabled selected>Pilih Divisi</option>
+                      <option value='' disabled selected>Pilih Posisi</option>
                     <?php foreach ($divisi as $row) {  ?>
                       <option name='id_divisi' value="<?=$row->id_divisi?>" ><?= $row->nm_divisi?> </option>;
                     <?php }?>
@@ -100,7 +100,7 @@
             <tr>
               <td style="float:right; padding-bottom: 10px; padding-top: 10px; padding-right:20px;"> 
                 <button type='submit' class="btn btn-primary" id='Tampilkan'><span>View</span></button>
-              </td>
+							</td>
             </tr>
           </table>
         <?php echo form_close()?>

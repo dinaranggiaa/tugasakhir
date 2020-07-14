@@ -67,7 +67,7 @@
             <tr>
               <td style="padding-left:15px;padding-right:15px;">
                 <select name='id_divisi' id='id_divisi' required class="form-control">
-                      <option value='' disabled selected>Pilih Divisi</option>
+                      <option value='' disabled selected>Pilih Posisi</option>
                     <?php foreach ($divisi as $row) {  ?>
                       <option name='id_divisi' value="<?=$row -> id_divisi?>" ><?= $row -> nm_divisi?> </option>;
                     <?php }?>

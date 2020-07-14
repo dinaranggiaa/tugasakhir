@@ -766,7 +766,7 @@ class C_ProsesAHP extends MY_Controller {
 
 	}
 
-	public function tampil_subkriteria2($id_kriteria, $divisi)
+	public function tampil_kembali_subkriteria($id_kriteria, $divisi)
 	{
 		// $data['kriteria']	 	= $this->M_Proses->get_kriteria()->result();
 		// $data['getkriteria'] 	= $this->M_Proses->get_datakriteria($id_kriteria)->result();
@@ -790,6 +790,7 @@ class C_ProsesAHP extends MY_Controller {
 	{
 		$id_kriteria			= $this->input->post('id_kriteria');
 		$divisi					= $this->input->post('id_divisi');
+
 		$data['getkriteria']	= $this->M_Proses->get_datakriteria($id_kriteria)->result();
 		$data['getdivisi']		= $this->M_Proses->get_datadivisi($divisi)->result();
 		
@@ -1078,8 +1079,13 @@ class C_ProsesAHP extends MY_Controller {
 			$data['CI'] 				= $CI; //hasil data CI
 			$data['CR'] 				= $CR; //hasil data CR
 			$data['pesan']				= $pesan;
+
+			$data['id_divisi']		= $divisi;
+			$data['id_kriteria']	= $id_kriteria;
+			$KriteriaID				= $this->uri->segment('3');
+			$divisiID				= $this->uri->segment('4');
 		
-			
+			print_r($KriteriaID	);
 			$this->load->view("admin/subkriteria/h_Subkriteria", $data);
 			//redirect('C_ProsesAHP/get_hperbandingan_sub');
 

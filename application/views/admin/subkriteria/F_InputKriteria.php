@@ -52,7 +52,7 @@ table th {
 	<table>
 		<tr>
 			<td>
-				<select name='id_divisi' id='id_divisi' required class="form-control">
+				<select name='id_divisi' id='id_divisi' required class="form-control" style="width: 250px;">
 							<option value='' disabled selected>Pilih Divisi</option>
 						<?php foreach ($divisi as $row) {  ?>
 							<option name='id_divisi' value="<?=$row -> id_divisi?>"><?= $row -> nm_divisi?> </option>;
@@ -61,7 +61,7 @@ table th {
 			</td>
 
 			<td>
-				<select name='id_kriteria' id='id_kriteria' required class="form-control">
+				<select name='id_kriteria' id='id_kriteria' required class="form-control" style="width: 250px;">
 							<option value='' disabled selected>Pilih Kriteria</option>
 						<?php foreach ($kriteria as $row) {  ?>
 							<option name='id_kriteria' value="<?=$row->id_kriteria?>"><?= $row->nm_kriteria?> </option>;
@@ -75,3 +75,16 @@ table th {
 	</table>
 	
 	<?php echo form_close()?>
+
+	<div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover" style="width: 75%; font-size:13px; font-weight:normal;">	
+			<thead>
+				<tr>
+					<th style="width: 25%;">Sub Kriteria Pertama</th>
+					<th style="width: 50%;">Penilaian</th>
+					<th style="width: 25%;">Sub Kriteria Kedua</th>
+				</tr>
+			</thead>
+		</div>
+	</div>

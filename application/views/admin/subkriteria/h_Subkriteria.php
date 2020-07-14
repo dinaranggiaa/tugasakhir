@@ -194,13 +194,14 @@ input[type=text], select {
 				<h4>Eigen Vector Kriteria</h4>
 				<form action="<?php echo base_url()?>index.php/C_ProsesAHP/simpan_eigenvector_subkriteria" method="POST">
 
-				<?php foreach ($getdivisi as $rows) : ?>
+				<?php foreach ($getdivisi as $rows) { ?>
 					<input type="hidden" class ="form-control" name="id_divisi" id="id_divisi" value="<?php echo $rows->id_divisi?>" placeholder="<?php echo $rows->id_divisi ?>">
-					<?php endforeach?>
+				<?php }?>
 
 				<?php foreach ($getkriteria as $row) : ?>
 					<input type="hidden" class ="form-control" name="id_kriteria" id="id_kriteria" value="<?php echo $row->id_kriteria?>" placeholder="<?php echo $row->id_kriteria ?>">
-					
+				<?php endforeach ?>
+								
 					
 				
 				<table style="width: 50%;">
@@ -300,12 +301,11 @@ input[type=text], select {
 									<button type="submit" class="btn btn-success fas fa-save" name="btn_simpan" id="btn_simpan"> Save</button>
 								</form>
 							</td>
+
 							<td style="width: 20px; padding-right:10px; padding-top:7px; border:hidden;">
-								<a class="btn btn-warning fa fa-arrow-left" href="<?php echo site_url('C_ProsesAHP/tampil_subkriteria2/'.$row -> id_kriteria)?>"> Back</a>
-								<?php endforeach ?>
-								
+								<form action="<?php echo site_url('index.php/C_ProsesAHP/tampil_kembali_subkriteria/').$id_kriteria.'/'.$id_divisi?>">
+									<button type="submit" class="btn btn-warning fa fa-arrow-left" > Back</button>
 								</form>
-								
 							</td>
 						  </tr>
                 	</table>	

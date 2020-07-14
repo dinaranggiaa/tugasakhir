@@ -51,7 +51,21 @@ table th {
 	<table>
 		<tr>
 			<td>
-				<select name='id_kriteria' id='id_kriteria' required class="form-control">
+				<select name='id_divisi' id='id_divisi' required class="form-control" style="width: 250px;">
+					<?php foreach ($getdivisi as $row) : ?>
+						<?php foreach ($divisi as $value) {  
+								if($row -> id_divisi == $value -> id_divisi) {
+									$keterangan = "selected";
+								} else {
+									$keterangan = "";
+								}?> 
+							<option  <?= $keterangan?> name='id_divisi' value="<?=$value -> id_divisi?>"><?= $value -> nm_divisi?> </option>;
+						<?php }?>
+				</select>
+				<?php endforeach?>
+			</td>
+			<td>
+				<select name='id_kriteria' id='id_kriteria' required class="form-control" style="width: 250px;">
 					<?php foreach ($getkriteria as $row) : ?>
 						<?php foreach ($kriteria as $value) {  
 							if($row -> id_kriteria == $value -> id_kriteria) {
@@ -91,9 +105,9 @@ table th {
             <table class="table table-striped table-bordered table-hover" style="width: 75%; font-size:13px; font-weight:normal;">	
 			<thead>
 				<tr>
-					<th style="width: 25%;">Kriteria Pertama</th>
+					<th style="width: 25%;">Sub Kriteria Pertama</th>
 					<th style="width: 50%;">Penilaian</th>
-					<th style="width: 25%;">Kriteria Kedua</th>
+					<th style="width: 25%;">Sub Kriteria Kedua</th>
 				</tr>
 			</thead>
 			<?php

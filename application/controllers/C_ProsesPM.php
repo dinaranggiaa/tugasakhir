@@ -85,7 +85,7 @@ class C_ProsesPM extends MY_Controller {
 	{
 		$bulan				= $this->input->post('bulan');
 		$tahun				= $this->input->post('tahun');
-		$divisi				= $this->input->post('divisi');
+		$divisi				= $this->input->post('id_divisi');
 
 		$data['bulan'] 			=  $bulan;
 		$data['tahun'] 			=  $tahun;
@@ -119,8 +119,10 @@ class C_ProsesPM extends MY_Controller {
 			$this->db->where('id_pelamar', $id_pelamar);
 			$this->db->update('hasil_akhir');
 		}
+
+		
 		//$this->load->view('C_Laporan/Cetak_HasilKeputusan', $data);
-		redirect(base_url().'C_Laporan/Cetak_HasilKeputusan/'.$bulan/$tahun/$divisi);
+		redirect(base_url().'C_Laporan/Cetak_Hasil_Keputusan/'.$bulan.'/'.$tahun.'/'.$divisi);
 		//redirect('C_Laporan/Cetak_HasilKeputusan/'.$bulan/$tahun/$divisi);
 	}
 
@@ -166,7 +168,7 @@ class C_ProsesPM extends MY_Controller {
 			
 		
 		$data['c_alternatif']	= $this->M_Proses->get_alternatif($bulan, $tahun, $divisi);
-		print_r($data['c_alternatif']); echo"<br><br>";
+		// print_r($data['c_alternatif']); echo"<br><br>";
  
 
 		// <!--Pengambilan nilai pada database-->
@@ -183,7 +185,7 @@ class C_ProsesPM extends MY_Controller {
 													$row['bobot_kriteria']);
 		}	
 		
-		echo "kriteria : "; print_r($kriteria); echo"<br><br>";
+		// echo "kriteria : "; print_r($kriteria); echo"<br><br>";
 		
 		//Get data SubKriteria
 		$getsubkriteria	= $this->M_Proses->get_target_subkriteria($divisi)->result_array();
@@ -199,7 +201,7 @@ class C_ProsesPM extends MY_Controller {
 													$row['bobot_subkriteria']);
 		}
 
-		echo "Subkriteria : "; print_r($subkriteria); echo"<br><br>";
+		// echo "Subkriteria : "; print_r($subkriteria); echo"<br><br>";
 
 		//Get data alternatif
 		$getalternatif	= $this->M_Proses->get_alternatif($bulan, $tahun, $divisi);
@@ -207,7 +209,7 @@ class C_ProsesPM extends MY_Controller {
 		foreach ($getalternatif as $row){
 			$alternatif[$row['id_pelamar']] = array($row['nm_pelamar']);
 		}
-		echo "Get Data Alternatif : "; print_r($alternatif); echo"<br><br>";
+		// echo "Get Data Alternatif : "; print_r($alternatif); echo"<br><br>";
 		
 	
 		//Get data alternatif join dengan kriteria
@@ -220,7 +222,7 @@ class C_ProsesPM extends MY_Controller {
 			$hsample[$surut] = $sample[$row['id_pelamar']][$row['id_subkriteria']];
 			$surut++;
 		}
-		echo "Get Data Sample : "; print_r($sample); echo"<br><br>";
+		// echo "Get Data Sample : "; print_r($sample); echo"<br><br>";
 
 		//Get gap nilai pelamar		
 		$getgap		= $this->M_Proses->data_match_subkriteria($bulan, $tahun, $divisi)->result_array();
@@ -233,7 +235,7 @@ class C_ProsesPM extends MY_Controller {
 			$urutgap++;
 		}
 
-		echo "Get Data Gap : "; print_r($gap); echo"<br><br>";
+		// echo "Get Data Gap : "; print_r($gap); echo"<br><br>";
 
 		//Get bobot nilai pelamar
 		//$getbobot		= $this->M_Proses->data_penilaian($bulan, $tahun)->result_array();
@@ -246,7 +248,7 @@ class C_ProsesPM extends MY_Controller {
 			$urutbobot++;
 		}
 
-		echo "Get Data Bobot : "; print_r($bobot); echo"<br><br>";
+		// echo "Get Data Bobot : "; print_r($bobot); echo"<br><br>";
 		
 		
 		// $nilaitotal = array();
@@ -266,14 +268,14 @@ class C_ProsesPM extends MY_Controller {
 			$urut++;
 		}
 
-		echo "Get Data Nilai Total : "; print_r($nilaitotal); echo"<br><br>";
+		// echo "Get Data Nilai Total : "; print_r($nilaitotal); echo"<br><br>";
 		
 		$gethasilakhir	= $this->M_Proses->data_hasil_akhir($bulan, $tahun, $divisi)->result_array();
 		$rangking = array();
 		foreach($gethasilakhir as $key => $row){
 			$rangking[$row['id_pelamar']] = $row['nilai_akhir'];
 		}
-		echo "Get Data Peringkat : "; print_r($gethasilakhir); echo"<br><br>";
+		// echo "Get Data Peringkat : "; print_r($gethasilakhir); echo"<br><br>";
 
 				
 		$data['bulan'] 			=  $bulan;
@@ -288,7 +290,6 @@ class C_ProsesPM extends MY_Controller {
 		$data['nmsubkriteria']  = $this->M_Proses->getnmsubkriteria()->result_array();
 		$data['subkriteria'] 	 	= $getsubkriteria;
 		$data['kriteria']			= $getkriteria;
-		echo"<br><br>";
 		$data['ntarget']		= $this->M_Proses->getntarget($divisi)->result_array();
 		$data['nilaipelamar'] 	= $this->M_Proses->getnilaipelamar($bulan, $tahun, $divisi)->result_array();	
 		
@@ -301,6 +302,7 @@ class C_ProsesPM extends MY_Controller {
 		$this->load->view("admin/h_PerhitunganPM", $data);
 
 	}
+	
 
 	function proses_pm()
 	{

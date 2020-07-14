@@ -102,6 +102,22 @@ class C_Laporan extends MY_Controller {
 		$this->mypdf->generate('admin/L_KeputusanPelamar',$data,true);
 	}
 
+	public function Cetak_Hasil_Keputusan($bulan, $tahun, $divisi)
+	{
+
+		$data['bulan']		= $bulan;
+		$data['tahun']		= $tahun;
+		$data['divisi']		= $divisi;
+		
+		$data['tgl'] 		= date('d M Y h:i:s');
+		$data['pelamar']	= $this->M_Pendataan->keputusan_pelamar($bulan, $tahun, $divisi)->result();
+		print_r($data['pelamar']);
+		print_r($bulan);
+		print_r($tahun);
+		print_r($divisi);
+		$this->mypdf->generate('admin/L_KeputusanPelamar',$data,true);
+	}
+
 	public function Cetak_KaryawanBaru()
 	{
 		$bulan				= $this->input->post('bulan');
